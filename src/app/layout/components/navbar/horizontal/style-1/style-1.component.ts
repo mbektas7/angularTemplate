@@ -142,16 +142,6 @@ export class NavbarHorizontalStyle1Component implements OnInit, OnDestroy
             });
             this._authService.getTokenObservable().subscribe((token) => {
                 if (this._authService.isTokenValid()){
-                    this.profileService.readProfileImage().subscribe((res: any) => {
-                        if (res.data && res.data.length > 0){
-                            this.profileImage = res.data[0].appFile.url;
-                            this.profileImage = 'data:image/jpg;base64,' +
-                             (this._sanitizer.bypassSecurityTrustResourceUrl(this.profileImage) as any).changingThisBreaksApplicationSecurity;
-                        }
-                        this.email = this._authService.getCurrentUserEmail();
-                        this.name = this._authService.getCurrentUserName();
-        
-                    });
                 }
             });
       

@@ -43,20 +43,17 @@ export class ProfileService implements Resolve<any>
 
     updateUserAbout(userAbout: UserAboutUpdateModal){
 
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'application/json');
-        headers = headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers = headers.append('Accept', 'application/json');
+        console.log(userAbout.userId);
+        
+        this.httpService.updateData("Users/",userAbout).finally().then();
 
-        userAbout.userId = this.authService.getCurrentUserId();
-
-        this.httpService.put('Users/' + userAbout.userId, userAbout).subscribe(data => {   
-            this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
-            this.router.navigateByUrl('/apps/dashboard');  
-          },
-           error => {
-            this.alertifyService.error('Güncelleme işlemi sırasında hata oluştu. \n' + error.error);
-          } );
+        // this.httpService.put('Users/' + userAbout.userId, userAbout).subscribe(data => {   
+        //     this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
+        //     this.router.navigateByUrl('/apps/dashboard');  
+        //   },
+        //    error => {
+        //     this.alertifyService.error('Güncelleme işlemi sırasında hata oluştu. \n' + error.error);
+        //   } );
     }
 
 
@@ -115,14 +112,7 @@ export class ProfileService implements Resolve<any>
         return null;
     }
     
-    uploadUserProfilePicture(data){
-        let formData = new FormData();
-        formData.append('picture',data)
-      return   this.httpService.post('appfiles/userProfileImage', formData);
-    }
-    readProfileImage(){
-      return  this._httpClient.get(environment.rootPath + 'appfiles/userProfileImage');
-    }
+
     deleteProfileImage(){
 
     }

@@ -61,7 +61,7 @@ export class AuthService {
 
   async logOut(){
     
-    await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
+   // await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
     this.saveToken(null);
     this.deleteRefreshToken();
 
@@ -88,6 +88,7 @@ export class AuthService {
     return this.httpClient.post(environment.rootPath + `Token/isUserLoggedInWithoutRefreshing`, null); 
     }
     getCurrentUserId(){
+      console.log(jwtToken);
     if (jwtToken) {
        return this.jwtHelper.decodeToken(jwtToken).userid;
     }

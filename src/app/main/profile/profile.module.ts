@@ -53,6 +53,6 @@ const routes = [
 })
 export class ProfileModule {
     constructor(private dateAdapter: DateAdapter<Date>) {
-        dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+        dateAdapter.setLocale('tr-tr'); // DD/MM/YYYY
     }
 }

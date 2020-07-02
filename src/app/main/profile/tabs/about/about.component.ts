@@ -42,20 +42,13 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         private authService: AuthService
     )
     {
-        // Set the private defaults
-        this._unsubscribeAll = new Subject();
+          this._unsubscribeAll = new Subject();
         this.userAbout = new UserAboutUpdateModal();
 
 
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         this.isEditing = false;
@@ -68,12 +61,9 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         this.getUserDetails();
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
+
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
         
@@ -81,14 +71,10 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
 
     getUserDetails(){
       const userId = this.authService.getCurrentUserId();
-      this.httpService.getList('Users/' + userId).then(data => {
+      console.log(userId);
+       this.httpService.getList('Users/' + userId).then(data => {
           this.userAbout = data;
-          if(this.userAbout.dateOfStart.includes('0001-01-01T')){
-            this.userAbout.dateOfStart = new Date().toISOString();
-          }
-          if(this.userAbout.birthday.includes('0001-01-01T')){
-              this.userAbout.birthday = new Date().toISOString();
-          }
+          console.log(this.userAbout);
           if (this.userAbout.isFemale) {
             this.gender = '1';
         }
@@ -104,19 +90,19 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
 
     save(){
        
-        if (this.gender === '0') {
-            this.userAbout.isFemale = false;
+
+       if (this.gender === '0') {
+             this.userAbout.isFemale = false;
         }
         else {
-            this.userAbout.isFemale = true;
+             this.userAbout.isFemale = true;
         }
-        this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
-        this.userAbout.dateOfStart = formatDate(this.userAbout.dateOfStart, 'yyyy-MM-dd HH:mm:ss', 'en-US') 
+         this.userAbout.birthday = formatDate(this.userAbout.birthday, 'dd--MM-yyyy HH:mm:ss', 'en-US')
  
-        this._profileService.updateUserAbout(this.userAbout);
-        //this.isEditing = false;
+         this._profileService.updateUserAbout(this.userAbout);
+         this.isEditing = false;
 
-      //  location.reload();
+     
     }
 
     

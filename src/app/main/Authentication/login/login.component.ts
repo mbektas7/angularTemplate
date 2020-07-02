@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit
         this.authService.loginV2(this.loginUser, '')
         .subscribe(async data => {
             if (data){
-                this.authService.saveToken(data[0]);
+                this.authService.saveToken(data);
                 const userToken: any = data;
                 const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
                 this.alertifyService.success('Sisteme giriş yapıldı');    

@@ -6,11 +6,9 @@ export class UserAboutUpdateModal {
     surname : string;
     isFemale : boolean;
     about : string;
-    job:string;
     address:string;
-    website:string;
-    email:string;
+    mail:string;
     phone:string;
-    dateOfStart:string
+    CompanyName : string;
     
 }
