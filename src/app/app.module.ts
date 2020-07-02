@@ -29,21 +29,64 @@ import { PageClaims } from 'enums/pageTypes.enum';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import {QuicklinkStrategy, QuicklinkModule} from 'ngx-quicklink';
 
-import { SampleModule } from 'app/main/sample/sample.module';
-import { TestModule } from './main/test/test.module';
-
+import { LoginGuard } from './shared/guards/login.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const appRoutes: Routes = [
+   
+
     {
-        path      : 'sample',
-        redirectTo: 'sample'
+        path        : 'auth/login',
+        pathMatch   : 'full',
+        loadChildren: () => import('./main/authentication/login/login.module').then(m => m.LoginModule),
+    
     },
     {
-        path      : 'test',
-        redirectTo: 'test'
-    }
+        path        : 'auth/register',
+        loadChildren: () => import('./main/authentication/register/register.module').then(m => m.RegisterModule)
 
+    },
+    {
+        path      : 'auth/invited',
+        loadChildren: () => import('./main/authentication/invitedRegister/invitedRegister.module').then(m => m.InvitedRegisterModule)
+    },
+    {
+        path      : 'auth/np',
+        loadChildren: () => import('./main/authentication/forgot-password/verifyForgotPassword/verifyForgotPassword.module').then(m => m.verifyForgotPasswordModule),
+        
+    },
+    {
+        path      : 'apps/dashboard',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
+        canActivate: [ LoginGuard]
+    },
+    {
+        path        : 'profile',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
+    }
+    ,
+    {
+        path      : 'password',
+        pathMatch: 'full',
+        loadChildren : () => import('./main/password/password.module').then(m => m.PasswordModule),
+        canActivate: [ LoginGuard]
+
+    },
+    {
+        path    : '',
+        pathMatch: 'full',
+        redirectTo: 'apps/dashboard'
+    },
+    {
+        path      : '**',
+        redirectTo: '../index.html',
+        
+    }
+        
 ];
+
 
 @NgModule({
     declarations: [
@@ -53,35 +96,33 @@ const appRoutes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes),
-
+        QuicklinkModule,
+        RouterModule.forRoot(appRoutes,{
+            preloadingStrategy:QuicklinkStrategy
+        }),
+        MatDialogModule,
         TranslateModule.forRoot(),
-
-        // Material moment date module
         MatMomentDateModule,
-
-        // Material
         MatButtonModule,
         MatIconModule,
-
-        // Fuse modules
         FuseModule.forRoot(fuseConfig),
         FuseProgressBarModule,
         FuseSharedModule,
         FuseSidebarModule,
         FuseThemeOptionsModule,
+                 
+        
 
         // App modules
-        LayoutModule,
-        SampleModule,
-        TestModule
+        LayoutModule
     ],
     bootstrap   : [
         AppComponent
     ],
     providers: 
     [AlertifyService,
-         {provide: MAT_DATE_LOCALE, useValue: 'tr'},
+    LoginGuard, {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   

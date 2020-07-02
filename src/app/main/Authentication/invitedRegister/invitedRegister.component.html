@@ -1,0 +1,86 @@
+<div id="invitedRegister" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+
+    <div id="invitedRegister-intro" fxFlex fxHide fxShow.gt-xs>
+
+        <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
+            <img src="~/../../../../../../assets/images/logos/logoYatay.png">
+        </div>
+
+        <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+            Mirapi .NET CORE
+        </div>
+
+        <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+            Basitçe kayıt olup operasyonlarınızı yönetebilirsiniz.
+        </div>
+
+    </div>
+
+    <div id="invitedRegister-form-wrapper" fusePerfectScrollbar
+        [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="invitedRegister-form">
+
+            <div class="title">HESABINI AKTİF ET</div>
+
+            <form #registerForm="ngForm" (ngSubmit)="invitedRegister()" id="manager">
+
+
+                <mat-form-field>
+                    <input matInput ngModel id="company" name="company" placeholder="Şirket" #company
+                        [(ngModel)]="this.user.companyName" required disabled>
+                </mat-form-field>
+
+
+                <mat-form-field>
+
+                    <input matInput placeholder="Email" id="email" name="email" ngModel #email="ngModel"
+                        [(ngModel)]="this.user.mail" disabled>
+                </mat-form-field>
+                <mat-form-field id="passwordField">
+                    <input matInput name="password" id="password" type="password" #password="ngModel" ngModel
+                        placeholder="Güvenli bir şifre oluşturun" [(ngModel)]="this.user.password" required
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+                    <mat-error *ngIf="password.hasError('required')">
+                        Şifre alanı gereklidir
+                    </mat-error>
+                    <mat-error *ngIf="password.hasError('pattern')">
+                        Şifre standartlara uymalıdır(En az 6 karekter olmalıdır ve bir küçük,bir büyük harf ve bir sayı
+                        içermelidir)
+                    </mat-error>
+                    <br>
+                </mat-form-field>
+
+
+                <mat-form-field id="confirmPasswordField">
+                    <input matInput type="password" 
+                    placeholder="Şifre (Doğrula)" 
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    ngModel
+                    #confirmPassword="ngModel" 
+                    required
+                    pattern="{{password.value}}">
+                    <mat-error *ngIf="confirmPassword.hasError('required')">
+                        Şifre Doğrula alanı gereklidir
+                    </mat-error>
+                    <mat-error *ngIf="confirmPassword.hasError('pattern')">
+                        Şifreler uyuşmuyor
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                    <mat-checkbox name="terms" id="terms" ngModel #terms="ngModel" aria-label="Accept" required>
+                        <span>Kabul</span>
+                    </mat-checkbox>
+                    <a href="#"> şartlar ve koşullar</a>
+                </div>
+                <button mat-raised-button color="accent" type="submit" class="submit-button"
+                    aria-label="CREATE AN ACCOUNT" [disabled]="!registerForm.valid || isSubmitClicked">
+                    HESABIMI OLUŞTUR ve AKTİF ET
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>

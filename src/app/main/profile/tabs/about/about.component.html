@@ -1,0 +1,154 @@
+<div id="about" class="p-24" fxLayout="row wrap">
+
+    <div class="about-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="65">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">Genel Bilgiler</div>
+            </header>
+
+            <div class="content" layout="column">
+
+                
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Ad</mat-label>
+                                    <input
+                                        matInput
+                                        name="name"
+                                        disabled="{{!isEditing}}"
+                                        [(ngModel)]="userAbout.name"
+                                        placeholder="Adınız"
+                                        required
+                                    />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Soyad</mat-label>
+                                    <input
+                                        matInput
+                                        name="surname"
+                                        disabled="{{!isEditing}}"
+                                        [(ngModel)]="userAbout.surname"
+                                        placeholder="Soyadınız"
+                                        required
+                                    />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Cinsiyet</mat-label>
+                                        <mat-select placeholder="Cinsiyet" [disabled]="!isEditing" [(ngModel)]="gender" >
+                                                        <mat-option  value="0">
+                                                          BAY
+                                                         </mat-option>
+                                                        <mat-option  value="1">
+                                                              BAYAN
+                                                            </mat-option>
+                                                      </mat-select>
+                        </mat-form-field>
+
+
+
+   
+                    <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                         <mat-label>Doğum Tarihi</mat-label>
+                            <input [disabled]="!isEditing"  matInput [matDatepicker]="picker" placeholder="Bir tarih seçin" [(ngModel)]="userAbout.birthday">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                 </mat-form-field>    
+                 <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                    <mat-label>İşe Başlama Tarihi</mat-label>
+                       <input [disabled]="!isEditing"  matInput [matDatepicker]="pickerIseBaslamaTarihi" placeholder="Bir tarih seçin" [(ngModel)]="userAbout.dateOfStart">
+                       <mat-datepicker-toggle matSuffix [for]="pickerIseBaslamaTarihi"></mat-datepicker-toggle>
+                       <mat-datepicker #pickerIseBaslamaTarihi></mat-datepicker>
+                </mat-form-field>    
+
+                <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                            <mat-label>Hakkımda</mat-label>
+                            <textarea [disabled]="!isEditing"
+                                      name="about"
+                                      matInput 
+                                      placeholder="Hakkınızda bir şeyler girin"
+                                    [(ngModel)]="userAbout.about">
+                            </textarea>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <!-- <div class="profile-box info-box work" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">İş</div>
+            </header>
+
+            <div class="content">
+
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Meslek</mat-label>
+                                    <input
+                                        matInput
+                                        name="meslek"
+                                        disabled="{{!isEditing}}"
+                                        [(ngModel)]="userAbout.job"
+                                        placeholder="Meslek"
+                                        required
+                                    />
+                        </mat-form-field>
+
+            </div>
+        </div> -->
+
+        <div class="profile-box info-box contact" fxLayout="column">
+
+            <header class="accent">
+                <div class="title">İletişim</div>
+            </header>
+
+            <div class="content">
+
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Adres</mat-label>
+                                 <textarea [disabled]="!isEditing"
+                                        name="address"
+                                        matInput 
+                                        placeholder="Açık adresiniz"
+                                      [(ngModel)]="userAbout.address">
+                              </textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                                        <mat-label>Telefon</mat-label>
+                                        <input
+                                        matInput
+                                        type="number"
+                                        name="telefon"
+                                        disabled="{{!isEditing}}"
+                                        [(ngModel)]="userAbout.phone"
+                                        placeholder="Telefon"
+                                        
+                                    />
+                        </mat-form-field>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="30" fxFlex.gt-md="35">
+
+       
+        <diV class="content">
+                                 
+         <div  [hidden]="isEditing" >
+           <button mat-raised-button [hidden]="!isEditing" (click)="edit()" color="primary" aria-label="Send Message">Düzenle</button>
+         </div>                             
+         
+         <div  [hidden]="!isEditing" >
+              <button mat-raised-button [hidden]="isEditing" (click)="save()" color="accent" aria-label="Save">Kaydet</button>
+         </div>
+                                       
+      </diV>
+       
+ </div>
+
+</div>

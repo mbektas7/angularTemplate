@@ -1,0 +1,39 @@
+<div id="mail-confirm" fxLayout="column">
+
+  <div id="mail-confirm-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+      <div id="mail-confirm-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+          <div class="logo">
+              <mat-icon *ngIf="!isConfirmed"  class="mat-accent s-96">email</mat-icon>
+              <mat-icon *ngIf="isConfirmed" class="mat-accent s-96">check</mat-icon>
+          </div>
+ 
+          <div *ngIf="!isConfirmed"  class="title">Mail adresinizi doğrulayın!</div>
+
+          <div *ngIf="!isConfirmed"  class="subtitle">
+              <p>
+                  Mail adresinize bir doğrulama linki gönderdik.
+              </p>
+              <p>
+                 Lütfen mail gelen kutunuzun kontrol edip bağlantıya tıklayarak mailinizi doğrulayınız.
+              </p>
+          </div>
+
+          <div *ngIf="isConfirmed"  class="title">Mail adresiniz başarıyla doğrulandı!</div>
+
+          <div *ngIf="isConfirmed"  class="subtitle">
+              <p>
+                 Sisteme giriş yapıp kullanmaya başlayabilirsiniz.
+              </p>
+          </div>
+
+          <div class="message">
+              <a class="link" [routerLink]="'/auth/login'">Giriş Yap</a>
+          </div>
+
+      </div>
+
+  </div>
+
+</div>

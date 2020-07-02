@@ -44,7 +44,7 @@ export class AuthService {
   loginV2(loginUser: UserLogin, captchaResponse) {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    return this.httpClient.post(`${environment.rootPath}Token/login`, loginUser, { headers: headers }).shareReplay();
+    return this.httpClient.post(`${environment.rootPath}Token`, loginUser, { headers: headers }).shareReplay();
   }
 
   register(registerUser: UserRegister) {

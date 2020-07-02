@@ -1,0 +1,125 @@
+<!-- PROGRESS BAR -->
+<fuse-progress-bar></fuse-progress-bar>
+<!-- / PROGRESS BAR -->
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+
+    <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+
+        <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
+            <img src="~/../../../../../../assets/images/logos/logoYatay.png">
+        </div>
+
+        <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+           DOGRU BILGI TEKNOLOJİLERİ!
+        </div>
+
+        <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+          Takımları, projeleri veya herhangi bir görevi takip et!
+        </div>
+
+    </div>
+
+    <div id="login-form-wrapper" fusePerfectScrollbar 
+         [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="login-form">
+                
+            <div class="title">Hesabınıza Giriş Yapın</div>
+
+            <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()"  novalidate>
+
+                <mat-form-field>
+                    <input   matInput placeholder="Kullanıcı adı" formControlName="username">
+                    <mat-error *ngIf="loginForm.get('username').hasError('required')">
+                        Email gerekli!
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input   matInput type="password" placeholder="Şifre" formControlName="password">
+                    <mat-error>
+                      Şifre Gerekli
+                    </mat-error>
+                </mat-form-field>
+                
+                <br>
+                <br>
+
+            <!--<re-captcha
+                siteKey="6LdC8skUAAAAAAwUE6LZeRBLS_qa1IbgTlaec34R"
+                formControlName="myRecaptcha"
+                [(ngModel)]="recaptcha"
+                name="captcha"
+                required
+                (resolved)="onCaptchaResolved($event)"></re-captcha>-->
+               
+                <!--
+                    <mat-form-field>
+                    <input  
+                     matInput type="password" 
+                     placeholder="Güvenlik kodu"
+                    formControlName="password"
+                    id="loginCaptchaInput"
+                    name="loginCaptchaInput"
+                    ngModel
+                    formControlName="userEnteredCaptchaCode"  
+                    type="text"
+                      >
+                    <mat-error>
+                      Güvenlik kodu gerekli
+                    </mat-error>
+                </mat-form-field>
+                
+                -->
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="space-between center">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me">
+                        Beni hatırla
+                    </mat-checkbox>
+
+                    <a class="forgot-password" [routerLink]="'/auth/forgot-password'">
+                        Şifremi unuttum?
+                    </a>
+                </div>
+
+                <button mat-raised-button color="accent" 
+                type="submit" 
+                [disabled]="loginForm.invalid ||isSubmitClicked" 
+                 class="submit-button"
+                >GİRİŞ</button>
+
+            </form>
+
+            <div class="separator">
+                <span class="text">veya</span>
+            </div>
+
+            <!--
+<div fxLayout="column" fxLayoutAlign="start center">
+
+                <button mat-raised-button class="google">
+                    Google ile bağlan
+                </button>
+
+                <button mat-raised-button class="facebook">
+                    Facebook ile bağlan
+                </button>
+
+            </div>
+            -->
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Bir hesabın yok mu?</span>
+                <a class="link" [routerLink]="'/install-company'">
+                    <mat-icon class="mat-icon material-icons mat-icon-no-color" pointerevents="auto" role="img" aria-hidden="true" style="color: rgb(6, 8, 112); position: relative;top:5px;">computer</mat-icon>
+                    Ekip oluştur</a>
+                <a class="link" [routerLink]="'/auth/register'">
+                    <mat-icon class="mat-icon material-icons mat-icon-no-color" pointerevents="auto" role="img" aria-hidden="true" style="color: rgb(6, 8, 112); position: relative;top:5px;">person</mat-icon>
+                    Ekibe katıl</a>
+                <!-- <mat-checkbox class="remember-me" aria-label="Haklar otomotik eklensin mi">
+                    Haklar otomotik eklensin mi
+                </mat-checkbox> -->
+            </div>
+        </div>
+    </div>
+</div>

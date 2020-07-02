@@ -36,21 +36,20 @@
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
 
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="/profile">
                     <mat-icon>account_circle</mat-icon>
-                    <span>My Profile</span>
+                    <span>Profilim</span>
                 </button>
 
-                <button mat-menu-item class="">
-                    <mat-icon>mail</mat-icon>
-                    <span>Inbox</span>
+                <button mat-menu-item routerLink="/password">
+                    <mat-icon>vpn_key</mat-icon>
+                    <span>Parola Değiştir</span>
                 </button>
 
-                <button mat-menu-item class="">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Logout</span>
+                <button (click)="logOut()" mat-menu-item class="">
+                    <mat-icon (click)="logOut()">exit_to_app</mat-icon>
+                    <span (click)="logOut()">Çıkış</span>
                 </button>
-
             </mat-menu>
 
             <div class="toolbar-separator"></div>

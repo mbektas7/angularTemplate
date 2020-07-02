@@ -1,0 +1,157 @@
+<div id="register" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+
+        <div id="register-intro" fxFlex fxHide fxShow.gt-xs>
+    
+            <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
+                <img src="~/../../../../../../assets/images/logos/logoYatay.png">
+            </div>
+    
+            <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+                Mirapi .NET CORE
+            </div>
+    
+            <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+               Basitçe kayıt olup operasyonlarınızı yönetebilirsiniz.
+            </div>
+    
+        </div>
+    
+    
+    
+        <div id="register-form-wrapper" fusePerfectScrollbar
+             [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+    
+           
+                <div class="logo" fxHide.gt-xs> 
+                </div>
+                <div class="title">HESAP OLUŞTUR</div>
+                
+    
+                <mat-tab-group  dynamicHeight="true">
+                        <mat-tab class="mat-tab-labels" label="Mail adresi ile">
+                                <div id="register-form">
+                                <form  #registerForm="ngForm" (ngSubmit)="register(registerForm)" id="manager">
+                
+                                    <mat-form-field>
+                                        <input matInput placeholder="Ekip üye kabul kodu"
+                                        required 
+                                        #concurrencyToken="ngModel"
+                                         name="concurrencyToken"
+                                        ngModel id="concurrencyToken"
+                                        type="text"
+                                        concurrencyToken
+                                        [(ngModel)]="userRegister.concurrencyToken"
+                                        >
+                                        <mat-error *ngIf="concurrencyToken.hasError('required')">
+                                            Ekip üye kabul kodu gereklidir
+                                        </mat-error>
+                                       
+                                    </mat-form-field>
+                                    <br>
+                
+                                        <mat-form-field>
+                                            <input matInput placeholder="Email"
+                                            required 
+                                            #email="ngModel"
+                                             name="email"
+                                            ngModel id="email"
+                                            type="email"
+                                            email
+                                            [(ngModel)]="userRegister.email"
+                                            >
+                                            <mat-error *ngIf="email.hasError('required')">
+                                                Email adresi gereklidir
+                                            </mat-error>
+                                            <mat-error *ngIf="email.hasError('email')">
+                                                Lütfen email adresini doğru formatta giriniz
+                                            </mat-error>
+                                           
+                                        </mat-form-field>
+                                        <br>
+                                        <mat-form-field class="passwordField">
+                                                <input type="password"
+                                                  matInput
+                                                  id="password"
+                                                  name="password" placeholder="Şifre"
+                                                  class="form-control" 
+                                                  required 
+                                                  ngModel
+                                                  #password="ngModel" 
+                                                  [(ngModel)]="userRegister.password"
+                                                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"/>
+                                            <mat-error *ngIf="password.hasError('required')">
+                                               Şifre alanı gereklidir
+                                            </mat-error>
+                                            <mat-error *ngIf="password.hasError('pattern')">
+                                                Şifre standartlara uymalıdır(En az 6 karekter,bir sayı,bir büyük,bir küçük harf)
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field id="confirmPasswordField">
+                                                <input type="password"
+                                                  matInput
+                                                  id="confirmPassword"
+                                                  name="confirmPassword" placeholder="Şifre (Doğrula)"
+                                                  class="form-control" 
+                                                  required 
+                                                  ngModel
+                                                  [(ngModel)]="userRegister.confirmPassword"
+                                                  #confirmPassword="ngModel" 
+                                                  pattern="{{password.value}}"/>
+                                            <mat-error *ngIf="confirmPassword.hasError('required')">
+                                               Şifre Doğrula alanı gereklidir
+                                            </mat-error>
+                                            <mat-error *ngIf="confirmPassword.hasError('pattern')">
+                                                Şifreler uyuşmuyor
+                                            </mat-error>
+                                        </mat-form-field>
+                        
+                                        <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                                            <mat-checkbox name="terms" id="terms" ngModel aria-label="Accept" required>
+                                                <span>Kabul Ediyorum</span>
+                                            </mat-checkbox>
+                                            <a href="#"> şartlar ve koşullar</a>
+                                        </div>
+                        
+                                        <button 
+                                        mat-raised-button color="accent"
+                                        type="submit" class="submit-button"
+                                        aria-label="CREATE AN ACCOUNT"
+                                        [disabled]="registerForm.invalid || isSubmitClicked">
+                                          <span *ngIf="!isSubmitClicked">HESABIMI OLUŞTUR</span>
+                                          <span *ngIf="isSubmitClicked">Kaydediliyor lütfen bekleyiniz..</span>  
+                                        </button>
+                        
+                                 </form>
+                                 </div>
+                        </mat-tab>
+                        <mat-tab class="mat-tab-labels" label="Davet kodu ile">
+                                <div id="register-form">
+    
+                         <form name="registerFormEmployee" [formGroup]="registerFormEmployee" (ngSubmit)="registerEmployee()" id="employee" novalidate>
+                
+                                        <mat-form-field>
+                                                <input matInput registerFormEmployee="davetkodu" placeholder="Size gönderilen davet kodunu giriniz" formControlName="davetkodu">
+                                                <mat-error >
+                                                    Davet kodu gerekli
+                                                </mat-error>
+                                         </mat-form-field>
+                    
+                                         <button mat-raised-button color="accent" type="submit" class="submit-button" aria-label="CREATE AN ACCOUNT"
+                                         [disabled]="registerFormEmployee.invalid || isDavetiyeAktifEtClicked">
+                                     Hesabımı aktif et
+                                 </button>
+                                </form> 
+                                </div>
+    
+                        </mat-tab>
+                
+                </mat-tab-group>
+                <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                    <span class="text">Zaten bir hesabın var mı?</span>
+                    <a class="link" [routerLink]="'/auth/login'">Giriş</a>
+                </div>
+            
+        </div>
+    </div>
+    
+    
