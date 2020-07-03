@@ -71,7 +71,6 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
 
     getUserDetails(){
       const userId = this.authService.getCurrentUserId();
-      console.log(userId);
        this.httpService.getList('Users/' + userId).then(data => {
           this.userAbout = data;
           console.log(this.userAbout);
@@ -97,8 +96,8 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         else {
              this.userAbout.isFemale = true;
         }
-         this.userAbout.birthday = formatDate(this.userAbout.birthday, 'dd--MM-yyyy HH:mm:ss', 'en-US')
- 
+         this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
+        console.log(this.userAbout);
          this._profileService.updateUserAbout(this.userAbout);
          this.isEditing = false;
 

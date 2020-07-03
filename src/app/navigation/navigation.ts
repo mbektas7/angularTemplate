@@ -4,6 +4,7 @@ export const navigation: FuseNavigation[] = [
     {
         id       : 'applications',
         title    : 'Anasayfa',
+        url      : '/dashboard',
         translate: 'NAV.APPLICATIONS',
         type     : 'group',
         children : [

@@ -6,15 +6,15 @@
     <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
 
         <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
-            <img src="~/../../../../../../assets/images/logos/logoYatay.png">
+            <img src="~/../../../../../../assets/images/logos/api.svg">
         </div>
 
         <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
-           DOGRU BILGI TEKNOLOJİLERİ!
+         MirApi  .NET WEB API
         </div>
 
         <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
-          Takımları, projeleri veya herhangi bir görevi takip et!
+         Start-up to!
         </div>
 
     </div>
@@ -110,15 +110,19 @@
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Bir hesabın yok mu?</span>
-                <a class="link" [routerLink]="'/install-company'">
+                <!-- <a class="link" [routerLink]="'/install-company'">
                     <mat-icon class="mat-icon material-icons mat-icon-no-color" pointerevents="auto" role="img" aria-hidden="true" style="color: rgb(6, 8, 112); position: relative;top:5px;">computer</mat-icon>
                     Ekip oluştur</a>
                 <a class="link" [routerLink]="'/auth/register'">
                     <mat-icon class="mat-icon material-icons mat-icon-no-color" pointerevents="auto" role="img" aria-hidden="true" style="color: rgb(6, 8, 112); position: relative;top:5px;">person</mat-icon>
-                    Ekibe katıl</a>
+                    Ekibe katıl</a> -->
                 <!-- <mat-checkbox class="remember-me" aria-label="Haklar otomotik eklensin mi">
                     Haklar otomotik eklensin mi
                 </mat-checkbox> -->
+
+                <a class="link" [routerLink]="'/auth/register'">
+                   Kayıt ol
+                </a>
             </div>
         </div>
     </div>

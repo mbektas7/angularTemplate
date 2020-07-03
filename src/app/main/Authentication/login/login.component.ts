@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit
             }
         };
         if (this.authService.isTokenValid()){
-            this.router.navigateByUrl('/apps/dashboard');
+            this.router.navigateByUrl('/dashboard');
         }
         this.jwtHelper = new JwtHelperService();
     }
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit
                   this.router.navigateByUrl('/profile');
                 }
                 else {
-                this.router.navigateByUrl('/apps/dashboard');
+                this.router.navigateByUrl('/dashboard');
             }
       
             

@@ -23,7 +23,7 @@ export class PasswordComponent implements OnInit {
         this.isSubmiting = true;
          this.httpClient.post('Users/changePassword', this.model).subscribe((res) => {
             this.alertifyService.success('Şifreniz başarıyla değiştirilmiştir');
-            this.router.navigateByUrl('apps/dashboard');
+            this.router.navigateByUrl('dashboard');
             
          }, error => {
 

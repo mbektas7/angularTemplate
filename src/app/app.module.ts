@@ -56,7 +56,7 @@ const appRoutes: Routes = [
         
     },
     {
-        path      : 'apps/dashboard',
+        path      : 'dashboard',
         pathMatch: 'full',
         loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
         canActivate: [ LoginGuard]
@@ -77,7 +77,7 @@ const appRoutes: Routes = [
     {
         path    : '',
         pathMatch: 'full',
-        redirectTo: 'apps/dashboard'
+        redirectTo: 'dashboard'
     },
     {
         path      : '**',

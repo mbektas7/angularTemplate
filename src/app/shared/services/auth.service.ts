@@ -70,8 +70,8 @@ export class AuthService {
   }
     async logOutWithoutRouting(){
     await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
-    this.deleteRefreshToken();
-    this.saveToken(null);
+    //this.deleteRefreshToken();
+    //this.saveToken(null);
     }
     isTokenValid(){
 

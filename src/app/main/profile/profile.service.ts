@@ -43,17 +43,13 @@ export class ProfileService implements Resolve<any>
 
     updateUserAbout(userAbout: UserAboutUpdateModal){
 
-        console.log(userAbout.userId);
-        
-        this.httpService.updateData("Users/",userAbout).finally().then();
-
-        // this.httpService.put('Users/' + userAbout.userId, userAbout).subscribe(data => {   
-        //     this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
-        //     this.router.navigateByUrl('/apps/dashboard');  
-        //   },
-        //    error => {
-        //     this.alertifyService.error('Güncelleme işlemi sırasında hata oluştu. \n' + error.error);
-        //   } );
+        this.httpService.put('Users/' + userAbout.userId, userAbout).subscribe(data => {   
+            this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
+            this.router.navigateByUrl('/dashboard');  
+          },
+           error => {
+            this.alertifyService.error('Güncelleme işlemi sırasında hata oluştu. \n' + error.error);
+          } );
     }
 
 
