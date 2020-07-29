@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { fuseAnimations } from '@fuse/animations';
+import { mirapiAnimations } from '@mirapi/animations';
 import { ProfileService } from 'app/main/profile/profile.service';
 import { UserAboutUpdateModal } from './userAboutUpdateModal';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
@@ -14,7 +14,7 @@ import { formatDate } from '@angular/common';
     templateUrl  : './about.component.html',
     styleUrls    : ['./about.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations   : mirapiAnimations
 })
 
 
@@ -96,7 +96,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         else {
              this.userAbout.isFemale = true;
         }
-         this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
+        // this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
         console.log(this.userAbout);
          this._profileService.updateUserAbout(this.userAbout);
          this.isEditing = false;

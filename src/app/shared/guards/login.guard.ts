@@ -11,8 +11,15 @@ export class LoginGuard implements CanActivate {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
                 
             try {
-                
-                return true;
+                if (this.authService.isTokenValid()) {
+                    console.log("user logged in");
+                    return true;
+                }
+                else {
+                    console.log("user not logged in");
+                    this.router.navigate(['/auth/login']);
+
+                }
             } catch (error) {
                 this.router.navigate(['/auth/login']);
                 return false;

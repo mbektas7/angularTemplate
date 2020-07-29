@@ -1,0 +1,16 @@
+@mixin mirapi-sidebar-theme($theme) {
+
+    $background: map-get($theme, background);
+
+    mirapi-sidebar {
+        background: map-get($background, background);
+    }
+
+    .mirapi-sidebar-overlay {
+        background-color: rgba(0, 0, 0, 0.6);
+
+        &.mirapi-sidebar-overlay-invisible {
+            background-color: transparent;
+        }
+    }
+}

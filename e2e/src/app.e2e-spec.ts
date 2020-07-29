@@ -1,14 +1,14 @@
-import { FusePage } from './app.po';
+import { MirapiPage } from './app.po';
 
-describe('Fuse App', () => {
-    let page: FusePage;
+describe('Mirapi App', () => {
+    let page: MirapiPage;
 
     beforeEach(() => {
-        page = new FusePage();
+        page = new MirapiPage();
     });
 
     it('should display welcome message', () => {
         page.navigateTo();
-        expect(page.getParagraphText()).toEqual('Welcome to Fuse!');
+        expect(page.getParagraphText()).toEqual('Welcome to Mirapi!');
     });
 });

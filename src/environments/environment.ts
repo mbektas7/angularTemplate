@@ -5,11 +5,7 @@
 export const environment = {
     production: false,
     hmr       : false,
-        // rootPath : 'http://192.168.1.154:86/api/',
-    //rootPath : 'http://5.189.151.105:94/api/',
-    //rootPath : 'http://5.189.151.105:92/api/'
-    //rootPath : 'https://personel.dogrubilgi.tech/api/'
-    rootPath:'http://localhost:50795/api/'
+    rootPath:'https://localhost:44315/api/'
 };
 
 /*

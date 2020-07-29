@@ -1,0 +1,33 @@
+<div class="nav" [ngClass]="{'horizontal':layout === 'horizontal', 'vertical':layout === 'vertical'}">
+
+    <!-- Vertical Navigation Layout -->
+    <ng-container *ngIf="layout === 'vertical'">
+
+        <ng-container *ngFor="let item of navigation">
+
+            <mirapi-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></mirapi-nav-vertical-group>
+            <mirapi-nav-vertical-collapsable *ngIf="item.type=='collapsable'"
+                                           [item]="item"></mirapi-nav-vertical-collapsable>
+            <mirapi-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></mirapi-nav-vertical-item>
+
+        </ng-container>
+
+    </ng-container>
+    <!-- / Vertical Navigation Layout -->
+
+    <!-- Horizontal Navigation Layout -->
+    <ng-container *ngIf="layout === 'horizontal'">
+
+        <ng-container *ngFor="let item of navigation">
+
+            <mirapi-nav-horizontal-collapsable *ngIf="item.type=='group'" [item]="item"></mirapi-nav-horizontal-collapsable>
+            <mirapi-nav-horizontal-collapsable *ngIf="item.type=='collapsable'"
+                                             [item]="item"></mirapi-nav-horizontal-collapsable>
+            <mirapi-nav-horizontal-item *ngIf="item.type=='item'" [item]="item"></mirapi-nav-horizontal-item>
+
+        </ng-container>
+
+    </ng-container>
+    <!-- / Horizontal Navigation Layout -->
+
+</div>

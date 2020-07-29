@@ -5,7 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 import { InvitedRegisterComponent } from './invitedRegister.component';
 import { InviteRegisterService } from './inviteRegister.service';
 
@@ -39,7 +39,7 @@ const routes = [
         MatFormFieldModule,
         MatInputModule,
 
-        FuseSharedModule
+        MirapiSharedModule
         
     ]
 })

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { FuseSidebarModule } from '@fuse/components';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSidebarModule } from '@mirapi/components';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { ContentModule } from 'app/layout/components/content/content.module';
 import { FooterModule } from 'app/layout/components/footer/footer.module';
@@ -19,8 +19,8 @@ import { VerticalLayout2Component } from 'app/layout/vertical/layout-2/layout-2.
     imports     : [
         RouterModule,
 
-        FuseSharedModule,
-        FuseSidebarModule,
+        MirapiSharedModule,
+        MirapiSidebarModule,
 
         ContentModule,
         FooterModule,

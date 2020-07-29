@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/shared/services/auth.service';
 import { CheckInTypes } from 'enums/checkinTypes.enum';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { navigation } from 'app/navigation/navigation';
 import { PageClaims } from 'enums/pageTypes.enum';
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     userList: any;
     constructor(
         private authService: AuthService,
-        private fuseNavigationService: FuseNavigationService,
+        private mirapiNavigationService: MirapiNavigationService,
         private httpRequestService: HttpRequestsService,
         private router: Router
     ) {
@@ -57,13 +57,13 @@ export class DashboardComponent implements OnInit {
         this.navigation = await this.removeUnauthorizedUrlsFromNavigation(
             this.navigation
         );
-        this.fuseNavigationService.unregister('main');
-        this.navigation = this.fuseNavigationService.register(
+        this.mirapiNavigationService.unregister('main');
+        this.navigation = this.mirapiNavigationService.register(
             'main',
             this.navigation.slice()
         );
         // Set the main navigation as our current navigation
-        this.fuseNavigationService.setCurrentNavigation('main');
+        this.mirapiNavigationService.setCurrentNavigation('main');
     }
     private removeUnauthorizedUrlsFromNavigation(array: any[]) {
         for (let i = 0; i < array.length; i++) {

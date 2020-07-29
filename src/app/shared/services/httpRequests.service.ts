@@ -51,8 +51,6 @@ export class HttpRequestsService {
   }
 
   put(path: string, data: any): Observable<any[]> {
-    console.log(path)
-    console.log(data)
     return this.httpClient
       .put<any[]>(environment.rootPath + path, data);
   }

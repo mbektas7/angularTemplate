@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 
 import { AuthService } from 'app/shared/services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 import { PageClaims } from 'enums/pageTypes.enum';
 import { environment } from 'environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 
 @Component({
     selector   : 'login',
     templateUrl: './login.component.html',
     styleUrls  : ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations : fuseAnimations
+    animations : mirapiAnimations
 })
 export class LoginComponent implements OnInit
 {
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
+     * @param {MirapiConfigService} _mirapiConfigService
      * @param {FormBuilder} _formBuilder
      * 
      * 
@@ -42,19 +42,19 @@ export class LoginComponent implements OnInit
     private jwtHelper: JwtHelperService
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,
         private authService: AuthService,
         private alertifyService: AlertifyService,
         private router: Router,
         private domSanitizer: DomSanitizer,
-        private progressBarService: FuseProgressBarService,
+        private progressBarService: MirapiProgressBarService,
 
     )
     {   
         
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

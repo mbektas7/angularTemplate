@@ -1,0 +1,17 @@
+@mixin mirapi-countdown-theme($theme) {
+
+    $foreground: map-get($theme, foreground);
+
+    mirapi-countdown {
+
+        .mirapi-countdown {
+
+            .time {
+
+                .title {
+                    color: map-get($foreground, secondary-text);
+                }
+            }
+        }
+    }
+}

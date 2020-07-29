@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 import { PageClaims } from 'enums/pageTypes.enum';
 import { LoginGuard } from 'app/shared/guards/login.guard';
 
@@ -36,7 +36,7 @@ const routes: Routes = [
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    FuseSharedModule,
+    MirapiSharedModule,
     MatTableModule
 ],
   declarations: [DashboardComponent]

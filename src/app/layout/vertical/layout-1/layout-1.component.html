@@ -1,5 +1,5 @@
 <!-- SIDE PANEL -->
-<ng-container *ngIf="!fuseConfig.layout.sidepanel.hidden && fuseConfig.layout.sidepanel.position === 'left'">
+<ng-container *ngIf="!mirapiConfig.layout.sidepanel.hidden && mirapiConfig.layout.sidepanel.position === 'left'">
 
     <!-- PANEL CONTENT -->
 
@@ -9,7 +9,7 @@
 <div id="main">
 
     <!-- TOOLBAR: Above -->
-    <ng-container *ngIf="fuseConfig.layout.toolbar.position === 'above'">
+    <ng-container *ngIf="mirapiConfig.layout.toolbar.position === 'above'">
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>
     </ng-container>
     <!-- / TOOLBAR: Above -->
@@ -17,7 +17,7 @@
     <div id="container-1" class="container">
 
         <!-- NAVBAR: Left -->
-        <ng-container *ngIf="fuseConfig.layout.navbar.position === 'left'">
+        <ng-container *ngIf="mirapiConfig.layout.navbar.position === 'left'">
             <ng-container *ngTemplateOutlet="leftNavbar"></ng-container>
         </ng-container>
         <!-- / NAVBAR: Left -->
@@ -25,16 +25,16 @@
         <div id="container-2" class="container">
 
             <!-- TOOLBAR: Below fixed -->
-            <ng-container *ngIf="fuseConfig.layout.toolbar.position === 'below-fixed'">
+            <ng-container *ngIf="mirapiConfig.layout.toolbar.position === 'below-fixed'">
                 <ng-container *ngTemplateOutlet="toolbar"></ng-container>
             </ng-container>
             <!-- / TOOLBAR: Below fixed -->
 
-            <div id="container-3" class="container" fusePerfectScrollbar
-                 [fusePerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+            <div id="container-3" class="container" mirapiPerfectScrollbar
+                 [mirapiPerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
 
                 <!-- TOOLBAR: Below static -->
-                <ng-container *ngIf="fuseConfig.layout.toolbar.position === 'below-static'">
+                <ng-container *ngIf="mirapiConfig.layout.toolbar.position === 'below-static'">
                     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
                 </ng-container>
                 <!-- / TOOLBAR: Below static -->
@@ -44,7 +44,7 @@
                 <!-- / CONTENT -->
 
                 <!-- FOOTER: Below static -->
-                <ng-container *ngIf="fuseConfig.layout.footer.position === 'below-static'">
+                <ng-container *ngIf="mirapiConfig.layout.footer.position === 'below-static'">
                     <ng-container *ngTemplateOutlet="footer"></ng-container>
                 </ng-container>
                 <!-- / FOOTER: Below static -->
@@ -52,7 +52,7 @@
             </div>
 
             <!-- FOOTER: Below fixed -->
-            <ng-container *ngIf="fuseConfig.layout.footer.position === 'below-fixed'">
+            <ng-container *ngIf="mirapiConfig.layout.footer.position === 'below-fixed'">
                 <ng-container *ngTemplateOutlet="footer"></ng-container>
             </ng-container>
             <!-- / FOOTER: Below fixed -->
@@ -60,7 +60,7 @@
         </div>
 
         <!-- NAVBAR: Right -->
-        <ng-container *ngIf="fuseConfig.layout.navbar.position === 'right'">
+        <ng-container *ngIf="mirapiConfig.layout.navbar.position === 'right'">
             <ng-container *ngTemplateOutlet="rightNavbar"></ng-container>
         </ng-container>
         <!-- / NAVBAR: Right -->
@@ -68,7 +68,7 @@
     </div>
 
     <!-- FOOTER: Above -->
-    <ng-container *ngIf="fuseConfig.layout.footer.position === 'above'">
+    <ng-container *ngIf="mirapiConfig.layout.footer.position === 'above'">
         <ng-container *ngTemplateOutlet="footer"></ng-container>
     </ng-container>
     <!-- FOOTER: Above -->
@@ -76,7 +76,7 @@
 </div>
 
 <!-- SIDE PANEL -->
-<ng-container *ngIf="!fuseConfig.layout.sidepanel.hidden && fuseConfig.layout.sidepanel.position === 'right'">
+<ng-container *ngIf="!mirapiConfig.layout.sidepanel.hidden && mirapiConfig.layout.sidepanel.position === 'right'">
 
     <!-- PANEL CONTENT -->
 
@@ -84,9 +84,9 @@
 <!-- / SIDE PANEL -->
 
 <!-- QUICK PANEL -->
-<fuse-sidebar name="quickPanel" position="right" class="quick-panel">
+<mirapi-sidebar name="quickPanel" position="right" class="quick-panel">
     <quick-panel></quick-panel>
-</fuse-sidebar>
+</mirapi-sidebar>
 <!-- / QUICK PANEL -->
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
@@ -95,38 +95,38 @@
 
 <!-- TOOLBAR -->
 <ng-template #toolbar>
-    <toolbar *ngIf="!fuseConfig.layout.toolbar.hidden"
-             [ngClass]="fuseConfig.layout.toolbar.customBackgroundColor === true ? fuseConfig.layout.toolbar.position + ' ' + fuseConfig.layout.toolbar.background : fuseConfig.layout.toolbar.position">
+    <toolbar *ngIf="!mirapiConfig.layout.toolbar.hidden"
+             [ngClass]="mirapiConfig.layout.toolbar.customBackgroundColor === true ? mirapiConfig.layout.toolbar.position + ' ' + mirapiConfig.layout.toolbar.background : mirapiConfig.layout.toolbar.position">
     </toolbar>
 </ng-template>
 <!-- / TOOLBAR -->
 
 <!-- FOOTER -->
 <ng-template #footer>
-    <footer *ngIf="!fuseConfig.layout.footer.hidden"
-            [ngClass]="fuseConfig.layout.footer.customBackgroundColor === true ? fuseConfig.layout.footer.position + ' ' + fuseConfig.layout.footer.background : fuseConfig.layout.footer.position">
+    <footer *ngIf="!mirapiConfig.layout.footer.hidden"
+            [ngClass]="mirapiConfig.layout.footer.customBackgroundColor === true ? mirapiConfig.layout.footer.position + ' ' + mirapiConfig.layout.footer.background : mirapiConfig.layout.footer.position">
     </footer>
 </ng-template>
 <!-- / FOOTER -->
 
 <!-- LEFT NAVBAR -->
 <ng-template #leftNavbar>
-    <fuse-sidebar name="navbar" class="navbar-fuse-sidebar"
-                  [folded]="fuseConfig.layout.navbar.folded"
+    <mirapi-sidebar name="navbar" class="navbar-mirapi-sidebar"
+                  [folded]="mirapiConfig.layout.navbar.folded"
                   lockedOpen="gt-md"
-                  *ngIf="!fuseConfig.layout.navbar.hidden">
-        <navbar [variant]="fuseConfig.layout.navbar.variant" class="left-navbar"></navbar>
-    </fuse-sidebar>
+                  *ngIf="!mirapiConfig.layout.navbar.hidden">
+        <navbar [variant]="mirapiConfig.layout.navbar.variant" class="left-navbar"></navbar>
+    </mirapi-sidebar>
 </ng-template>
 <!-- / LEFT NAVBAR -->
 
 <!-- RIGHT NAVBAR -->
 <ng-template #rightNavbar>
-    <fuse-sidebar name="navbar" position="right" class="navbar-fuse-sidebar"
-                  [folded]="fuseConfig.layout.navbar.folded"
+    <mirapi-sidebar name="navbar" position="right" class="navbar-mirapi-sidebar"
+                  [folded]="mirapiConfig.layout.navbar.folded"
                   lockedOpen="gt-md"
-                  *ngIf="!fuseConfig.layout.navbar.hidden">
-        <navbar [variant]="fuseConfig.layout.navbar.variant" class="right-navbar"></navbar>
-    </fuse-sidebar>
+                  *ngIf="!mirapiConfig.layout.navbar.hidden">
+        <navbar [variant]="mirapiConfig.layout.navbar.variant" class="right-navbar"></navbar>
+    </mirapi-sidebar>
 </ng-template>
 <!-- / RIGHT NAVBAR -->

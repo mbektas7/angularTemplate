@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 import { AuthService } from 'app/shared/services/auth.service';
 import { InviteRegisterService } from '../invitedRegister/inviteRegister.service';
 import { Router } from '@angular/router';
 import { UserRegister } from 'app/shared/models/UserRegister';
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { AlertifyService } from 'app/shared/services/alertify.service';
     templateUrl: './register.component.html',
     styleUrls  : ['./register.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations : fuseAnimations
+    animations : mirapiAnimations
 })
 export class RegisterComponent implements OnInit, OnDestroy
 {
@@ -29,17 +29,17 @@ export class RegisterComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
     
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,
         private authService: AuthService,
         private inviteService: InviteRegisterService,
         private router: Router,
-        private fuseProgressBar: FuseProgressBarService,
+        private mirapiProgressBar: MirapiProgressBarService,
         private alertifyService:AlertifyService
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true
@@ -92,17 +92,18 @@ export class RegisterComponent implements OnInit, OnDestroy
 
 
  register(form: HTMLFormElement) {
-    this.fuseProgressBar.show();
+    this.mirapiProgressBar.show();
     this.isSubmitClicked = true;
     this.authService.register(this.userRegister)
     .subscribe(data => {   
         this.alertifyService.success('Hesabınız başarıyla oluşturuldu.');
-        this.router.navigateByUrl('/auth/register/mail-confirm');  
+        this.router.navigateByUrl('/auth/login');  
+        //this.router.navigateByUrl('/auth/register/mail-confirm');  
       },
        error => {
         this.alertifyService.error('Kayıt işlemi sırasında hata oluştu. \n' + error.error);
         this.isSubmitClicked = false;
-        this.fuseProgressBar.hide();
+        this.mirapiProgressBar.hide();
     });
   }
 

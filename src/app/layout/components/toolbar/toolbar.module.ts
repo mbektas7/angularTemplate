@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 
-import { FuseSearchBarModule, FuseShortcutsModule } from '@fuse/components';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSearchBarModule, MirapiShortcutsModule } from '@mirapi/components';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 
@@ -18,9 +18,9 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
         MatMenuModule,
         MatToolbarModule,
 
-        FuseSharedModule,
-        FuseSearchBarModule,
-        FuseShortcutsModule
+        MirapiSharedModule,
+        MirapiSearchBarModule,
+        MirapiShortcutsModule
     ],
     exports     : [
         ToolbarComponent

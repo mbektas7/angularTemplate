@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { string } from 'prop-types';
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 
 @Injectable()
 export class verifyForgotPasswordService implements Resolve<any>
@@ -23,7 +23,7 @@ export class verifyForgotPasswordService implements Resolve<any>
         private _httpClient: HttpRequestsService,
         private _alertifyService :AlertifyService,
         private router: Router,
-        private _progressBarService :FuseProgressBarService
+        private _progressBarService :MirapiProgressBarService
     )
     {
         // Set the defaults

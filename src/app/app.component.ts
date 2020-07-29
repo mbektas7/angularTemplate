@@ -5,11 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
-import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
+import { MirapiSidebarService } from '@mirapi/components/sidebar/sidebar.service';
+import { MirapiSplashScreenService } from '@mirapi/services/splash-screen.service';
+import { MirapiTranslationLoaderService } from '@mirapi/services/translation-loader.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
@@ -22,7 +22,7 @@ import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
-    fuseConfig: any;
+    mirapiConfig: any;
     navigation: any;
 
     // Private
@@ -32,21 +32,21 @@ export class AppComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {DOCUMENT} document
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseNavigationService} _fuseNavigationService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {FuseSplashScreenService} _fuseSplashScreenService
-     * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
+     * @param {MirapiConfigService} _mirapiConfigService
+     * @param {MirapiNavigationService} _mirapiNavigationService
+     * @param {MirapiSidebarService} _mirapiSidebarService
+     * @param {MirapiSplashScreenService} _mirapiSplashScreenService
+     * @param {MirapiTranslationLoaderService} _mirapiTranslationLoaderService
      * @param {Platform} _platform
      * @param {TranslateService} _translateService
      */
     constructor(
         @Inject(DOCUMENT) private document: any,
-        private _fuseConfigService: FuseConfigService,
-        private _fuseNavigationService: FuseNavigationService,
-        private _fuseSidebarService: FuseSidebarService,
-        private _fuseSplashScreenService: FuseSplashScreenService,
-        private _fuseTranslationLoaderService: FuseTranslationLoaderService,
+        private _mirapiConfigService: MirapiConfigService,
+        private _mirapiNavigationService: MirapiNavigationService,
+        private _mirapiSidebarService: MirapiSidebarService,
+        private _mirapiSplashScreenService: MirapiSplashScreenService,
+        private _mirapiTranslationLoaderService: MirapiTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform
     )
@@ -55,10 +55,10 @@ export class AppComponent implements OnInit, OnDestroy
         this.navigation = navigation;
 
         // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
+        this._mirapiNavigationService.register('main', this.navigation);
 
         // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
+        this._mirapiNavigationService.setCurrentNavigation('main');
 
         // Add languages
         this._translateService.addLangs(['en', 'tr']);
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy
         this._translateService.setDefaultLang('en');
 
         // Set the navigation translations
-        this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
+        this._mirapiTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
 
         // Use a language
         this._translateService.use('en');
@@ -125,14 +125,14 @@ export class AppComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to config changes
-        this._fuseConfigService.config
+        this._mirapiConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
 
-                this.fuseConfig = config;
+                this.mirapiConfig = config;
 
                 // Boxed
-                if ( this.fuseConfig.layout.width === 'boxed' )
+                if ( this.mirapiConfig.layout.width === 'boxed' )
                 {
                     this.document.body.classList.add('boxed');
                 }
@@ -152,7 +152,7 @@ export class AppComponent implements OnInit, OnDestroy
                     }
                 }
 
-                this.document.body.classList.add(this.fuseConfig.colorTheme);
+                this.document.body.classList.add(this.mirapiConfig.colorTheme);
             });
     }
 
@@ -177,6 +177,6 @@ export class AppComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._mirapiSidebarService.getSidebar(key).toggleOpen();
     }
 }

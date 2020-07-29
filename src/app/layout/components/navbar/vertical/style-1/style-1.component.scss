@@ -1,8 +1,8 @@
-@import "src/@fuse/scss/fuse";
+@import "src/@mirapi/scss/mirapi";
 
-fuse-sidebar {
+mirapi-sidebar {
 
-    &.navbar-fuse-sidebar {
+    &.navbar-mirapi-sidebar {
         overflow: hidden;
 
         &.folded:not(.unfolded) {

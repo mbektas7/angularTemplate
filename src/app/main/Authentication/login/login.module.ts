@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
-import { FuseProgressBarModule } from '@fuse/components';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiProgressBarModule } from '@mirapi/components';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { LoginComponent } from 'app/main/authentication/login/login.component';
 import { AlertifyService } from 'app/shared/services/alertify.service';
@@ -32,7 +32,7 @@ const routes = [
     ],
     imports :[
         RouterModule.forChild(routes),
-        FuseProgressBarModule,
+        MirapiProgressBarModule,
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -40,7 +40,7 @@ const routes = [
         MatIconModule,
         RecaptchaModule,
         RecaptchaFormsModule,
-        FuseSharedModule,
+        MirapiSharedModule,
         BotDetectCaptchaModule,
         FormsModule,                               // <========== Add this line!
         ReactiveFormsModule 

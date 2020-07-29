@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 import { MailConfirmService } from './mail-confirm.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -11,20 +11,20 @@ import { Subject } from 'rxjs';
     templateUrl  : './mail-confirm.component.html',
     styleUrls    : ['./mail-confirm.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations   : mirapiAnimations
 })
 export class MailConfirmComponent
 {
     private _unsubscribeAll: Subject<any>;
     isConfirmed : boolean;
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _mailconfirmservice : MailConfirmService
     )
     {
         this.isConfirmed=false;
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

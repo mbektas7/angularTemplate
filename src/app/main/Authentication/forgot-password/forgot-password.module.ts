@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { ForgotPasswordComponent } from 'app/main/authentication/forgot-password/forgot-password.component';
 
@@ -29,7 +29,7 @@ const routes = [
         MatIconModule,
         MatInputModule,
 
-        FuseSharedModule,
+        MirapiSharedModule,
     ]
 })
 export class ForgotPasswordModule

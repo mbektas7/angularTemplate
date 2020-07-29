@@ -1,0 +1,14 @@
+@mixin mirapi-material-color-picker-theme($theme) {
+
+    $background: map-get($theme, background);
+
+    .mirapi-material-color-picker-menu {
+
+        .mat-menu-content {
+
+            .views {
+                background: #303030;
+            }
+        }
+    }
+}

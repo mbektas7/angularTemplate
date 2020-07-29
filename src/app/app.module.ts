@@ -11,11 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
-import { FuseModule } from '@fuse/fuse.module';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
+import { MirapiModule } from '@mirapi/mirapi.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
+import { MirapiProgressBarModule, MirapiSidebarModule, MirapiThemeOptionsModule } from '@mirapi/components';
 
-import { fuseConfig } from 'app/fuse-config';
+import { mirapiConfig } from 'app/mirapi-config';
 import {enableProdMode} from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -31,6 +31,8 @@ import {QuicklinkStrategy, QuicklinkModule} from 'ngx-quicklink';
 
 import { LoginGuard } from './shared/guards/login.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
+import { AdminModule } from './main/admin/admin.module';
 
 const appRoutes: Routes = [
    
@@ -65,8 +67,13 @@ const appRoutes: Routes = [
         path        : 'profile',
         pathMatch: 'full',
         loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
-    }
-    ,
+    },
+    {
+        path        : 'admin',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
+    },
+
     {
         path      : 'password',
         pathMatch: 'full',
@@ -74,11 +81,11 @@ const appRoutes: Routes = [
         canActivate: [ LoginGuard]
 
     },
-    {
-        path    : '',
-        pathMatch: 'full',
-        redirectTo: 'dashboard'
-    },
+    // {
+    //     path    : '',
+    //     pathMatch: 'full',
+    //     redirectTo: 'dashboard'
+    // },
     {
         path      : '**',
         redirectTo: '../index.html',
@@ -105,22 +112,25 @@ const appRoutes: Routes = [
         MatMomentDateModule,
         MatButtonModule,
         MatIconModule,
-        FuseModule.forRoot(fuseConfig),
-        FuseProgressBarModule,
-        FuseSharedModule,
-        FuseSidebarModule,
-        FuseThemeOptionsModule,
+        MirapiModule.forRoot(mirapiConfig),
+        MirapiProgressBarModule,
+        MirapiSharedModule,
+        MirapiSidebarModule,
+        MirapiThemeOptionsModule,
                  
         
 
         // App modules
-        LayoutModule
+        LayoutModule,
+        AdminModule
+        
     ],
     bootstrap   : [
         AppComponent
     ],
     providers: 
     [AlertifyService,
+    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
     LoginGuard, {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

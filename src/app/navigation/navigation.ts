@@ -1,6 +1,6 @@
-import { FuseNavigation } from '@fuse/types';
+import { MirapiNavigation } from '@mirapi/types';
 
-export const navigation: FuseNavigation[] = [
+export const navigation: MirapiNavigation[] = [
     {
         id       : 'applications',
         title    : 'Anasayfa',
@@ -21,6 +21,30 @@ export const navigation: FuseNavigation[] = [
                     bg       : '#F44336',
                     fg       : '#FFFFFF'
                 }
+            }
+        ]
+    },
+    {
+        id       : 'admin',
+        title    : 'Yönetim',
+        url      : '/admin',
+        translate: 'NAV.ADMIN',
+        type     : 'group',
+        icon     : 'settings',
+        children : [
+            {
+                id       : 'marka',
+                title    : 'Markalar',
+                type     : 'item',
+                icon     : 'bookmark_border',
+                url      : '/brands',
+            },
+            {
+                id       : 'arac',
+                title    : 'Araçlar',
+                type     : 'item',
+                icon     : 'bookmark_border',
+                url      : '/cars',
             }
         ]
     }

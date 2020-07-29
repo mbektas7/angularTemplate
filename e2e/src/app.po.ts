@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class FusePage {
+export class MirapiPage {
     navigateTo(): any {
         return browser.get('/');
     }

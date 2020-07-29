@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { PasswordComponent } from './password.component';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseWidgetModule } from '@fuse/components';
+import { MirapiSharedModule } from '@mirapi/shared.module';
+import { MirapiWidgetModule } from '@mirapi/components';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const routes = [
@@ -32,8 +32,8 @@ const routes = [
     MatIconModule,
     MatSelectModule,
     MatOptionModule,
-    FuseSharedModule,
-    FuseWidgetModule,
+    MirapiSharedModule,
+    MirapiWidgetModule,
     FormsModule,
     ReactiveFormsModule,
     MatTabsModule                        

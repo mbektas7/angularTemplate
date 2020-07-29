@@ -3,8 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 
 import { verifyForgotPasswordService } from './verifyForgotPassword.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
     templateUrl: './verifyForgotPassword.component.html',
     styleUrls  : ['./verifyForgotPassword.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations : fuseAnimations
+    animations : mirapiAnimations
 })
 export class verifyForgotPasswordComponent implements OnInit, OnDestroy
 {
@@ -25,14 +25,14 @@ export class verifyForgotPasswordComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _verifyForgotPasswordService :verifyForgotPasswordService,
         private alertiyfyService:AlertifyService,
         private router:Router
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

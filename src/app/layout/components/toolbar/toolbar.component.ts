@@ -4,12 +4,13 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { MirapiSidebarService } from '@mirapi/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { AuthService } from 'app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { ProfileService } from 'app/main/profile/profile.service';
 
 @Component({
     selector     : 'toolbar',
@@ -31,19 +32,25 @@ export class ToolbarComponent implements OnInit, OnDestroy
     // Private
     private _unsubscribeAll: Subject<any>;
 
+    TOKEN_KEY = 'token';
+
+    name = ''
+
+
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {MirapiConfigService} _mirapiConfigService
+     * @param {MirapiSidebarService} _mirapiSidebarService
      * @param {TranslateService} _translateService
      */
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService,
+        private _mirapiConfigService: MirapiConfigService,
+        private _mirapiSidebarService: MirapiSidebarService,
         private _translateService: TranslateService,
         private authService: AuthService,
         private router: Router,
+        private profileService: ProfileService,
     )
     {
         // Set the defaults
@@ -89,7 +96,13 @@ export class ToolbarComponent implements OnInit, OnDestroy
         ];
 
         this.navigation = navigation;
-
+        this.authService.getTokenObservable().subscribe((token) => {
+            if (this.authService.isTokenValid()){
+                this.setProfileValues();
+              
+    
+        }
+        });
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -103,8 +116,12 @@ export class ToolbarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        if (this.authService.isTokenValid()){
+            this.setProfileValues();
+          }
+
         // Subscribe to the config changes
-        this._fuseConfigService.config
+        this._mirapiConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
                 this.horizontalNavbar = settings.layout.navbar.position === 'top';
@@ -137,7 +154,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      */
     toggleSidebarOpen(key): void
     {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._mirapiSidebarService.getSidebar(key).toggleOpen();
     }
 
     /**
@@ -171,4 +188,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         await this.router.navigateByUrl('auth/login');
         location.reload();
        }
+
+       setProfileValues(){
+
+        this.name = this.authService.getCurrentUserName();
+      }
 }

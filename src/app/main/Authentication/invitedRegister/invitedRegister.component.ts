@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 import { InviteRegisterService } from './inviteRegister.service';
 
 import { Router } from '@angular/router';
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { AlertifyService } from 'app/shared/services/alertify.service';
     templateUrl: './invitedRegister.component.html',
     styleUrls: ['./invitedRegister.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    animations: mirapiAnimations
 })
 export class InvitedRegisterComponent implements OnInit, OnDestroy {
     user: any;
@@ -23,14 +23,14 @@ export class InvitedRegisterComponent implements OnInit, OnDestroy {
     isSubmitClicked = false;
     private _unsubscribeAll: Subject<any>;
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _inviteRegisterService: InviteRegisterService,
         private router: Router,
-        private progressBar: FuseProgressBarService,
+        private progressBar: MirapiProgressBarService,
         private alertifyService:AlertifyService
     ) {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar: {
                     hidden: true

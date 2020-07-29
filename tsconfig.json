@@ -12,8 +12,8 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "paths": {
-            "@fuse": [
-                "@fuse/"
+            "@mirapi": [
+                "@mirapi/"
             ]
         },
         "target": "es2015",

@@ -6,7 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { AlertifyService } from './alertify.service';
 import { UserRegister} from '../models/UserRegister';
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 import { environment } from 'environments/environment';
 import { tap, share, map, catchError } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -26,7 +26,7 @@ export class AuthService {
     private httpClient: HttpClient,
     private router: Router,
     private alertifyService: AlertifyService,
-    private _progressBarService: FuseProgressBarService,
+    private _progressBarService: MirapiProgressBarService,
   ) {
     this.jwtTokenSubject = new Subject();
   }
@@ -79,6 +79,7 @@ export class AuthService {
       return !isExpired;
     }
     isUserLoggedIn(){
+      console.log("user kontrol");
      return this.httpClient.post(environment.rootPath + `Token/isUserLoggedIn`, null); 
     }
     deleteRefreshToken(){

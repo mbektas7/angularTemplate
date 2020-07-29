@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { MirapiConfigService } from '@mirapi/services/config.service';
+import { mirapiAnimations } from '@mirapi/animations';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
     templateUrl  : './forgot-password.component.html',
     styleUrls    : ['./forgot-password.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations   : mirapiAnimations
 })
 export class ForgotPasswordComponent implements OnInit
 {
@@ -21,7 +21,7 @@ export class ForgotPasswordComponent implements OnInit
     user: any = {};
     
     constructor(
-        private _fuseConfigService: FuseConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,
         private _httpService: HttpRequestsService,
         private _alertify: AlertifyService,
@@ -29,7 +29,7 @@ export class ForgotPasswordComponent implements OnInit
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true

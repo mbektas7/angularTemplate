@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 import { ProfileService } from 'app/main/profile/profile.service';
 import { ProfileComponent } from 'app/main/profile/profile.component';
 import { ProfileAboutComponent } from 'app/main/profile/tabs/about/about.component';
@@ -39,7 +39,7 @@ const routes = [
         MatFormFieldModule,
         MatTabsModule,
         MatTabsModule,
-        FuseSharedModule,
+        MirapiSharedModule,
         MatInputModule,
         MatChipsModule,
         MatDatepickerModule,

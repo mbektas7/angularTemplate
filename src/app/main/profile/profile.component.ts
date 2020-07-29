@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 
-import { fuseAnimations } from '@fuse/animations';
+import { mirapiAnimations } from '@mirapi/animations';
 import { ProfileService } from './profile.service';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AuthService } from 'app/shared/services/auth.service';
@@ -14,7 +14,7 @@ import { AlertifyService } from 'app/shared/services/alertify.service';
     templateUrl  : './profile.component.html',
     styleUrls    : ['./profile.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations   : mirapiAnimations
 })
 export class ProfileComponent implements OnInit
 {

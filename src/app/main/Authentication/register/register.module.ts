@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { FuseSharedModule } from '@fuse/shared.module';
+import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { RegisterComponent } from 'app/main/authentication/register/register.component';
 import { MailConfirmComponent } from './mail-confirm/mail-confirm.component';
@@ -55,7 +55,7 @@ const routes = [
         MatTabsModule,
         MatButtonToggleModule,
 
-        FuseSharedModule
+        MirapiSharedModule
         
     ]
 })

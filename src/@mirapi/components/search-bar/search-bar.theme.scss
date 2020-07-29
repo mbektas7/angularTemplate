@@ -1,0 +1,11 @@
+@mixin mirapi-search-bar-theme($theme) {
+
+    $background: map-get($theme, background);
+
+    .mirapi-search-bar {
+
+        &.expanded {
+            background-color: map-get($background, background);
+        }
+    }
+}
