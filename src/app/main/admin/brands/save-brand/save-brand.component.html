@@ -1,0 +1,37 @@
+<h1 mat-dialog-title *ngIf="data.state==='new'">Marka Ekle</h1>
+<h1 mat-dialog-title *ngIf="data.id" >Marka Düzenle</h1>
+<div>
+<div mat-dialog-content>
+
+        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                <mat-label>Marka</mat-label>
+            <input
+            matInput
+            name="name"
+            placeholder="Bir marka giriniz"
+            required
+            [(ngModel)]="data.name"
+            />
+</mat-form-field>
+
+<!-- <mat-form-field *ngIf="data.state==='update'" appearance="outline" floatLabel="always"  class="w-80-p">
+        <mat-label>Durum</mat-label>
+        <mat-select placeholder="Durum"  [(ngModel)]="data.isDeleted" >
+                        <mat-option  [value]="false">
+                          Aktif
+                        </mat-option>
+                        <mat-option  [value]="true">
+                              Pasif
+                            </mat-option>
+                      </mat-select>
+</mat-form-field> -->
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">iptal</button>
+        <button mat-raised-button color="warn" *ngIf="data.id"  (click)="deleteContactType(data)">Sil</button>
+        <button mat-raised-button color="accent" *ngIf="data.name" [mat-dialog-close]="data">Kaydet</button>
+        
+    </div>
+
+</div>

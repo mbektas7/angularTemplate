@@ -33,6 +33,7 @@ import { LoginGuard } from './shared/guards/login.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
+import { QuestionsModule } from './main/questions/questions.module';
 
 const appRoutes: Routes = [
    
@@ -90,7 +91,13 @@ const appRoutes: Routes = [
         path      : '**',
         redirectTo: '../index.html',
         
-    }
+    },
+    {
+        path        : 'questions',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule),
+        canActivate: [ LoginGuard]
+    },
         
 ];
 
@@ -122,7 +129,8 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        AdminModule
+        AdminModule,
+        QuestionsModule
         
     ],
     bootstrap   : [

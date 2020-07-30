@@ -1,9 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AdminComponent } from './admin.component';
+
+import { QuestionsComponent } from './questions.component';
 import { LoginGuard } from 'app/shared/guards/login.guard';
-
-
 import { RouterModule } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,32 +25,16 @@ import { MirapiSharedModule } from '@mirapi/shared.module';
 import { MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
-import { BrandsComponent } from './brands/brands.component';
-import { CarsComponent } from './cars/cars.component';
-import { SaveBrandComponent } from './brands/save-brand/save-brand.component';
-import { SaveCarComponent } from './cars/save-car/save-car.component';
-
+import { NgModule } from '@angular/core';
 
 
 const routes = [
   {
       path     : '',
-      component: AdminComponent,
+      component: QuestionsComponent,
       canActivate: [LoginGuard]
-  },
-  {
-    path     : 'brands',
-    component: BrandsComponent,
-    canActivate: [LoginGuard]
-  },
-  {
-    path     : 'cars',
-    component: CarsComponent,
-    canActivate: [LoginGuard]
-
   }
   ];
-
 
 
 @NgModule({
@@ -85,16 +66,13 @@ const routes = [
     MatSelectModule
   ],
   declarations: [
-    AdminComponent,
-    BrandsComponent,
-    CarsComponent,
-    SaveBrandComponent,
-    SaveCarComponent,
+    QuestionsComponent,
+
     
   ],
     entryComponents: [
-    SaveBrandComponent,
-    SaveCarComponent
+
   ]
+
 })
-export class AdminModule { }
+export class QuestionsModule { }

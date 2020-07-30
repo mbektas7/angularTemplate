@@ -4,8 +4,8 @@ export const locale = {
         'NAV': {
             'APPLICATIONS': 'Programlar',
             'ADMIN': 'Yönetim',
-            'SAMPLE'        : {
-                'TITLE': 'Örnek',
+            'QUESTIONS'        : {
+                'TITLE': 'Soru-Cevap',
                 'BADGE': '15'
             }
         }

@@ -23,11 +23,11 @@ export class AdminService {
     }
     
     
-    addItem(path,contactType):Promise<any>{
+    addItem(path,data):Promise<any>{
     
       return new Promise((resolve,reject)=>{
     
-          this._httpClient.post(path,contactType).subscribe((response:any)=>{
+          this._httpClient.post(path,data).subscribe((response:any)=>{
               resolve(response['data']);
               this._alertifyService.success('İşlem Başarılı.');
           },
@@ -37,11 +37,10 @@ export class AdminService {
       });
     }
     
-    updateData(path,contactType):Promise<any>{
+    updateData(path,data):Promise<any>{
     
       return new Promise((resolve,reject)=>{
-          let data={name:contactType.name,url:contactType.url};
-          this._httpClient.put(path+contactType.id,data).subscribe((response:any)=>{
+          this._httpClient.put(path+data.id,data).subscribe((response:any)=>{
               resolve(response['data']);
               this._alertifyService.success('İşlem başarılı.');
           },
@@ -51,20 +50,7 @@ export class AdminService {
           );
       });
     }
-    
-    updateDataShift(path,shift):Promise<any>{
-    
-      return new Promise((resolve,reject)=>{
-          this._httpClient.put(path+shift.id,shift).subscribe((response:any)=>{
-              resolve(response['data']);
-              this._alertifyService.success('İşlem başarılı.');
-          },
-          error => {
-            this._alertifyService.error('İşlem sırasında hata oluştu.');
-          }
-          );
-      });
-    }
+
     
     deleteData(path,id):Promise<any>{
     
