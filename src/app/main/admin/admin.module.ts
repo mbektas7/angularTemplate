@@ -32,6 +32,8 @@ import { BrandsComponent } from './brands/brands.component';
 import { CarsComponent } from './cars/cars.component';
 import { SaveBrandComponent } from './brands/save-brand/save-brand.component';
 import { SaveCarComponent } from './cars/save-car/save-car.component';
+import { PostsComponent } from './posts/posts.component';
+import { SavePostComponent } from './posts/save-post/save-post.component';
 
 
 
@@ -49,6 +51,18 @@ const routes = [
   {
     path     : 'cars',
     component: CarsComponent,
+    canActivate: [LoginGuard]
+
+  },
+  {
+    path     : 'posts',
+    component: PostsComponent,
+    canActivate: [LoginGuard]
+
+  },
+  {
+    path     : 'new/post',
+    component: SavePostComponent,
     canActivate: [LoginGuard]
 
   }
@@ -90,6 +104,8 @@ const routes = [
     CarsComponent,
     SaveBrandComponent,
     SaveCarComponent,
+    PostsComponent,
+    SavePostComponent
     
   ],
     entryComponents: [

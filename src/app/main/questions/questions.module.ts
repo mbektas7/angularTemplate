@@ -26,6 +26,7 @@ import { MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
+import { MatGridListModule, MatCardModule } from '@angular/material';
 
 
 const routes = [
@@ -63,7 +64,10 @@ const routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatGridListModule,
+    MatCardModule
+    
   ],
   declarations: [
     QuestionsComponent,

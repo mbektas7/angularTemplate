@@ -45,6 +45,13 @@ export const navigation: MirapiNavigation[] = [
                 type     : 'item',
                 icon     : 'bookmark_border',
                 url      : '/cars',
+            },
+            {
+                id       : 'post',
+                title    : 'Gönderiler',
+                type     : 'item',
+                icon     : 'bookmark_border',
+                url      : '/posts',
             }
         ]
     }
