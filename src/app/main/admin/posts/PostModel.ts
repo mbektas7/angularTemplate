@@ -1,3 +1,5 @@
+import { NumberValueAccessor } from '@angular/forms';
+
 export class PostModel {
     id: string;
     title : string;
@@ -6,4 +8,7 @@ export class PostModel {
     userId : String;
     parentId : String;
     isAnswered : boolean;
+    answer : number;
+    vote : number;
+    view : number;
 }
