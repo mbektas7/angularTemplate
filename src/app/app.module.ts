@@ -65,6 +65,12 @@ const appRoutes: Routes = [
         canActivate: [ LoginGuard]
     },
     {
+        path        : 'questions',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule),
+        canActivate: [ LoginGuard]
+    },
+    {
         path        : 'profile',
         pathMatch: 'full',
         loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
@@ -82,23 +88,16 @@ const appRoutes: Routes = [
         canActivate: [ LoginGuard]
 
     },
-    // {
-    //     path    : '',
-    //     pathMatch: 'full',
-    //     redirectTo: 'dashboard'
-    // },
+    {
+        path    : '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard'
+    },
     {
         path      : '**',
         redirectTo: '../index.html',
         
-    },
-    {
-        path        : 'questions',
-        pathMatch: 'full',
-        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule),
-        canActivate: [ LoginGuard]
-    },
-        
+    }        
 ];
 
 
@@ -138,7 +137,7 @@ const appRoutes: Routes = [
     ],
     providers: 
     [AlertifyService,
-    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
     LoginGuard, {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

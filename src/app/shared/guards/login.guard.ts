@@ -10,20 +10,31 @@ export class LoginGuard implements CanActivate {
     constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router, private httpRequestService: HttpRequestsService){}
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
                 
-            try {
-                if (this.authService.isTokenValid()) {
-                    console.log("user logged in");
+        try {
+                
+            const result: any = await this.httpRequestService.get(`Token/isAuthenticatedLoginThatPage?pageType=${route.data.pageType}`).toPromise();             
+            switch (route.data.pageType) {
+                case PageClaims.password:
                     return true;
-                }
+                case PageClaims.profile:
+                    return true;
+                case PageClaims.calendar:
+                    return true;
+                default:
+                    const logged = this.authService.isTokenValid();
+                    if (result.data === true){
+                        return true;
+                    }
                 else {
-                    console.log("user not logged in");
                     this.router.navigate(['/auth/login']);
-
-                }
-            } catch (error) {
-                this.router.navigate(['/auth/login']);
-                return false;
+    
+                    return false;
+                 }
             }
+        } catch (error) {
+            this.router.navigate(['/auth/login']);
+            return false;
+        }
      
     }
 

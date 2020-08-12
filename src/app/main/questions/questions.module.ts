@@ -27,14 +27,25 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
 import { MatGridListModule, MatCardModule } from '@angular/material';
+import { QuestionDetailComponent } from './question-detail/question-detail.component';
+import { QuestionsService } from './questions.service';
+import { QuestionDetailService } from './question-detail/question-detail.service';
 
 
 const routes = [
   {
       path     : '',
+      pathMatch: 'full',
       component: QuestionsComponent,
-      canActivate: [LoginGuard]
+  },
+  {
+    path     : 'questions/:id',
+    component: QuestionDetailComponent,
+    pathMatch: 'full',
+    resolve: {
+      data: QuestionDetailService
   }
+}
   ];
 
 
@@ -69,14 +80,13 @@ const routes = [
     MatCardModule
     
   ],
+  providers :[ QuestionsService , QuestionDetailService],
   declarations: [
     QuestionsComponent,
-
-    
+    QuestionDetailComponent
+ 
   ],
-    entryComponents: [
-
-  ]
-
+    entryComponents: [ ]
+ 
 })
 export class QuestionsModule { }

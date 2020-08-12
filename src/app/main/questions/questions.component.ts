@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdminService } from '../admin/admin.service';
 import { PostModel } from '../admin/posts/PostModel';
+import { mirapiAnimations } from '@mirapi/animations';
 
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.scss']
+  styleUrls: ['./questions.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: mirapiAnimations
 })
 
 

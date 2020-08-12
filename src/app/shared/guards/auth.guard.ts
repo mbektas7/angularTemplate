@@ -26,11 +26,10 @@ export class AuthGuard implements CanActivate  {
         } catch (error) {
             return true;
         }
-    
+
+}
+  
+}
+
         
-      
-  
-  
-}
-  
-}
+    
