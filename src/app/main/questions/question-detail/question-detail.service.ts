@@ -43,9 +43,9 @@ getPost(): Promise<any> {
       this._httpClient
           .get('post/' + this.routeParams.id)
           .subscribe((response: any) => {
-              this.post = response;
+              this.post = response["data"];
               this.onPostChanged.next(this.post);
-              resolve(response);
+              resolve(response["data"]);
           }, reject);
   });
 }

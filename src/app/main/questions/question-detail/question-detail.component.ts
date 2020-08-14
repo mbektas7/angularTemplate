@@ -16,7 +16,8 @@ import { QuestionDetailService } from './question-detail.service';
 export class QuestionDetailComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
-  post : PostModel
+  post : any
+  comments : any[]
   constructor(private questionService : QuestionDetailService) {
 
     this._unsubscribeAll = new Subject();
@@ -28,9 +29,15 @@ export class QuestionDetailComponent implements OnInit {
        .subscribe(data => {
         this.post = data;
 
-         console.log(this.post);
+        this.comments = [ {'username':'Miraç', 'time':'Bugün', 'message' : 'Ben de bu konuda bilgi almak istiyorum.'}]
+        this.post.comments = this.comments;
+
+        console.log(this.post);
      });
   }
+
+
+
 
 
 

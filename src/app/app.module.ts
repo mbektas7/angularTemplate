@@ -77,6 +77,7 @@ const appRoutes: Routes = [
     },
     {
         path        : 'admin',
+        canActivate: [ LoginGuard],
         pathMatch: 'full',
         loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
     },
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
     {
         path    : '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'dashboard',
+        canActivate: [ LoginGuard]
     },
     {
         path      : '**',
