@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     hmr       : false,
-    rootPath:'https://localhost:44315/api/'
+    rootPath:'https://localhost:44315/api/',
+    apiUrl:'https://localhost:44315/api/'
 };
 
 /*

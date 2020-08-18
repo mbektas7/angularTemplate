@@ -34,7 +34,9 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
 import { QuestionsModule } from './main/questions/questions.module';
-import { AuthService } from './shared/services/auth.service';
+import { appInitializer, JwtInterceptor, ErrorInterceptor } from 'helpers';
+import { AuthenticationService } from './shared/services/authentication.service';
+
 
 const appRoutes: Routes = [
    
@@ -140,11 +142,15 @@ const appRoutes: Routes = [
     ],
     providers: 
     [AlertifyService,
-        {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
-    LoginGuard, {provide: LocationStrategy, useClass: HashLocationStrategy},
+    LoginGuard, 
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+
   
        ]
 })

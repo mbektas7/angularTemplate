@@ -19,6 +19,8 @@ export class UserService {
       const userId = this.authService.getCurrentUserId();
       return this.httpRequestService.post('Users/' + userId + '/getUserCompanies', null);
   }
+
+
   async getUsersByIds(users: Array<string>){
       let result = await this.httpRequestService.getList('Users');
       result = result.filter((user) => users.includes(user.id));
