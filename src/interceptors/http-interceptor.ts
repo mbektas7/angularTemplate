@@ -28,8 +28,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-
-  
         this.progressBar.show();
         const token = this.authService.getToken();
         const headerSettings = {

@@ -24,7 +24,6 @@ const routes = [
     {
         path: '',
         component: ProfileComponent,
-        canActivate: [LoginGuard],
         data: {pageType: PageClaims.profile}
 
     }

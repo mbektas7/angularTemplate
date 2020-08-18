@@ -4,9 +4,9 @@ export class PostModel {
     id: string;
     title : string;
     message : string;
-    carId : String;
-    userId : String;
-    parentId : String;
+    carId : string;
+    userId : string;
+    parentId : string;
     isAnswered : boolean;
     answer : number;
     vote : number;

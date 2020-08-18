@@ -51,6 +51,7 @@ export class HttpRequestsService {
   }
 
   put(path: string, data: any): Observable<any[]> {
+
     return this.httpClient
       .put<any[]>(environment.rootPath + path, data);
   }
@@ -91,8 +92,8 @@ export class HttpRequestsService {
       .get<any[]>(environment.rootPath + path)
       .map((response: any[]) => {
         return <any[]>response;
-      });
-      
+      })
+      .catch(this.aaa);
   }
 
   getNew(path:string){
@@ -107,6 +108,15 @@ export class HttpRequestsService {
         });
   }
 
+  aaa(error: Response) {
+
+    if (error.status === 401) {
+    } else {
+
+    }
+    return Observable.throw(error.status);
+
+  }
 
   getList(path): Promise<any> {
 

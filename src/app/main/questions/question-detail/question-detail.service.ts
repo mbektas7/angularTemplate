@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { HttpClient } from '@angular/common/http';
 import { PostModel } from 'app/main/admin/posts/PostModel';
+import { SaveAnswer } from 'app/main/admin/posts/saveAnswer';
 
 @Injectable()
 export class QuestionDetailService   implements Resolve<any>{
@@ -49,5 +50,16 @@ getPost(): Promise<any> {
           }, reject);
   });
 }
+
+addAnswer(data : SaveAnswer): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .post('post/addAnswer',data)
+            .subscribe((response: any) => {
+                this.getPost();
+                resolve(response["data"]);
+            }, reject);
+    });
+  }
 
 }

@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
 import { QuestionsModule } from './main/questions/questions.module';
+import { AuthService } from './shared/services/auth.service';
 
 const appRoutes: Routes = [
    

@@ -54,23 +54,23 @@
 
              <footer class="" fxLayout="column" fxLayoutAlign="start start">
                 <div *ngIf="post.comments" class="comment-count" fxLayout="row" fxLayoutAlign="start center">
-                    {{post.comments.length}} comments
+                    {{post.answers.length}} comments
                     <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
                 </div>
 
-                <div class="comment" fxLayout="row" fxFlexFill *ngFor="let comment of post.comments">
+                <div class="comment" fxLayout="row" fxFlexFill *ngFor="let answer of post.answers">
                     <img src="assets/images/avatars/alice.jpg" class="avatar"/>
 
                     <div fxLayout="column" fxFlex>
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <span class="username">{{comment.username}}</span>
-                            <span class="time">{{comment.time}}</span>
+                            <span class="username">{{answer.user.name}}</span>
+                            <span class="time">{{answer.CreationDate}}</span>
                         </div>
                         <div class="message">
-                           {{comment.message}}
+                           {{answer.message}}
                         </div>
                         <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
-                            <a href="#" class="reply-button">Reply</a>
+                            <a href="#" class="reply-button">Cevapla</a>
                             <mat-icon fxFlex class="report-button s-16">flag</mat-icon>
                         </div>
                     </div>
@@ -80,9 +80,9 @@
                     <img src="assets/images/avatars/Velazquez.jpg" class="avatar"/>
 
                     <form fxFlex>
-                        <textarea placeholder="Add a comment..."></textarea>
-                        <button mat-raised-button color="accent" class="post-comment-button" aria-label="Post Comment">
-                            Post Comment
+                        <textarea placeholder="Add a comment..." [(ngModel)]="answer" name="answer"></textarea>
+                        <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
+                            Cevap Ver
                         </button>
                     </form>
                 </div>

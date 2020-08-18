@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit
     }
 
     ngOnInit(): void {
-        this.name = this.authService.getCurrentUserName();
+       // this.name = this.authService.getCurrentUserName();
     }
 
 
