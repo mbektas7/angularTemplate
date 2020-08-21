@@ -12,6 +12,7 @@ import { PageClaims } from 'enums/pageTypes.enum';
 import { environment } from 'environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector   : 'login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit
     /**
      * Constructor
      *
-     * @param {MirapiConfigService} _mirapiConfigService
+     * @param {FuseConfigService} _fuseConfigService
      * @param {FormBuilder} _formBuilder
      * 
      * 
@@ -41,20 +42,24 @@ export class LoginComponent implements OnInit
     captchaId = '';
     private jwtHelper: JwtHelperService
 
+    loading = false;
+    submitted = false;
+    returnUrl: string;
+    error = '';
+
     constructor(
-        private _mirapiConfigService: MirapiConfigService,
+        private _fuseConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,
         private authService: AuthService,
         private alertifyService: AlertifyService,
         private router: Router,
         private domSanitizer: DomSanitizer,
         private progressBarService: MirapiProgressBarService,
-
     )
     {   
-        
+       
         // Configure the layout
-        this._mirapiConfigService.config = {
+        this._fuseConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true
@@ -87,45 +92,45 @@ export class LoginComponent implements OnInit
             password: ['', Validators.required],
         });
     }
-     login() {
-         this.progressBarService.show();
-        this.disableLoginButton();
-        this.loginUser = Object.assign({}, this.loginForm.value);
+    login() {
+        this.progressBarService.show();
+       this.disableLoginButton();
+       this.loginUser = Object.assign({}, this.loginForm.value);
 
-        this.authService.loginV2(this.loginUser, '')
-        .subscribe(async data => {
-            if (data){
-                this.authService.saveToken(data);
-                const userToken: any = data;
-                const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-                this.alertifyService.success('Sisteme giriş yapıldı');    
-                const userName = decodedToken.sub;
-                if (userName == null){
-                  this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-                  this.router.navigateByUrl('/profile');
-                }
-                else {
-                this.router.navigateByUrl('/dashboard');
-            }
-      
-            
-        }
-          },
-          error => {
-            this.progressBarService.hide();
-            if (error.status === 401){
-                this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-            }
-            else {
-                // this.reloadImage();
-                this.alertifyService.error(error.error);
+       this.authService.loginV2(this.loginUser, '')
+       .subscribe(async data => {
+           if (data){
+               this.authService.saveToken(data["JwtToken"]);
+               const userToken: any = data["JwtToken"];
+               const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+               this.alertifyService.success('Sisteme giriş yapıldı');    
+               const userName = decodedToken.sub;
+               if (userName == null){
+                 this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+                 this.router.navigateByUrl('/profile');
+               }
+               else {
+               this.router.navigateByUrl('/dashboard');
+           }
+     
+           
+       }
+         },
+         error => {
+           this.progressBarService.hide();
+           if (error.status === 401){
+               this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
+           }
+           else {
+               // this.reloadImage();
+               this.alertifyService.error(error.error);
 
-            }
-            this.activeLoginButton();
-        });       
+           }
+           this.activeLoginButton();
+       });       
 
-    
-    }
+   
+   }
     reloadImage() {
     }
 
@@ -135,49 +140,6 @@ export class LoginComponent implements OnInit
     disableLoginButton(){
         this.isSubmitClicked = true;
     }
-    private  removeUnauthorizedUrlsFromNavigation(array: any[]) {
-        for (let i = 0; i < array.length; i++) {
-            const value = array[i];
-            if (value.url) {
-                const result: any = this.isPageTypeAuthenticated(value.pageType);
-                if (result === false) {
-                    array[i] = null;
-                }
-            } else if (value.children) {
-                value.children =  this.removeUnauthorizedUrlsFromNavigation(
-                    value.children
-                );
-                if (!value.url && value.children.length === 0) {
-                    array[i] = null;
-                }
-            }
-        }
-        return array.filter(a => a);
-    }
-    
-    isPageTypeAuthenticated(pageType: any): any {
-        const pageTypes: string = this.authService.getPageTypes();
-        if (pageType === PageClaims.dashboard) {
-            return true;
-        }
-        let isAuthenticated = false;
-        const pageTypesArray = pageTypes.split('-');
 
-        for (let i = 0; i < pageTypesArray.length; i++) {
-            const element = pageTypesArray[i];
-            if (element === pageType) {
-                isAuthenticated = true;
-                break;
-            }
-
-        }
-        return  isAuthenticated;
-    }
-
-    private setImagePathFromBase64(base64: string){
-        const sonuc = this.domSanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' 
-        + base64);
-        this.captchaImage = sonuc;
-    }
 }
 

@@ -38,8 +38,8 @@ const routes = [
 
 @NgModule({
     declarations: [
-        RegisterComponent,
-        MailConfirmComponent
+   RegisterComponent,
+   MailConfirmComponent
     ],
     providers :[
         MailConfirmService,InviteRegisterService

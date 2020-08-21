@@ -96,13 +96,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
         ];
 
         this.navigation = navigation;
-        this.authService.getTokenObservable().subscribe((token) => {
-            if (this.authService.isTokenValid()){
-                this.setProfileValues();
-              
-    
-        }
-        });
+
+        
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -191,6 +186,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
        setProfileValues(){
 
-        this.name = this.authService.getCurrentUserName();
+       // this.name = this.authService.getCurrentUserName();
       }
 }

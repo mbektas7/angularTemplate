@@ -11,50 +11,31 @@ export class LoginGuard implements CanActivate {
     constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router, private httpRequestService: HttpRequestsService){}
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
                 
-            try {
+        try {
                 
-                const result: any = await this.httpRequestService.get(`Token/isAuthenticatedLoginThatPage?pageType=${route.data.pageType}`).toPromise();             
-                switch (route.data.pageType) {
-                    case PageClaims.password:
+            const result: any = await this.httpRequestService.get(`Token/isAuthenticatedLoginThatPage?pageType=${route.data.pageType}`).toPromise();             
+            switch (route.data.pageType) {
+                case PageClaims.password:
+                    return true;
+                case PageClaims.profile:
+                    return true;
+                case PageClaims.calendar:
+                    return true;
+                default:
+                    const logged = this.authService.isTokenValid();
+                    if (result.data === true){
                         return true;
-                    case PageClaims.profile:
-                        return true;
-                    case PageClaims.calendar:
-                        return true;
-                    default:
-                        const logged = this.authService.isTokenValid();
-                        if (result.data === true){
-                            return true;
-                        }
-                    else {
-                        this.router.navigate(['/auth/login']);
-        
-                        return false;
-                     }
-                }
-            } catch (error) {
-                this.router.navigate(['/auth/login']);
-                return false;
+                    }
+                else {
+                    this.router.navigate(['/auth/login']);
+    
+                    return false;
+                 }
             }
-     
+        } catch (error) {
+            this.router.navigate(['/auth/login']);
+            return false;
+        }
     }
 
-    isPageTypeAuthenticated(pageType: any): any {
-        const pageTypes: string = this.authService.getPageTypes();
-        if (pageType === PageClaims.dashboard) {
-            return true;
-        }
-        let isAuthenticated = false;
-        const pageTypesArray = pageTypes.split('-');
-
-        for (let i = 0; i < pageTypesArray.length; i++) {
-            const element = pageTypesArray[i];
-            if (element === pageType) {
-                isAuthenticated = true;
-                break;
-            }
-
-        }
-        return  isAuthenticated;
-    }
 }

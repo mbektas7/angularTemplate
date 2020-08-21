@@ -140,10 +140,8 @@ export class NavbarHorizontalStyle1Component implements OnInit, OnDestroy
             .subscribe(() => {
                 this.navigation = this._mirapiNavigationService.getCurrentNavigation();
             });
-            this._authService.getTokenObservable().subscribe((token) => {
-                if (this._authService.isTokenValid()){
-                }
-            });
+  
+            
       
             
     }

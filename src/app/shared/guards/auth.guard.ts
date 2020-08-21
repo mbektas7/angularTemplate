@@ -20,7 +20,7 @@ import { AuthService } from '../services/auth.service';
                   
           try {
               const result: any = await this.authService.isUserLoggedInWithoutRefreshing().toPromise(); 
-              this.router.navigateByUrl('apps/dashboard')
+              this.router.navigateByUrl('/dashboard')
               
          
           } catch (error) {

@@ -69,12 +69,9 @@ export class DashboardComponent implements OnInit {
         for (let i = 0; i < array.length; i++) {
             const value = array[i];
             if (value.url) {
-                const result: any = this.isPageTypeAuthenticated(
-                    value.pageType
-                );
-                if (result === false) {
-                    array[i] = null;
-                }
+             
+             
+                
             } else if (value.children) {
                 value.children = this.removeUnauthorizedUrlsFromNavigation(
                     value.children
@@ -86,21 +83,6 @@ export class DashboardComponent implements OnInit {
         }
         return array.filter(a => a);
     }
-    isPageTypeAuthenticated(pageType: any): any {
-        const pageTypes: string = this.authService.getPageTypes();
-        if (pageType === PageClaims.dashboard) {
-            return true;
-        }
-        let isAuthenticated = false;
-        const pageTypesArray = pageTypes.split('-');
-        for (let i = 0; i < pageTypesArray.length; i++) {
-            const element = pageTypesArray[i];
-            if (element === pageType) {
-                isAuthenticated = true;
-                break;
-            }
-        }
-        return isAuthenticated;
-    }
+
 
 }

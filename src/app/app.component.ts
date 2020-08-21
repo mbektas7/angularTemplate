@@ -14,6 +14,7 @@ import { MirapiTranslationLoaderService } from '@mirapi/services/translation-loa
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
+import { User } from './main/profile/user';
 
 @Component({
     selector   : 'app',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy
 {
     mirapiConfig: any;
     navigation: any;
-
+    user: User;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -48,9 +49,9 @@ export class AppComponent implements OnInit, OnDestroy
         private _mirapiSplashScreenService: MirapiSplashScreenService,
         private _mirapiTranslationLoaderService: MirapiTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
     )
     {
+
         // Get default navigation
         this.navigation = navigation;
 
@@ -105,11 +106,7 @@ export class AppComponent implements OnInit, OnDestroy
          * ----------------------------------------------------------------------------------------------------
          */
 
-        // Add is-mobile class to the body if the platform is mobile
-        if ( this._platform.ANDROID || this._platform.IOS )
-        {
-            this.document.body.classList.add('is-mobile');
-        }
+      
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -179,4 +176,6 @@ export class AppComponent implements OnInit, OnDestroy
     {
         this._mirapiSidebarService.getSidebar(key).toggleOpen();
     }
+
+
 }

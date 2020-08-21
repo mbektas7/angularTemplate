@@ -24,18 +24,16 @@ import { LayoutModule } from 'app/layout/layout.module';
 
 import { AlertifyService } from './shared/services/alertify.service';
 
-import { PageClaims } from 'enums/pageTypes.enum';
-
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import {QuicklinkStrategy, QuicklinkModule} from 'ngx-quicklink';
 
 import { LoginGuard } from './shared/guards/login.guard';
-import { AuthGuard } from './shared/guards/auth.guard';
+
 import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
 import { QuestionsModule } from './main/questions/questions.module';
-import { appInitializer, JwtInterceptor, ErrorInterceptor } from 'helpers';
-import { AuthenticationService } from './shared/services/authentication.service';
+
+
+
 
 
 const appRoutes: Routes = [
@@ -116,7 +114,8 @@ const appRoutes: Routes = [
         HttpClientModule,
         QuicklinkModule,
         RouterModule.forRoot(appRoutes,{
-            preloadingStrategy:QuicklinkStrategy
+            preloadingStrategy:QuicklinkStrategy,
+            useHash:true
         }),
         MatDialogModule,
         TranslateModule.forRoot(),
@@ -142,16 +141,12 @@ const appRoutes: Routes = [
     ],
     providers: 
     [AlertifyService,
-    LoginGuard, 
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    LoginGuard,  
+    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-
-  
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
        ]
 })
 export class AppModule

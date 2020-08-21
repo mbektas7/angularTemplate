@@ -51,12 +51,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             .handle(newRequest)
             .catch(error => {
                 if (
-                    request.url.includes('refresh') ||
+                    request.url.includes('refresh-token') ||
                     request.url.includes('login') ||
                     request.url.includes('isUserLoggedInWithoutRefreshing') ||
                     request.url.includes('logout')
                 ) {
-                    if (request.url.includes('refresh')) {
+                    if (request.url.includes('refresh-token')) {
+                        console.log("cikis");
                         this.authService.logOut();
                     }
 
@@ -92,6 +93,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 }
             })
             .finally(() => {
+                console.log("finally");
                 this.progressBar.hide();
             });
     }
