@@ -11,6 +11,7 @@ import { navigation } from 'app/navigation/navigation';
 import { AuthService } from 'app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ProfileService } from 'app/main/profile/profile.service';
+import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 
 @Component({
     selector     : 'toolbar',
@@ -51,6 +52,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private authService: AuthService,
         private router: Router,
         private profileService: ProfileService,
+        private http : HttpRequestsService
     )
     {
         // Set the defaults
@@ -177,6 +179,15 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._translateService.use(lang.id);
     }
 
+    getUserDetails(){
+        const userId = this.authService.getCurrentUserId();
+         this.http.getList('Users/' + userId).then(data => {
+            this.name = data.Name;
+
+        });
+        
+    }
+
 
     async logOut(){
         await this.authService.logOut();
@@ -186,6 +197,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
        setProfileValues(){
 
-       // this.name = this.authService.getCurrentUserName();
+        this.name = this.authService.getCurrentUserName();
       }
 }

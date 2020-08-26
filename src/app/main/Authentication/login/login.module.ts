@@ -9,12 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MirapiProgressBarModule } from '@mirapi/components';
 import { MirapiSharedModule } from '@mirapi/shared.module';
 
-import { LoginComponent } from 'app/main/authentication/login/login.component';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { AuthService } from 'app/shared/services/auth.service';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { BotDetectCaptchaModule } from 'angular-captcha';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login.component';
 
 
 const routes = [
@@ -42,7 +42,7 @@ const routes = [
         RecaptchaFormsModule,
         MirapiSharedModule,
         BotDetectCaptchaModule,
-        FormsModule,                               // <========== Add this line!
+        FormsModule,                            
         ReactiveFormsModule 
     ],
     providers: [AlertifyService,AuthService],

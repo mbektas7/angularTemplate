@@ -6,6 +6,7 @@ import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 
 import { PostModel } from '../admin/posts/PostModel';
+import { AuthService } from 'app/shared/services/auth.service';
 
 
 @Injectable()
@@ -22,7 +23,8 @@ export class QuestionsService implements Resolve<any> {
    */
   constructor(
       private _httpClient: HttpRequestsService,
-      private http: HttpClient
+      private http: HttpClient,
+      private autService : AuthService
   )
   {
       // Set the defaults
@@ -70,6 +72,20 @@ export class QuestionsService implements Resolve<any> {
 
   }
 
+
+  getUserPosts() : Promise<any>
+  {
+     let userID = this.autService.getCurrentUserId();
+      return  new Promise((resolve, reject) => {
+         this._httpClient.get('post/getUserPosts/'+userID).subscribe((response: any) => {
+             resolve(response["data"]);
+         }, reject);
+     });
+
+  }
+
+
+  
 
 
 }

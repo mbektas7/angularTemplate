@@ -31,6 +31,7 @@ import { LoginGuard } from './shared/guards/login.guard';
 import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
 import { QuestionsModule } from './main/questions/questions.module';
+import { MypostsModule } from './main/myposts/myposts.module';
 
 
 
@@ -42,17 +43,12 @@ const appRoutes: Routes = [
     {
         path        : 'auth/login',
         pathMatch   : 'full',
-        loadChildren: () => import('./main/authentication/login/login.module').then(m => m.LoginModule),
-    
+        loadChildren: () => import('./main/Authentication/login/login.module').then(m=>m.LoginModule)
     },
     {
         path        : 'auth/register',
-        loadChildren: () => import('./main/authentication/register/register.module').then(m => m.RegisterModule)
+        loadChildren: () => import('./main/Authentication/register/register.module').then(m=>m.RegisterModule)
 
-    },
-    {
-        path      : 'auth/invited',
-        loadChildren: () => import('./main/authentication/invitedRegister/invitedRegister.module').then(m => m.InvitedRegisterModule)
     },
     {
         path      : 'auth/np',
@@ -75,6 +71,11 @@ const appRoutes: Routes = [
         path        : 'profile',
         pathMatch: 'full',
         loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
+    },
+    {
+        path        : 'myposts',
+        pathMatch: 'full',
+        loadChildren: () => import('./main/myposts/myposts.module').then(m => m.MypostsModule),
     },
     {
         path        : 'admin',
@@ -108,14 +109,14 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent
     ],
+    exports: [RouterModule],
     imports     : [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         QuicklinkModule,
         RouterModule.forRoot(appRoutes,{
-            preloadingStrategy:QuicklinkStrategy,
-            useHash:true
+            preloadingStrategy:QuicklinkStrategy
         }),
         MatDialogModule,
         TranslateModule.forRoot(),
@@ -133,7 +134,8 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         AdminModule,
-        QuestionsModule
+        QuestionsModule,
+        MypostsModule
         
     ],
     bootstrap   : [

@@ -5,11 +5,12 @@ import { Subject } from 'rxjs';
 import { MirapiConfigService } from '@mirapi/services/config.service';
 import { mirapiAnimations } from '@mirapi/animations';
 import { AuthService } from 'app/shared/services/auth.service';
-import { InviteRegisterService } from '../invitedRegister/inviteRegister.service';
+
 import { Router } from '@angular/router';
 import { UserRegister } from 'app/shared/models/UserRegister';
 import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
+import { InviteRegisterService } from '../invitedRegister/inviteRegister.service';
 
 @Component({
     selector   : 'register',

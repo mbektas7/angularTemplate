@@ -93,7 +93,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 }
             })
             .finally(() => {
-                console.log("finally");
                 this.progressBar.hide();
             });
     }

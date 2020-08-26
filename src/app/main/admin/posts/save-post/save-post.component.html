@@ -34,7 +34,7 @@
     <mat-form-field class="w-60-p">
         <mat-select placeholder="Araç" required name="car"
           [(ngModel)]="post.carId">
-          <mat-option *ngFor="let car of cars" [value]="car.id">
+          <mat-option *ngFor="let car of cars" [value]="car.Id">
             {{car.name}}
           </mat-option>
         </mat-select>
@@ -61,4 +61,4 @@
     <!-- / CONTENT CARD -->
 </div>
 <!-- / CENTER -->
-</div> -->
+</div> 

@@ -2,7 +2,6 @@
         <input #fileUpload type="file"
         id="file" hidden="true"
         accept="image/*"
-        (change)="uploadProfileImage($event.target.files)"
         >
     <!-- HEADER -->
     <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
@@ -13,22 +12,13 @@
                  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                  <ul class="xop-grid">
                     <li>
-                        <div class="xop-box xop-img-1" *ngIf="profileImage" [ngStyle]="{'background': 'url(' + profileImage + ') no-repeat 0 0 / cover'}">
+                        <div class="xop-box xop-img-1" >
                             <a href="#">
                             </a>
                              <div class="overlay" (click)="fileUpload.click()">
                              
                                <span class='icon'>+</span>
                              </div>
-                          </div>
-                          <div class="xop-box xop-img-1" *ngIf="!profileImage">
-                              
-                            <a href="#">
-                            </a>
-                             <div class="overlay" (click)="fileUpload.click()">
-                               <span class='icon'>+</span>
-                             </div>
-
                           </div>
                      </li>
                  </ul>

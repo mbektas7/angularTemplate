@@ -9,6 +9,7 @@ export interface  dialogData {
   id: string;
   name: string;
   brandId : string;
+  state : string;
 }
 
 @Component({

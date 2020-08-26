@@ -84,7 +84,6 @@ $typography: mat-typography-config(
 @import "src/app/main/authentication/login/login.theme";
 @import "src/app/main/authentication/register/register.theme";
 @import "src/app/main/authentication/register/mail-confirm/mail-confirm.theme";
-@import "src/app/main/authentication/invitedRegister/invitedRegister.theme";
 @import "src/app/main/authentication/forgot-password/forgot-password.theme";
 @import "src/app/main/authentication/forgot-password/verifyForgotPassword/verifyForgotPassword.theme";
 @import "src/app/main/profile/tabs/about/about.theme";
@@ -104,7 +103,6 @@ $typography: mat-typography-config(
     @include profile-about-theme($theme);
     @include register-theme($theme);
     @include  mail-confirm-theme($theme);
-    @include invitedRegister-theme($theme);
     @include verifyForgotPassword-theme($theme);
 
 

@@ -6,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { MirapiSharedModule } from '@mirapi/shared.module';
+import { ForgotPasswordComponent } from './forgot-password.component';
 
-import { ForgotPasswordComponent } from 'app/main/authentication/forgot-password/forgot-password.component';
 
 
 const routes = [

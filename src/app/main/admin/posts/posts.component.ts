@@ -3,6 +3,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { PostModel } from './PostModel';
 import { AdminService } from '../admin.service';
 import { mirapiAnimations } from '@mirapi/animations';
+import { SavePostComponent } from './save-post/save-post.component';
 
 @Component({
   selector: 'app-posts',
@@ -45,6 +46,38 @@ export class PostsComponent implements OnInit {
     });
 
   }  
+
+
+  updateDialog(id): void {
+
+    const item = this.findById(id, this.posts);
+    const dialogRef = this.dialog.open(SavePostComponent, {
+      width: '500px',
+      data: { 
+        state: 'update',
+        id: item.Id,
+        name: item.message,
+        carId : item.car.Id
+      }
+
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log(result);
+      if (result != null&& !result.mode) {    
+        this.adminService.updateData('post/',result).then(()=>{
+          this.getList();
+        });
+      }
+      if (result && result.mode === 'delete'){
+        await this.adminService.deleteData('post/', result.id).then();
+        this.getList();
+      }
+    });
+  }
+
+
+
   findById(id: any, array: any[]){
     return array.find(x => x.id === id);
   }

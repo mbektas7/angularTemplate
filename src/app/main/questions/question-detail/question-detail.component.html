@@ -1,93 +1,108 @@
 
-<div id="timeline" class="p-24 w-100-p" fxLayoutAlign="center center" fxLayout="row wrap">
-    <div class="timeline-content"  fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="55" fxFlex.gt-md="65">
-
-
-        <div class="timeline-item" >
-
-            <header fxLayout="row" fxLayoutAlign="space-between start">
-                <div class="user" fxLayout="row" fxLayoutAlign="start center">
-                     <img class="avatar" src="assets/images/avatars/Velazquez.jpg"> 
-
-                    <div fxLayout="column">
-                        <div class="title">
-                            <span class="username">{{post.user.name}}</span>
-                            <span > posted a question</span>
-                        </div>
-                        <div class="time">{{post.creationDate}}</div>
-                    </div>
-                </div>
-
-                <button mat-icon-button aria-label="More">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-            </header>
-
-            <div class="content">
-                <div *ngIf="post.message" class="message">
-                    {{post.message}}
-                </div>
-
-
-                <div  fxLayout="column" class="article">
-                    <div class="media">
-                        <img class="w-30-p"  src="assets\images\profile\braies-lake-small.jpg">
-                    </div>
-                    <div class="title">{{post.title}}</div>
-                </div>
-
-                <div fxLayout="row" fxLayoutAlign="start center">
-                    <button mat-button class="like-button">
-                        <span fxLayout="row" fxLayoutAlign="start center">
-                            <mat-icon class="s-16">favorite</mat-icon>
-                            <span>Like</span>&nbsp;<span>(61)</span>
-                        </span>
-                    </button>
-                    <button mat-button class="share-button">
-                        <span fxLayout="row" fxLayoutAlign="start center">
-                            <mat-icon class="s-16">share</mat-icon>
-                            <span>Share</span>&nbsp;
-                        </span>
-                    </button>
-                </div>
-            </div>
-
-             <footer class="" fxLayout="column" fxLayoutAlign="start start">
-                <div *ngIf="post.comments" class="comment-count" fxLayout="row" fxLayoutAlign="start center">
-                    {{post.answers.length}} comments
-                    <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
-                </div>
-
-                <div class="comment" fxLayout="row" fxFlexFill *ngFor="let answer of post.answers">
-                    <img src="assets/images/avatars/alice.jpg" class="avatar"/>
-
-                    <div fxLayout="column" fxFlex>
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                            <span class="username">{{answer.user.name}}</span>
-                            <span class="time">{{answer.CreationDate}}</span>
-                        </div>
-                        <div class="message">
-                           {{answer.message}}
-                        </div>
-                        <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
-                            <a href="#" class="reply-button">Cevapla</a>
-                            <mat-icon fxFlex class="report-button s-16">flag</mat-icon>
+<div class="w-100-p"  >
+    <div id="timeline" fxLayout="row" fxLayoutAlign="center none">
+    
+        <div class="timeline-content"  fxLayoutAlign="center none" fxLayout="column"  fxFlex="100" fxFlex.gt-sm="55" fxFlex.gt-md="65">
+    
+    
+            <div class="timeline-item"  >
+    
+                <header fxLayout="row" fxLayoutAlign="space-between start">
+                    <div class="user" fxLayout="row" fxLayoutAlign="start center">
+                         <img class="avatar" src="assets/images/avatars/Velazquez.jpg"> 
+    
+                        <div fxLayout="column">
+                            <div class="title">
+                                <span class="username">{{post.user.name}}</span>
+                                <span > posted a question</span>
+                            </div>
+                            <div class="time">{{post.creationDate}}</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="reply" fxLayout="row" fxFlexFill>
-                    <img src="assets/images/avatars/Velazquez.jpg" class="avatar"/>
-
-                    <form fxFlex>
-                        <textarea placeholder="Add a comment..." [(ngModel)]="answer" name="answer"></textarea>
-                        <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
-                            Cevap Ver
+    
+                </header>
+    
+                <div class="content">
+                    <div *ngIf="post.message" class="message">
+                        {{post.message}}
+                    </div>
+    
+    
+                    <div  fxLayout="column" class="article">
+                        <div class="media">
+                            <img class="w-30-p"  src="assets\images\profile\braies-lake-small.jpg">
+                        </div>
+                        <div class="title">{{post.title}}</div>
+                    </div>
+    
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <button mat-button class="like-button">
+                            <span fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="s-16">favorite</mat-icon>
+                                <span>Like</span>&nbsp;<span>(61)</span>
+                            </span>
                         </button>
-                    </form>
+                        <button mat-button class="share-button">
+                            <span fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="s-16">share</mat-icon>
+                                <span>Share</span>&nbsp;
+                            </span>
+                        </button>
+                        <div fxLayout="column" fxLayoutAlign="start center">
+                            <button (click)="vote(1)" mat-button class="vote-button">
+                                <span fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="s-16">expand_less</mat-icon>
+                                   
+                                </span>
+                            </button>
+                            <button (click)="vote(-1)" mat-button class="vote-button">
+                                <span fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="s-16">expand_more</mat-icon>
+                                </span>
+                            </button>
+                        </div>
+                        <span>{{post.vote}}</span>
+                    </div>
                 </div>
-            </footer> 
+    
+                 <footer class="" fxLayout="column" fxLayoutAlign="start start">
+                    <div *ngIf="post.comments" class="comment-count" fxLayout="row" fxLayoutAlign="start center">
+                        {{post.answers.length}} comments
+                        <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
+                    </div>
+    
+                    <div class="comment" fxLayout="row" fxFlexFill *ngFor="let answer of post.answers">
+                        <img src="assets/images/avatars/alice.jpg" class="avatar"/>
+    
+                        <div fxLayout="column" fxFlex>
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <span class="username">{{answer.user.Name}}</span>
+                                <span class="time">{{answer.CreationDate |date:'dd.MM.yyyy HH:mm'}}</span>
+                            </div>
+                            <div class="message">
+                               {{answer.message}}
+                            </div>
+                            <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
+                                <a href="#" class="reply-button">Cevapla</a>
+                                <mat-icon fxFlex class="report-button s-16">flag</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="reply" fxLayout="row" fxFlexFill>
+                        <img src="assets/images/avatars/Velazquez.jpg" class="avatar"/>
+    
+                        <form fxFlex>
+                            <textarea placeholder="Add a comment..." [(ngModel)]="answer" name="answer"></textarea>
+                            <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
+                                Cevap Ver
+                            </button>
+                        </form>
+                    </div>
+                </footer> 
+            </div>
         </div>
+    
     </div>
-
 </div>
+

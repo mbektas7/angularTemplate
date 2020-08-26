@@ -10,10 +10,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { MirapiSharedModule } from '@mirapi/shared.module';
 
-import { RegisterComponent } from 'app/main/authentication/register/register.component';
 import { MailConfirmComponent } from './mail-confirm/mail-confirm.component';
-import { InviteRegisterService } from '../invitedRegister/inviteRegister.service';
 import { MailConfirmService } from './mail-confirm/mail-confirm.service';
+import { RegisterComponent } from './register.component';
+import { InviteRegisterService } from '../invitedRegister/inviteRegister.service';
 
 const routes = [
     {

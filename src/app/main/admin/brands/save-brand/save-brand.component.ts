@@ -8,7 +8,7 @@ export interface  dialogData {
   
   id: string;
   name: string;
-  
+  state: string;
 }
 
 @Component({

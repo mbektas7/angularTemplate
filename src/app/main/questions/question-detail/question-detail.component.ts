@@ -8,6 +8,8 @@ import { QuestionDetailService } from './question-detail.service';
 import { request } from 'http';
 import { AuthService } from 'app/shared/services/auth.service';
 import { SaveAnswer } from 'app/main/admin/posts/saveAnswer';
+import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 
 @Component({
@@ -24,7 +26,10 @@ export class QuestionDetailComponent implements OnInit {
   comments : any[]
   answer : string;
  
-  constructor(private questionDeatilService : QuestionDetailService,private autService: AuthService) {
+  constructor(
+    private questionDeatilService : QuestionDetailService,
+    private autService: AuthService,
+    private httpReq : HttpRequestsService) {
 
     this._unsubscribeAll = new Subject();
    }
@@ -53,6 +58,20 @@ export class QuestionDetailComponent implements OnInit {
     this.questionDeatilService.addAnswer(request).then();
     this.answer = "";
     
+  }
+
+
+
+  vote(vote : number){
+    console.log(vote);
+    let data = {
+      'vote': vote,
+      'postId' : this.post.Id
+    }
+    this.httpReq.addItem("post/vote",data).then(()=>{
+      this.questionDeatilService.getPost();
+      
+    });
   }
 
 
