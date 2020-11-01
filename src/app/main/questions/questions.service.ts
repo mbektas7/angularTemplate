@@ -84,6 +84,28 @@ export class QuestionsService implements Resolve<any> {
 
   }
 
+  updatePost(data:PostModel): Promise<any>
+  {
+
+      return  new Promise((resolve, reject) => {
+         this._httpClient.put('post/'+data.Id,data).subscribe((response:any) => {
+             resolve(response["data"]);
+         },reject)
+
+  });
+   }
+
+   deletePost(data:PostModel): Promise<any>
+   {
+ 
+    return  new Promise((resolve, reject) => {
+        this._httpClient.delete('post/',data.Id).subscribe((response:any) => {
+            resolve(response["data"]);
+        },reject)
+    });
+    }
+  
+
 
   
 

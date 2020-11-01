@@ -1,0 +1,34 @@
+<h1 mat-dialog-title >Araç Seç</h1>
+<div>
+<div mat-dialog-content>
+
+
+    <mat-form-field class="w-60-p">
+      <mat-select placeholder="Marka" (ngModelChange)="getCarsList($event)" required name="brand"
+        [(ngModel)]="data.brandId">
+        <mat-option *ngFor="let brand of brands" [value]="brand.Id">
+          {{brand.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-60-p">
+        <mat-select placeholder="Model" required name="car"
+          [(ngModel)]="data.carId">
+          <mat-option *ngFor="let car of cars" [value]="car.Id">
+            {{car.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">iptal</button>
+      <button mat-raised-button color="accent"  [mat-dialog-close]="data">Kaydet</button>
+      
+  </div>
+
+</div>

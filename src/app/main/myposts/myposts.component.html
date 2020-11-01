@@ -4,11 +4,10 @@
     <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center start">
             <div fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="secondary-text s-18">home</mat-icon>
-                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
-                <span class="secondary-text">User Interface</span>
+                <mat-icon>dehaze</mat-icon>
+                <div class="h1">Tüm Gönderilerim</div>
             </div>
-            <div class="h1 mt-16">Tüm Gönderilerim</div>
+            
         </div>
     </div>
     <!-- / HEADER -->
@@ -16,40 +15,44 @@
     <!-- CONTENT -->
     <div class="content ">
 
-
-
-
         <div class="w-50">
 
             <div class="p-24 " fxLayout="column" fxLayoutAlign="center stretch">
 
-                <div class="mat-card p-24 px-24 mb-24" [routerLink]="'/questions/'+item.Id" *ngFor="let item of myPosts"
+                <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myPosts"
                     fxLayout="row" fxLayoutAlign="start" fxFlex="1 0">
 
                     <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch">
 
                         <div fxLayout="row" fxLayoutAlign="space-between center">
-                            <div class="h2 mb-24 border-bottom">{{item.title}}</div>
+                            <a class="h2 mb-24 border-bottom"  [routerLink]="'/questions/'+item.Id" >{{item.title}}</a>
 
                             <div fxLayout="row" fxLayoutAlign="space-between center">
                             <button mat-icon-button class="warn"
-                                (click)="delete()">
+                                (click)="deletePost(item)">
                                 <mat-icon>delete</mat-icon>
                                 
                             </button>
                             <button mat-icon-button class="blue" 
-                                (click)="edit()">
-                                <mat-icon>edit</mat-icon>
-                                
+                            [routerLink]="['/update-question/'+ item.Id]" >
+                                <mat-icon>edit</mat-icon>  
                             </button>
                         </div>
                         </div>
 
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div *ngIf="!isEditing" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <p class="pt-16 ">
                                 {{item.message}}
                             </p>
                         </div>
+
+                        <form *ngIf="isEditing" fxFlex>
+                            <textarea placeholder="Add a comment..." [(ngModel)]="item.message" name="answer"></textarea>
+                            <button mat-raised-button color="accent" class="post-comment-button" (click)="update(item)" aria-label="Post Comment">
+                                Güncelle
+                            </button>
+                        </form>
+
                         <div>
                             <mat-chip-list>
                                 <mat-chip class="green-50-bg" [removable]="false">

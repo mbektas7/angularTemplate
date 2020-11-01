@@ -23,7 +23,8 @@
          [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
 
         <div id="login-form">
-                
+            
+
             <div class="title">Hesabınıza Giriş Yapın</div>
 
             <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()"  novalidate>
@@ -88,10 +89,23 @@
                  class="submit-button"
                 >GİRİŞ</button>
 
+               
+                
             </form>
 
             <div class="separator">
                 <span class="text">veya</span>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start center">
+
+                <button mat-raised-button  (click) = "signInWithGoogle()" class="google">
+                    Google ile Giriş
+                </button>
+
+                <button mat-raised-button (click) = "signInWithFB()" class="facebook">
+                    Facebook ile Giriş
+                </button>
+
             </div>
 
             <!--

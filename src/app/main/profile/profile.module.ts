@@ -20,6 +20,8 @@ import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { AuthGuard } from 'app/shared/guards/auth.guard';
 import { LoginGuard } from 'app/shared/guards/login.guard';
 import { PageClaims } from 'enums/pageTypes.enum';
+import { SelectCarComponent } from '../admin/cars/select-car/select-car.component';
+import { MatDialogModule } from '@angular/material';
 const routes = [
     {
         path: '',
@@ -29,7 +31,7 @@ const routes = [
     }
 ];
 @NgModule({
-    declarations: [ProfileComponent, ProfileAboutComponent],
+    declarations: [ProfileComponent, ProfileAboutComponent,SelectCarComponent],
     imports: [
         RouterModule.forChild(routes),
         MatButtonModule,
@@ -46,9 +48,14 @@ const routes = [
         MatSelectModule,
         MatNativeDateModule,
         MatChipsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule
+        
     ],
-    providers: [ProfileService]
+    providers: [ProfileService],
+    entryComponents :[
+        SelectCarComponent
+    ]
 })
 export class ProfileModule {
     constructor(private dateAdapter: DateAdapter<Date>) {

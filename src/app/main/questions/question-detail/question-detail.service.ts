@@ -12,6 +12,7 @@ export class QuestionDetailService   implements Resolve<any>{
 
   routeParams: any;
   post: PostModel[];
+  images: any[];
   onPostChanged: BehaviorSubject<any>;
 
   constructor(
@@ -50,6 +51,17 @@ getPost(): Promise<any> {
           }, reject);
   });
 }
+
+getPostImages(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .get('post/getPostImages/' + this.routeParams.id)
+            .subscribe((response: any) => {
+                this.images = response["data"];
+                resolve(response["data"]);
+            }, reject);
+    });
+  }
 
 addAnswer(data : SaveAnswer): Promise<any> {
     return new Promise((resolve, reject) => {

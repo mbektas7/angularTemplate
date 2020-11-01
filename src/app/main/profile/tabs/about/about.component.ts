@@ -7,6 +7,8 @@ import { UserAboutUpdateModal } from './userAboutUpdateModal';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AuthService } from 'app/shared/services/auth.service';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { SelectCarComponent } from 'app/main/admin/cars/select-car/select-car.component';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     gender: string;
     userAbout: UserAboutUpdateModal;
     userDetails: any;
+    carName:  string;
     
     private _unsubscribeAll: Subject<any>;
 
@@ -37,6 +40,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
      * @param {ProfileService} _profileService
      */
     constructor(
+        public dialog: MatDialog,
         private _profileService: ProfileService,
         private httpService: HttpRequestsService,
         private authService: AuthService
@@ -73,7 +77,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
       const userId = this.authService.getCurrentUserId();
        this.httpService.getList('Users/' + userId).then(data => {
           this.userAbout = data;
-          console.log(this.userAbout);
+          this.carName = data['car']['name'];
           if (this.userAbout.isFemale) {
             this.gender = '1';
         }
@@ -97,12 +101,29 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
              this.userAbout.isFemale = true;
         }
         // this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
-        console.log(this.userAbout);
+       
          this._profileService.updateUserAbout(this.userAbout);
          this.isEditing = false;
-
      
     }
+
+    selectCar(): void {
+        const dialogRef = this.dialog.open(SelectCarComponent, {
+          width: '500px',
+          data: {
+            brandId : '',
+            carId : ''
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          if (result != null) {    
+
+            this.userAbout.carId = result.carId;
+            this._profileService.updateUserAbout(this.userAbout);
+          } 
+        });
+      }
 
     
     

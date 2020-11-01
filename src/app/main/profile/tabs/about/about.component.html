@@ -71,28 +71,32 @@
 
         </div>
 
-        <!-- <div class="profile-box info-box work" fxLayout="column">
+     <div class="profile-box info-box work" fxLayout="column">
 
             <header class="accent">
-                <div class="title">İş</div>
+                <div class="title">Araç</div>
             </header>
 
             <div class="content">
 
                         <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
-                                        <mat-label>Meslek</mat-label>
+                                        <mat-label>Araç</mat-label>
                                     <input
                                         matInput
-                                        name="meslek"
+                                        name="arac"
                                         disabled="{{!isEditing}}"
-                                        [(ngModel)]="userAbout.job"
-                                        placeholder="Meslek"
+                                        [(ngModel)]="carName"
+                                        placeholder="Model"
                                         required
                                     />
                         </mat-form-field>
 
+                        <div >
+                            <button mat-raised-button  (click)="selectCar()" color="accent" aria-label="Save">Araç Seç</button>
+                       </div>
+
             </div>
-        </div> -->
+        </div>
 
         <div class="profile-box info-box contact" fxLayout="column">
 

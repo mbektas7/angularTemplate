@@ -11,6 +11,7 @@ import { MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { QuestionsService } from '../questions/questions.service';
+import { MypostDetailComponent } from './mypost-detail/mypost-detail.component';
 
 const routes = [
   {
@@ -54,8 +55,12 @@ const routes = [
   ],
   providers :[ QuestionsService , QuestionDetailService],
   declarations: [
-    MypostsComponent  
+    MypostsComponent,
+    MypostDetailComponent  
  
+  ],
+  entryComponents: [
+    MypostDetailComponent
   ]
  
 })

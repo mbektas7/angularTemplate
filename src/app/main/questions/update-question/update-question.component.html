@@ -1,0 +1,94 @@
+
+<div id="forms" class="page-layout simple " fxLayout="column">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+        <div fxLayout="column" fxLayoutAlign="center start">
+
+            <div class="h1 mt-16"> Yeni bir gönderi ekle</div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+ <div class="content p-24 mat-card ">
+
+
+
+
+        <div  fxLayout="column" fxLayoutAlign="center stretch" >      
+
+            <div fxLauout="row">
+
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <input
+                    matInput
+                    name="title"
+                    [(ngModel)]="post.title"
+                    placeholder="Gönderiniz için bir başlık giriniz"
+                    required
+                />
+               </mat-form-field>
+            </div>
+
+
+
+            <ckeditor [(ngModel)]="post.message"  [editor]="Editor" (ready)="onReady($event)" data="<p></p>"></ckeditor>
+
+            <div class="pt-24" fxLayout="row" fxLayoutAlign="start center">
+              <input #file type="file" style="display: none" accept='image/*' (change)="preview(file.files)" />
+              <button mat-raised-button class="blue-grey my-12 mt-sm-0" (click)="file.click()">Fotoğraf Yükle</button>
+            </div>
+
+
+<div class="p-20" class="period-media"  fxLayout="row wrap">
+
+  <div class="p-24" *ngFor="let item of images" fxLayoutAlign="start center" fxLayout="column" >
+    <img  style="height: 25%;width: 25%; height: 256px; width: 256px; " class="preview" [src]="item" >
+    <button mat-raised-button class="accent-bg w-60 my-12 mt-sm-0" (click)="deletePhoto(item)" >Sil</button>
+</div>
+</div>
+
+
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                  <mat-chip
+                  class="blue-grey"
+                    *ngFor="let tag of selectedTags"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(tag.Id, tag.name)">
+                    {{tag.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+
+                  <input placeholder="Yeni Etiket Ekle..." #fruitInput [formControl]="tagCtrl" [matAutocomplete]="auto" 
+                  [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"   (ngModelChange)="searchAddressText($event)"   >
+                  
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                  <mat-option *ngFor="let tag of tags" [value]="tag.Id">
+                    {{tag.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+
+              
+
+            <div class="p-24" fxLayout="row" fxLayoutAlign="end center" >
+                <button mat-raised-button (click) ="savePost()" class="accent-bg my-12 mt-sm-0">
+                    <span>Kaydet</span>
+                </button>
+            </div>
+        </div>
+
+
+
+ </div>
+    <!-- / CONTENT -->
+
+</div>
+
+

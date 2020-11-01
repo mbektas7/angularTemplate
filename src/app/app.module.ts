@@ -23,6 +23,7 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 
 import { AlertifyService } from './shared/services/alertify.service';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 import {QuicklinkStrategy, QuicklinkModule} from 'ngx-quicklink';
 
@@ -64,8 +65,8 @@ const appRoutes: Routes = [
     {
         path        : 'questions',
         pathMatch: 'full',
-        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule),
-        canActivate: [ LoginGuard]
+        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule)
+       
     },
     {
         path        : 'profile',
@@ -129,7 +130,8 @@ const appRoutes: Routes = [
         MirapiSidebarModule,
         MirapiThemeOptionsModule,
                  
-        
+        /// social logins
+        SocialLoginModule,
 
         // App modules
         LayoutModule,
@@ -148,7 +150,25 @@ const appRoutes: Routes = [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    {
+        provide: 'SocialAuthServiceConfig',
+        useValue: {
+          autoLogin: false,
+          providers: [
+            {
+              id: GoogleLoginProvider.PROVIDER_ID,
+              provider: new GoogleLoginProvider(
+                '601878090181-eogcprfmakh6s1o09i0bksd7rllf2ls2.apps.googleusercontent.com'
+              ),
+            },
+            {
+              id: FacebookLoginProvider.PROVIDER_ID,
+              provider: new FacebookLoginProvider('690120018581448'),
+            },
+          ],
+        } as SocialAuthServiceConfig,
+      }
        ]
 })
 export class AppModule

@@ -10,7 +10,10 @@ import { AuthService } from 'app/shared/services/auth.service';
 import { SaveAnswer } from 'app/main/admin/posts/saveAnswer';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
 
+import 'moment/locale/tr';
 
 @Component({
   selector: 'app-question-detail',
@@ -25,8 +28,17 @@ export class QuestionDetailComponent implements OnInit {
   post : any
   comments : any[]
   answer : string;
- 
+  images: string[];
+  profileImage : string;
+  isEditable : boolean;
+  likeCount : string;
+  likeList : any[];
+  liked : boolean;
+  moment: any = moment;
+
   constructor(
+    private questionService : QuestionsService,
+    private router : Router,
     private questionDeatilService : QuestionDetailService,
     private autService: AuthService,
     private httpReq : HttpRequestsService) {
@@ -35,18 +47,52 @@ export class QuestionDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    const date = moment();
+    let dateInFormat = date.format('YYYY.M.D');
+    console.log(moment().calendar());
+    console.log(dateInFormat);
+
      this.questionDeatilService.onPostChanged
        .pipe(takeUntil(this._unsubscribeAll))
        .subscribe(data => {
         this.post = data;
-
+        this.likeList = this.post.likes;
+        this.likeCount = this.post.likes.length;
+        this.isLiked();
      });
+     this.getPostImages();
+     this.profileImage = this.autService.userProfileImage;
+
+
+     if (this.autService.getCurrentUserId()==this.post.user.Id) {
+       this.isEditable = true;
+     }
+     else
+     this.isEditable = false;
   }
 
+  getPostImages(){
+    this.questionDeatilService.getPostImages().then(data=>{
+        this.images = data;
+    });
+  }
+
+  isLiked(){
+    this.liked = false;
+    for (let index = 0; index < this.likeList.length; index++) {
+
+      const item = this.likeList[index];
+      if (item.user.Id==this.autService.getCurrentUserId()) {
+        this.liked = true;
+        break;
+       } else {
+        this.liked = false;
+       }
+    }
+  }
 
   sendAnswer() {
 
-   
     let request = new SaveAnswer()
     request.title =  ""
     request.parentId = this.post.Id;
@@ -63,16 +109,48 @@ export class QuestionDetailComponent implements OnInit {
 
 
   vote(vote : number){
-    console.log(vote);
     let data = {
       'vote': vote,
-      'postId' : this.post.Id
+      'postId' : this.post.Id,
+      'userId': this.autService.getCurrentUserId()
     }
     this.httpReq.addItem("post/vote",data).then(()=>{
       this.questionDeatilService.getPost();
       
     });
   }
+
+  like(like: boolean){
+
+    let data = {
+      'Id' : this.post.Id,
+      'userId' : this.autService.getCurrentUserId()
+    }
+
+    if (!like) {
+      this.httpReq.addItem("post/like",data).then(()=>{
+        this.questionDeatilService.getPost();
+        this.isLiked();
+      });
+    } else {
+      this.httpReq.addItem("post/unlike",data).then(()=>{
+        this.questionDeatilService.getPost();
+        this.isLiked();
+      });
+    }
+  
+    
+  }
+
+
+
+  async deletePost(data : PostModel){
+    await this.questionService.deletePost(data).then(()=>{
+      this.router.navigateByUrl("/questions");
+    });
+  }
+
+  
 
 
 

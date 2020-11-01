@@ -12,6 +12,8 @@ import { AuthService } from 'app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ProfileService } from 'app/main/profile/profile.service';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
     selector     : 'toolbar',
@@ -35,8 +37,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     TOKEN_KEY = 'token';
 
-    name = ''
-
+    name = '';
+    profilImage :any;
 
     /**
      * Constructor
@@ -46,11 +48,13 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param {TranslateService} _translateService
      */
     constructor(
+        private socialAuthService : SocialAuthService,
         private _mirapiConfigService: MirapiConfigService,
         private _mirapiSidebarService: MirapiSidebarService,
         private _translateService: TranslateService,
         private authService: AuthService,
         private router: Router,
+        private _sanitizer: DomSanitizer,
         private profileService: ProfileService,
         private http : HttpRequestsService
     )
@@ -116,6 +120,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         if (this.authService.isTokenValid()){
             this.setProfileValues();
           }
+          this.getUserDetails();
 
         // Subscribe to the config changes
         this._mirapiConfigService.config
@@ -181,15 +186,25 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
     getUserDetails(){
         const userId = this.authService.getCurrentUserId();
+        
          this.http.getList('Users/' + userId).then(data => {
             this.name = data.Name;
-
+            this.profilImage = data.avatar;
+            this.authService.userProfileImage = this.profilImage;
+            if (data.isSocialLogin) {
+                this.profilImage = 'data:image/jpg;base64,' +
+            (this._sanitizer.bypassSecurityTrustResourceUrl(this.profilImage) as any).changingThisBreaksApplicationSecurity;
+            }
+            
         });
         
     }
 
 
     async logOut(){
+        
+         this.socialAuthService.signOut();
+          
         await this.authService.logOut();
         await this.router.navigateByUrl('auth/login');
         location.reload();

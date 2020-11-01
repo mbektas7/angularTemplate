@@ -43,7 +43,7 @@ export class ProfileService implements Resolve<any>
 
     updateUserAbout(userAbout: UserAboutUpdateModal){
 
-        this.httpService.put('Users/' + userAbout.userId, userAbout).subscribe(data => {   
+        this.httpService.put('Users/' + userAbout.Id, userAbout).subscribe(data => {   
             this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
             this.router.navigateByUrl('/dashboard');  
           },
@@ -111,6 +111,15 @@ export class ProfileService implements Resolve<any>
 
     deleteProfileImage(){
 
+    }
+
+    uploadUserProfilePicture(data){
+        let formData = new FormData();
+        formData.append('picture',data)
+      return   this.httpService.post('appfiles/userProfileImage', formData);
+    }
+    readProfileImage(){
+      return  this.httpService.get(environment.rootPath + 'appfiles/userProfileImage');
     }
 
    

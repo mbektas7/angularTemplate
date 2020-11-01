@@ -2,15 +2,17 @@
 <div id="forms" class="page-layout simple " fxLayout="column">
 
     <!-- HEADER -->
-    <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+    <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
         <div fxLayout="column" fxLayoutAlign="center start">
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="secondary-text s-18">home</mat-icon>
-                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
-                <span class="secondary-text">User Interface</span>
-            </div>
+
             <div class="h1 mt-16">Son Paylaşımlar</div>
         </div>
+
+<div class="pr-40" >
+    <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  color="primary" >
+        Yeni Gönderi Ekle</button>
+</div>
+        
     </div>
     <!-- / HEADER -->
 
@@ -30,26 +32,22 @@
 
                     <div class="h2 mb-24 border-bottom">{{item.title}}</div>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <p class="pt-16 ">
-                        {{item.message}}
+                        <p class="pt-16 " innerHTML="{{ (item.message.length>6)? (item.message | slice:0:200)+'..':(item.message) }}">
+                        
                         </p>
                     </div>
                     <div>
                         <mat-chip-list >
-                            <mat-chip class="green-50-bg" [removable]="false">
-                                <mat-icon >blur_on</mat-icon>
-                                Aksesuar
-                            </mat-chip>
-
-                            <mat-chip class="cyan-100-bg" [removable]="false">
-                                <mat-icon >brightness_5</mat-icon>
-                                Motor
+                            <mat-chip class="green-50-bg" *ngFor="let tag of item.categories" [removable]="false">
+                                <mat-icon>{{tag.category.iconName}}</mat-icon>
+                                {{tag.category.name}}
                             </mat-chip>
                         </mat-chip-list>
 
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center">
-                        <mat-icon >person</mat-icon>
+                        
+                        <img  src="{{item.user.avatar}}" class="avatar"/>
                         <div>
                             <p class="pt-16 ">
                             {{item.user.Name}}

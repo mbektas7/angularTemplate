@@ -26,25 +26,39 @@ import { MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
-import { MatGridListModule, MatCardModule } from '@angular/material';
+import { MatGridListModule, MatCardModule, MatMenuModule, MatBadgeModule } from '@angular/material';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionsService } from './questions.service';
 import { QuestionDetailService } from './question-detail/question-detail.service';
-
+import { NewQuestionComponent } from './new-question/new-question.component';
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
+import { MyUploadAdapter } from './new-question/UploadAdapter';
+import { UpdateQuestionComponent } from './update-question/update-question.component';
+import { SafePipe } from 'app/shared/pipes/SafePipe';
+import { BrowserModule } from '@angular/platform-browser';
 
 const routes = [
   {
       path     : '',
-      pathMatch: 'full',
       component: QuestionsComponent,
   },
   {
     path     : 'questions/:id',
     component: QuestionDetailComponent,
-    pathMatch: 'full',
     resolve: {
       data: QuestionDetailService
   }
+}
+  ,  {
+    path     : 'new-questions',
+    component: NewQuestionComponent ,
+},
+{
+  path     : 'update-question/:id',
+  component: UpdateQuestionComponent,
+  resolve: {
+    data: QuestionDetailService
+}
 }
   ];
 
@@ -76,14 +90,20 @@ const routes = [
     MatDatepickerModule,
     MatRadioModule,
     MatSelectModule,
+    MatBadgeModule,
     MatGridListModule,
-    MatCardModule
-    
+    MatCardModule,
+    CKEditorModule,
+    MatChipsModule,
+    MatMenuModule
   ],
   providers :[ QuestionsService , QuestionDetailService],
   declarations: [
+    SafePipe ,
     QuestionsComponent,
-    QuestionDetailComponent
+    QuestionDetailComponent,
+    NewQuestionComponent,
+    UpdateQuestionComponent
  
   ],
     entryComponents: [ ]

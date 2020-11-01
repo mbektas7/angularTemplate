@@ -1,0 +1,30 @@
+<h1 mat-dialog-title *ngIf="data.state==='new'">{{title}} Ekle</h1>
+<h1 mat-dialog-title *ngIf="data.Id" >{{title}} Düzenle</h1>
+<div>
+<div mat-dialog-content>
+
+<mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                <mat-label>Başlık</mat-label>
+            <input
+            matInput
+            name="title"
+            placeholder="Bir  adı giriniz"
+            required
+            [(ngModel)]="data.title"
+            />
+</mat-form-field>
+
+<mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+    <mat-label>İçerik</mat-label>
+    <textarea  matInput placeholder="Add a comment..." [(ngModel)]="data.message" name="answer"></textarea>
+</mat-form-field>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">iptal</button>
+        <button mat-raised-button color="warn" *ngIf="data.Id"  (click)="delete(data)">Sil</button>
+        <button mat-raised-button color="accent" *ngIf="data.message" [mat-dialog-close]="data">Kaydet</button>
+        
+    </div>
+
+</div>

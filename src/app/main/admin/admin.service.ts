@@ -43,7 +43,7 @@ export class AdminService {
     updateData(path,data):Promise<any>{
     
       return new Promise((resolve,reject)=>{
-          this._httpClient.put(path+data.id,data).subscribe((response:any)=>{
+          this._httpClient.put(path+data.Id,data).subscribe((response:any)=>{
               resolve(response['data']);
               this._alertifyService.success('İşlem başarılı.');
           },

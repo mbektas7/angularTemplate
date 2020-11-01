@@ -5,4 +5,5 @@
     name: string;
     surname: string;
     jwtToken?: string;
+    avatar : string
 }

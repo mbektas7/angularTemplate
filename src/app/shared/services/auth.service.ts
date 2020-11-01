@@ -10,6 +10,7 @@ import { MirapiProgressBarService } from "@mirapi/components/progress-bar/progre
 import { environment } from "environments/environment";
 import { tap, share, map, catchError } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
+import { SocialUser } from 'angularx-social-login';
 
 let jwtToken: string;
 
@@ -20,7 +21,7 @@ export class AuthService {
 
     jwtHelper = new JwtHelperService();
 
-
+    userProfileImage : string;
     private jwtTokenSubject: Subject<string>;
     constructor(
     private httpClient: HttpClient,
@@ -46,6 +47,13 @@ export class AuthService {
     headers = headers.append('Content-Type', 'application/json');
     return this.httpClient.post(`${environment.rootPath}Token`, loginUser, { headers: headers }).shareReplay();
   }
+
+  loginV3(login:SocialUser, captchaResponse) {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    return this.httpClient.post(`${environment.rootPath}Users/socialLoginControl`, login, { headers: headers }).shareReplay();
+  }
+  
 
   register(registerUser: UserRegister) {
     let headers = new HttpHeaders();

@@ -26,6 +26,7 @@ export class QuestionsComponent implements OnInit {
   getList(){
     this.adminService.getList('post').then(data=>{
       this.posts = data;
+      console.log(this.posts);
     });
   }
   

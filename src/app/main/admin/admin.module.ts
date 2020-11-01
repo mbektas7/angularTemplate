@@ -34,6 +34,7 @@ import { SaveBrandComponent } from './brands/save-brand/save-brand.component';
 import { SaveCarComponent } from './cars/save-car/save-car.component';
 import { PostsComponent } from './posts/posts.component';
 import { SavePostComponent } from './posts/save-post/save-post.component';
+import { SelectCarComponent } from './cars/select-car/select-car.component';
 
 
 
@@ -106,7 +107,7 @@ const routes = [
     SaveCarComponent,
     PostsComponent,
     SavePostComponent
-    
+        
   ],
     entryComponents: [
     SaveBrandComponent,
