@@ -1,15 +1,15 @@
 export class UserAboutUpdateModal {
 
     Id:string;
-    birthday : string;
-    name : string;
-    surname : string;
+    Birthday : string;
+    Name : string;
+    Surname : string;
     isFemale : boolean;
-    about : string;
+    About : string;
     mail:string;
     carId : string;
-    address:string;
-    phone:string;
+    Address:string;
+    Phone:string;
     avatar : string;
 
     

@@ -4,7 +4,6 @@ import { CheckInTypes } from 'enums/checkinTypes.enum';
 import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { navigation } from 'app/navigation/navigation';
-import { PageClaims } from 'enums/pageTypes.enum';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,13 +15,6 @@ export class DashboardComponent implements OnInit {
     private userId;
     lastEntranceAndExits = [];
 
-    displayedColumns: string[] = [
-        'Giriş Zamanı',
-        'Çıkış Zamanı',
-        'Gün',
-        'Çalışılması Gereken Süre',
-        'Çalışılan Süre'
-    ];
     navigation: any;
     uploadUrl: 'dasdad';
     userList: any;
@@ -44,14 +36,7 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    getFiveDaysAgoFromNow(): any {
-        const date = new Date();
-        date.setDate(date.getDate() - 7);
-        return date;
-    }
-
-
-
+ 
     private async setNavigations() {
         this.navigation = navigation.slice();
         this.navigation = await this.removeUnauthorizedUrlsFromNavigation(

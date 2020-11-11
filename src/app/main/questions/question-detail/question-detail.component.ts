@@ -35,7 +35,7 @@ export class QuestionDetailComponent implements OnInit {
   likeList : any[];
   liked : boolean;
   moment: any = moment;
-
+  isLoggedIn : boolean;
   constructor(
     private questionService : QuestionsService,
     private router : Router,
@@ -44,13 +44,14 @@ export class QuestionDetailComponent implements OnInit {
     private httpReq : HttpRequestsService) {
 
     this._unsubscribeAll = new Subject();
+    this.isLoggedIn =  false;
+    this.isLoggedIn = this.autService.isTokenValid();
+    console.log("questions-detail");
+    console.log(this.autService.isTokenValid());
    }
 
   ngOnInit() {
-    const date = moment();
-    let dateInFormat = date.format('YYYY.M.D');
-    console.log(moment().calendar());
-    console.log(dateInFormat);
+   
 
      this.questionDeatilService.onPostChanged
        .pipe(takeUntil(this._unsubscribeAll))

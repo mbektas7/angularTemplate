@@ -4,25 +4,35 @@ export const navigation: MirapiNavigation[] = [
     {
         id       : 'applications',
         title    : 'Anasayfa',
-        url      : '/dashboard',
-        translate: 'NAV.APPLICATIONS',
+        url      : '/questions',
+        translate: 'NAV.HOMEPAGE',
+        icon     : 'question_answer',
         type     : 'group',
-        children : [
-            {
-                id       : 'questions',
-                title    : 'Questions',
-                translate: 'NAV.QUESTIONS.TITLE',
-                type     : 'item',
-                icon     : 'question_answer',
-                url      : '/questions',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.QUESTIONS.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
-            }
-        ]
+        // children : [
+        //     {
+        //         id       : 'questions',
+        //         title    : 'Questions',
+        //         translate: 'NAV.QUESTIONS.TITLE',
+        //         type     : 'item',
+        //         icon     : 'question_answer',
+        //         url      : '/questions',
+        //         badge    : {
+        //             title    : '25',
+        //             translate: 'NAV.QUESTIONS.BADGE',
+        //             bg       : '#F44336',
+        //             fg       : '#FFFFFF'
+        //         }
+        //     }
+        // ]
+    },
+    {
+        id       : 'blog',
+        title    : 'Blog',
+        url      : '/blog',
+        translate: 'NAV.BLOG',
+        icon     : 'speaker_notes',
+        type     : 'group',
+
     },
     {
         id       : 'admin',
@@ -30,6 +40,7 @@ export const navigation: MirapiNavigation[] = [
         url      : '/admin',
         translate: 'NAV.ADMIN',
         type     : 'group',
+        hidden   : true,
         icon     : 'settings',
         children : [
             {

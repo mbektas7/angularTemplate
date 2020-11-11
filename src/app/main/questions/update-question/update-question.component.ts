@@ -121,7 +121,6 @@ export class UpdateQuestionComponent implements OnInit {
 
 
     this.post.categories = this.selectedTags;
-    this.post.imageList = this.images;
     this.adminService.updateData('post/',this.post).then(data=>{
       this.router.navigateByUrl('/questions/'+this.post.Id);  
     });
@@ -130,11 +129,10 @@ export class UpdateQuestionComponent implements OnInit {
 
   deletePhoto(file : any){
     console.log(file);
-
-    const index: number = this.images.indexOf(file);
-    if (index !== -1) {
-        this.images.splice(index, 1);
-    }   
+    this.adminService.deleteData('post/deletePostPhoto/',file.Id).then(data=>{
+      this.getPostImages();
+    });
+    
   }
 
 
@@ -171,11 +169,26 @@ export class UpdateQuestionComponent implements OnInit {
     this.imagePath = files;
     reader.readAsDataURL(files[0]); 
     reader.onload = (_event) => { 
-      this.images.push(reader.result)
 
+
+      this.images.push(reader.result)
+      this.addImage(reader.result)
     }
 
     console.log(this.imageList);
+  }
+
+  addImage(data : any){
+    let request = {
+      'path' : data,
+      'post' : {
+        'Id':this.post.Id
+      }
+    }
+    this.adminService.addItem('post/addPostPhoto',request).then(data=>{
+      this.getPostImages(); 
+    });
+
   }
 
 

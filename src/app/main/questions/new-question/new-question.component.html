@@ -66,7 +66,7 @@
 
                   <input placeholder="Yeni Etiket Ekle..." #fruitInput [formControl]="tagCtrl" [matAutocomplete]="auto" 
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  [matChipInputAddOnBlur]="addOnBlur"   (ngModelChange)="searchAddressText($event)"   >
+                     (ngModelChange)="searchAddressText($event)"   >
                   
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

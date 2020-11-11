@@ -15,6 +15,8 @@ import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { User } from './main/profile/user';
+import { AuthService } from './shared/services/auth.service';
+import { UserDTO } from './shared/models/UserDTO';
 
 @Component({
     selector   : 'app',
@@ -28,20 +30,10 @@ export class AppComponent implements OnInit, OnDestroy
     user: User;
     // Private
     private _unsubscribeAll: Subject<any>;
+    currentUser: UserDTO;
 
-    /**
-     * Constructor
-     *
-     * @param {DOCUMENT} document
-     * @param {MirapiConfigService} _mirapiConfigService
-     * @param {MirapiNavigationService} _mirapiNavigationService
-     * @param {MirapiSidebarService} _mirapiSidebarService
-     * @param {MirapiSplashScreenService} _mirapiSplashScreenService
-     * @param {MirapiTranslationLoaderService} _mirapiTranslationLoaderService
-     * @param {Platform} _platform
-     * @param {TranslateService} _translateService
-     */
     constructor(
+        private authService : AuthService,
         @Inject(DOCUMENT) private document: any,
         private _mirapiConfigService: MirapiConfigService,
         private _mirapiNavigationService: MirapiNavigationService,
@@ -52,9 +44,16 @@ export class AppComponent implements OnInit, OnDestroy
     )
     {
 
+        if (this.authService.loggedIn()) {
+            this._mirapiNavigationService.updateNavigationItem('admin', {
+                hidden: false
+            });
+          }
+
+        
         // Get default navigation
         this.navigation = navigation;
-
+    
         // Register the navigation to the service
         this._mirapiNavigationService.register('main', this.navigation);
 
@@ -73,52 +72,10 @@ export class AppComponent implements OnInit, OnDestroy
         // Use a language
         this._translateService.use('en');
 
-        /**
-         * ----------------------------------------------------------------------------------------------------
-         * ngxTranslate Fix Start
-         * ----------------------------------------------------------------------------------------------------
-         */
-
-        /**
-         * If you are using a language other than the default one, i.e. Turkish in this case,
-         * you may encounter an issue where some of the components are not actually being
-         * translated when your app first initialized.
-         *
-         * This is related to ngxTranslate module and below there is a temporary fix while we
-         * are moving the multi language implementation over to the Angular's core language
-         * service.
-         **/
-
-        // Set the default language to 'en' and then back to 'tr'.
-        // '.use' cannot be used here as ngxTranslate won't switch to a language that's already
-        // been selected and there is no way to force it, so we overcome the issue by switching
-        // the default language back and forth.
-        /**
-         setTimeout(() => {
-            this._translateService.setDefaultLang('en');
-            this._translateService.setDefaultLang('tr');
-         });
-         */
-
-        /**
-         * ----------------------------------------------------------------------------------------------------
-         * ngxTranslate Fix End
-         * ----------------------------------------------------------------------------------------------------
-         */
-
-      
-
-        // Set the private defaults
+        
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to config changes
@@ -151,11 +108,23 @@ export class AppComponent implements OnInit, OnDestroy
 
                 this.document.body.classList.add(this.mirapiConfig.colorTheme);
             });
+
+            this.authService.getTokenObservable().subscribe((token) => {
+                if (this.authService.loggedIn()){
+                   
+                    this._mirapiNavigationService.updateNavigationItem('admin', {
+                        hidden: false
+                    });
+                   
+            }
+            else {
+               
+            }
+            });
+           
     }
 
-    /**
-     * On destroy
-     */
+  
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -163,15 +132,7 @@ export class AppComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
+   
     toggleSidebarOpen(key): void
     {
         this._mirapiSidebarService.getSidebar(key).toggleOpen();

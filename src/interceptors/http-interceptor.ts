@@ -9,25 +9,18 @@ import {
 import { AuthService } from 'app/shared/services/auth.service';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
-import { AlertifyService } from 'app/shared/services/alertify.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
     private refreshTokenInProgress = false;
     // Refresh Token Subject tracks the current token, or is null if no token is currently
     // available (e.g. refresh pending).
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<
-        any
-    >(null);
-    constructor(
-        private authService: AuthService,
-        private progressBar: MirapiProgressBarService,
-        private alertifyService: AlertifyService
-    ) {}
-    intercept(
-        request: HttpRequest<any>,
-        next: HttpHandler
-    ): Observable<HttpEvent<any>> {
+    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    constructor(   private authService: AuthService,     private progressBar: MirapiProgressBarService ) {}
+
+
+    intercept( request: HttpRequest<any>,   next: HttpHandler): Observable<HttpEvent<any>> {
+
         this.progressBar.show();
         const token = this.authService.getToken();
         const headerSettings = {
@@ -38,6 +31,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             'Pragma': 'no-cache',
             'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'   ,
             'If-Modified-Since': '0'     };
+
+
         if (token) {
             headerSettings['Authorization'] = `Bearer ${token}`;
         }
@@ -47,27 +42,40 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             headers,
             reportProgress: true
         });
+        request = request.clone({
+            withCredentials: true
+        });
+
         return next
             .handle(newRequest)
             .catch(error => {
+
                 if (
                     request.url.includes('refresh-token') ||
+                    request.url.includes('question') ||
                     request.url.includes('login') ||
                     request.url.includes('isUserLoggedInWithoutRefreshing') ||
                     request.url.includes('logout')
                 ) {
                     if (request.url.includes('refresh-token')) {
                         console.log("cikis");
-                        this.authService.logOut();
+                       // this.authService.logOut();
                     }
 
                     return Observable.throw(error);
                 }
+                if (  request.url.includes('question')  ) {
+                    console.log("questions intercepteor");
+                    this.addAuthenticationToken(request)
+                }
+
                 if (error.status !== 401) {
+                  
                     return Observable.throw(error);
                 }
 
                 if (this.refreshTokenInProgress) {
+                  
                     return this.refreshTokenSubject
                         .filter(result => result !== null)
                         .take(1)
@@ -75,15 +83,18 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                             next.handle(this.addAuthenticationToken(request))
                         );
                 } else {
+                  
                     this.refreshTokenInProgress = true;
                     this.refreshTokenSubject.next(null);
                     return this.authService.refreshToken()
                         .switchMap((res: any) => {
+                          
                             this.refreshTokenInProgress = false;
                             this.refreshTokenSubject.next(res[1]);
                             return next.handle(this.addAuthenticationToken(request));
                         })
                         .catch((err: any) => {
+                          
                             this.refreshTokenInProgress = false;
                             if (err.status === 401){
                                 this.authService.logOut();

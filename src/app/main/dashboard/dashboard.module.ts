@@ -16,16 +16,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { PageClaims } from 'enums/pageTypes.enum';
 import { LoginGuard } from 'app/shared/guards/login.guard';
 
 
 const routes: Routes = [
   {
       path     : '',
-      component: DashboardComponent,
-      canActivate: [LoginGuard],
-      data: {pageType: PageClaims.dashboard}
+      component: DashboardComponent
   }
 ];
 

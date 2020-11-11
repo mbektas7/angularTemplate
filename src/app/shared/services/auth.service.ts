@@ -1,16 +1,20 @@
 import { Injectable } from "@angular/core";
 import { UserLogin } from "../models/UserLogin";
-import { HttpHeaders, HttpClient } from "@angular/common/http";
-import { JwtHelperService } from "@auth0/angular-jwt";
-
+import { HttpHeaders, HttpClient, HttpInterceptor } from "@angular/common/http";
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Router } from "@angular/router";
 import { AlertifyService } from "./alertify.service";
 import { UserRegister } from "../models/UserRegister";
 import { MirapiProgressBarService } from "@mirapi/components/progress-bar/progress-bar.service";
 import { environment } from "environments/environment";
-import { tap, share, map, catchError } from "rxjs/operators";
-import { Observable, Subject } from "rxjs";
+import { tap, share, map, catchError, distinctUntilChanged } from "rxjs/operators";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { SocialUser } from 'angularx-social-login';
+
+import { User } from 'app/main/profile/user';
+import { UserDTO } from '../models/UserDTO';
+import { HttpRequestsService } from './httpRequests.service';
+
 
 let jwtToken: string;
 
@@ -19,33 +23,45 @@ let jwtToken: string;
 })
 export class AuthService {
 
-    jwtHelper = new JwtHelperService();
+   
 
+    jwtHelper = new JwtHelper();
+    jwtTokenSubject: Subject<string>;
+   
+    
+    userToken: any;
+    decodedToken: any;
+    TOKEN_KEY = 'token';
+    REFRESH_TOKEN_KEY = '625bc9db-b443-4af4-96b1-d5526487de36';
+    userName: any;
     userProfileImage : string;
-    private jwtTokenSubject: Subject<string>;
+
+   
     constructor(
     private httpClient: HttpClient,
     private router: Router,
     private alertifyService: AlertifyService,
     private _progressBarService: MirapiProgressBarService,
   ) {
+    this.jwtHelper = new JwtHelper()
     this.jwtTokenSubject = new Subject();
+   
+    
   }
+
+
  
-    userToken: any;
-    decodedToken: any;
-    TOKEN_KEY = 'token';
-    REFRESH_TOKEN_KEY = '625bc9db-b443-4af4-96b1-d5526487de36';
-    userName: any;
-    login(loginUser: UserLogin) {
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-    return this.httpClient.post(environment.rootPath + 'Token/' , loginUser, { headers: headers }).shareReplay();
-  }
+
   loginV2(loginUser: UserLogin, captchaResponse) {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    return this.httpClient.post(`${environment.rootPath}Token`, loginUser, { headers: headers }).shareReplay();
+    return this.httpClient.post(`${environment.rootPath}Token`, loginUser, { headers: headers }).do(user=> {
+     
+      this.saveToken(user["JwtToken"]);
+     console.log("login");
+      return user;
+    });
+    
   }
 
   loginV3(login:SocialUser, captchaResponse) {
@@ -53,7 +69,7 @@ export class AuthService {
     headers = headers.append('Content-Type', 'application/json');
     return this.httpClient.post(`${environment.rootPath}Users/socialLoginControl`, login, { headers: headers }).shareReplay();
   }
-  
+
 
   register(registerUser: UserRegister) {
     let headers = new HttpHeaders();
@@ -65,14 +81,16 @@ export class AuthService {
   saveToken(token) {
    jwtToken = token;
    this.jwtTokenSubject.next(jwtToken);
+  
   }
+
 
   async logOut(){
     
     await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
     this.saveToken(null);
     this.deleteRefreshToken();
-
+  
     this.router.navigateByUrl('/auth/login');
 
   }
@@ -81,14 +99,19 @@ export class AuthService {
     this.deleteRefreshToken();
     this.saveToken(null);
     }
+
+
     isTokenValid(){
 
       const isExpired =  this.jwtHelper.isTokenExpired(jwtToken);
       return !isExpired;
     }
-    isUserLoggedIn(){
-     return this.httpClient.post(environment.rootPath + `Token/isUserLoggedIn`, null); 
+
+
+    loggedIn(){
+      return tokenNotExpired(this.TOKEN_KEY, jwtToken);
     }
+
     deleteRefreshToken(){
         localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     }
@@ -120,14 +143,31 @@ export class AuthService {
     return null;
   }
   refreshToken() {
+   
     const url = environment.rootPath + '/Token';
     const req  = this.httpClient.post(environment.rootPath + `Token/refresh-token`,{}).do((res) => {
     if(res){
       this.saveToken(res["JwtToken"]);
+      
         }
     });
     return req;
   }
+
+getRefreshToken() {
+  if ((document.cookie.split(';').find(x => x.includes('refreshToken')) || '=').split('=')[1] !=null) {
+     this.httpClient.post(environment.rootPath + `Token/refresh-token`,{}).subscribe(data=>{
+    this.saveToken(data["JwtToken"]);
+   
+  });
+  return (document.cookie.split(';').find(x => x.includes('refreshToken')) || '=').split('=')[1];
+  } else {
+    return "";
+  }
+  // get refresh token from cookie
+ 
+   
+}
 
 
   getToken(){
@@ -140,7 +180,8 @@ export class AuthService {
     this.jwtTokenSubject.next(jwtToken);
     return this.jwtTokenSubject.asObservable();
   }
-  
+
+
 
 
 }

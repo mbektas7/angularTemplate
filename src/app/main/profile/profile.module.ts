@@ -19,14 +19,12 @@ import { ProfileAboutComponent } from 'app/main/profile/tabs/about/about.compone
 import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { AuthGuard } from 'app/shared/guards/auth.guard';
 import { LoginGuard } from 'app/shared/guards/login.guard';
-import { PageClaims } from 'enums/pageTypes.enum';
 import { SelectCarComponent } from '../admin/cars/select-car/select-car.component';
 import { MatDialogModule } from '@angular/material';
 const routes = [
     {
         path: '',
         component: ProfileComponent,
-        data: {pageType: PageClaims.profile}
 
     }
 ];

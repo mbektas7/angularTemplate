@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { User } from './user';
 import { UserAboutUpdateModal } from './tabs/about/userAboutUpdateModal';
+import { UserPhoto } from './UserPhoto';
 
 @Component({
     selector     : 'profile',
@@ -38,8 +39,9 @@ export class ProfileComponent implements OnInit
        this.name = this.authService.getCurrentUserName();
 
     this.profileService.getUserDetails().subscribe(data=>{
-      this.profileImage = data["data"].avatar;
-  
+      console.log(data["data"]['photo']['path']);
+      this.profileImage = data["data"]['photo']['path'];
+     
       if (data["isSocialLogin"]) {
         this.profileImage = 'data:image/jpg;base64,' +
         (this._sanitizer.bypassSecurityTrustResourceUrl(this.profileImage) as any).changingThisBreaksApplicationSecurity;
@@ -83,11 +85,13 @@ export class ProfileComponent implements OnInit
 
 
      updatePhoto(image : string){
-       this.userModal.avatar = image;
-       this.httpservice.addItem("users/changeProfilPhoto",this.userModal).then( ()=>{
 
+       let photo = new UserPhoto();
+       photo.baseData = image;
+
+       this.httpservice.addItem("users/addPhoto",photo).then( ()=>{
         this.profileService.getUserDetails().subscribe(data=>{
-          this.profileImage = data["data"].avatar
+          this.profileImage = data["data"]['photo']['path'];
         });
        } );
 

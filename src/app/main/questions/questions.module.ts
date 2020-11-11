@@ -22,7 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { MirapiWidgetModule } from '@mirapi/components';
+import { MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
@@ -36,6 +36,7 @@ import { MyUploadAdapter } from './new-question/UploadAdapter';
 import { UpdateQuestionComponent } from './update-question/update-question.component';
 import { SafePipe } from 'app/shared/pipes/SafePipe';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthService } from 'app/shared/services/auth.service';
 
 const routes = [
   {
@@ -44,17 +45,19 @@ const routes = [
   },
   {
     path     : 'questions/:id',
+    pathMatch: 'full',
     component: QuestionDetailComponent,
     resolve: {
       data: QuestionDetailService
   }
-}
-  ,  {
+},{
     path     : 'new-questions',
+    pathMatch: 'full',
     component: NewQuestionComponent ,
 },
 {
   path     : 'update-question/:id',
+  pathMatch: 'full',
   component: UpdateQuestionComponent,
   resolve: {
     data: QuestionDetailService
@@ -84,6 +87,7 @@ const routes = [
     MirapiSharedModule,
     MirapiWidgetModule,
     MatAutocompleteModule,
+    MirapiSearchBarModule,
     AngularMultiSelectModule,
     MultiselectModule,
     MatCheckboxModule,

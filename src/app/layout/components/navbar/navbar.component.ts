@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, Renderer2, ViewEncapsulation } from '@angular/core';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
     selector     : 'navbar',
@@ -22,9 +23,11 @@ export class NavbarComponent
         private _renderer: Renderer2
     )
     {
-        // Set the private defaults
+      
         this._variant = 'vertical-style-1';
     }
+
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors

@@ -19,11 +19,12 @@ import { AuthService } from '../services/auth.service';
       async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
                   
           try {
-              const result: any = await this.authService.isUserLoggedInWithoutRefreshing().toPromise(); 
-              this.router.navigateByUrl('/dashboard')
-              
+              const result: any = await this.authService.isTokenValid();
+              this.router.navigateByUrl('/questions')
+              console.log("authguard try");
          
           } catch (error) {
+            console.log("authguard catch");
               return true;
           }
       
@@ -34,6 +35,3 @@ import { AuthService } from '../services/auth.service';
   }
     
   }
-  
-        
-    

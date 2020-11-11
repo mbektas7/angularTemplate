@@ -3,30 +3,64 @@
 
     <!-- HEADER -->
     <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
+
         <div fxLayout="column" fxLayoutAlign="center start">
 
             <div class="h1 mt-16">Son Paylaşımlar</div>
         </div>
 
-<div class="pr-40" >
-    <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  color="primary" >
-        Yeni Gönderi Ekle</button>
-</div>
         
+         <!-- SEARCH -->
+         <div class="search-wrapper mx-32 mx-md-0">
+            <div  class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon>search</mat-icon>
+                <input (keyup.enter)="search()" #filter [(ngModel)]="searchText"  placeholder="Neyi merak etmiştin?">
+            </div>
+        </div>
+        <!-- / SEARCH -->
+
+    <div  *ngIf="!isLoggedIn" class="pr-40" >
+        <button [routerLink]="['/auth/login']"   mat-raised-button="" 
+        class="mat-focus-indicator add-product-button fuse-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+        tabindex="0"><span class="mat-button-wrapper">
+           
+            <span>Sormak için giriş yap</span></span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div></button>
+    </div>
+
+        <div *ngIf="isLoggedIn" class="pr-40" >
+            <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="warn-A200-fg" >
+                <mat-icon>add</mat-icon>
+                <span>Bir soru sor</span></button>
+        </div>
+       
     </div>
     <!-- / HEADER -->
 
     <!-- CONTENT -->
- <div class="content ">
+ <div  class="content " fxLayout="row" fxLayoutAlign="center none"  >
+
+    <div *ngFor="let message of messages" class="alert alert-success">{{message.text}}</div>
+
+    <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
 
 
+        <button [routerLink]="['/auth/login']" class="action ask-question" *ngIf="!isLoggedIn"  mat-raised-button="" 
+        color="accent"
+        class="mat-focus-indicator add-product-button fuse-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+        tabindex="0"><span class="mat-button-wrapper">
+            <mat-icon>add</mat-icon>
+            <span>Bir soru sor</span></span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div></button>
+
+    </div>
 
 
-    <div class="w-50">
+    <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
 
-        <div class="p-24 "  fxLayout="column" fxLayoutAlign="center stretch" >      
-
-            <div class="mat-card p-24 px-24 mb-24"  [routerLink]="'/questions/'+item.Id"   *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start"fxFlex="1 0" >
+            <div class="mat-card p-24 px-24 mb-24"  [routerLink]="'/questions/'+item.Id"   *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start" >
 
                 <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch" >
 
@@ -47,7 +81,7 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center">
                         
-                        <img  src="{{item.user.avatar}}" class="avatar"/>
+                        <img  src="{{item.user.photo?.path}}" class="avatar"/>
                         <div>
                             <p class="pt-16 ">
                             {{item.user.Name}}
@@ -57,7 +91,7 @@
                 </div>
                 <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center" >
 
-                    <div class="fuse-widget-front p-12">
+                    <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
                             <div class="blue-800-fg font-size-72 line-height-72">
                                {{item.view}}
@@ -66,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fuse-widget-front p-12">
+                    <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
                             <div class="grey-700-fg font-size-72 line-height-72">
                                 {{item.answer}}
@@ -75,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fuse-widget-front p-12">
+                    <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
                             <div class="orange-800-fg font-size-72 line-height-72">
                                 {{item.vote}}
@@ -88,9 +122,64 @@
               
             </div>
 
-        </div>
     </div>
 
+    <div class="px-4" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
+        <div class="col-md-2 disable-mobile right-sidebar">
+            <ul>
+                <li class="widget widget-statistic">
+                <ul>
+                    <li class="questions-count">
+                        <p>Soru</p><p>
+                        <span>{{summary?.postCount}}</span>
+                    </p></li>
+                    <li class="members-count">
+                        <p>Üye</p><p>
+                        <span>{{summary?.userCount}}</span>
+                    </p></li>
+                </ul>
+            </li><!-- END widget-statistic -->
+                <li class="widget widget-related-tags">
+                <h3>En çok kullanılan anahtarlar</h3>
+                <ul>
+                                <li *ngFor="let item of summary?.categories">
+                        <a class="q-tag" href="https://qaengine.enginethemes.com/blog/qa-tag/business-2/">{{item.name}}</a> x {{item.count}}         </li>
+                 </ul>
+            </li><!-- END widget-related-tags -->
+                <li class="widget widget-hot-questions">
+                <h3>En çok oylanan sorular</h3>
+                <ul>
+                                <li *ngFor="let item of summary?.mostVoted">
+                        <a [routerLink]="'/questions/'+item.Id"  >
+                            <span class="topic-title">{{item.title}}</span>
+                        </a>
+                    </li>
+                               
+                            </ul>
+            </li><!-- END widget-related-tags -->
+                <li class="widget user-widget">
+                <h3 class="widgettitle">En çok soranlar</h3>
+                <div class="hot-user-question">
+                    <ul>
+                                    <li *ngFor="let item of summary?.topUsers; let i = index">
+                            <span class="number">{{i}}</span>
+                            <span class="username ">
+                                <a href="https://qaengine.enginethemes.com/blog/member/tatthien/" title="56789">
+                                    {{item.name}}                    	</a>
+                            </span>
+                                                <span class="points-count" title="56789 Point(s)">
+                                <i class="fa fa-star"></i>
+                                <span>{{item.count}}</span>
+                            </span>
+                                            </li>
+                                   
+                                </ul>
+                </div>
+            </li>
+
+                </ul>
+        </div>
+    </div>
 
  </div>
     <!-- / CONTENT -->

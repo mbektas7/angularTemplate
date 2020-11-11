@@ -8,13 +8,13 @@ import { AuthService } from 'app/shared/services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { Router } from '@angular/router';
-import { PageClaims } from 'enums/pageTypes.enum';
 import { environment } from 'environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 import { first } from 'rxjs/operators';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
 
 
 @Component({
@@ -27,15 +27,7 @@ import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-logi
 export class LoginComponent implements OnInit
 {
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FormBuilder} _formBuilder
-     * 
-     * 
-     */
-    ;
+
     loginForm: FormGroup;
     userToken: any;
     isSubmitClicked = false;
@@ -64,6 +56,7 @@ export class LoginComponent implements OnInit
         private router: Router,
         private domSanitizer: DomSanitizer,
         private progressBarService: MirapiProgressBarService,
+        private _MirapiNavigationService : MirapiNavigationService
     )
     {   
        
@@ -84,15 +77,19 @@ export class LoginComponent implements OnInit
                 }
             }
         };
-        if (this.authServiceLocal.isTokenValid()){
-            this.router.navigateByUrl('/dashboard');
+
+     
+        if (this.authServiceLocal.loggedIn()) { 
+            this._MirapiNavigationService.updateNavigationItem('admin', {
+                hidden: false
+            });
+            this.router.navigateByUrl('/questions');
         }
+        
         this.jwtHelper = new JwtHelperService();
     }
-    get isAuthenticated(){
-         return this.authServiceLocal.isTokenValid();
 
-      }
+
 
     ngOnInit(): void
     {
@@ -102,15 +99,20 @@ export class LoginComponent implements OnInit
         });
 
     }
+
+
     login() {
         this.progressBarService.show();
        this.disableLoginButton();
        this.loginUser = Object.assign({}, this.loginForm.value);
 
-       this.authServiceLocal.loginV2(this.loginUser, '')
+       this.authServiceLocal.loginV2(this.loginUser,'')
        .subscribe(async data => {
            if (data){
-               this.authServiceLocal.saveToken(data["JwtToken"]);
+               // Menüler açılır
+               this._MirapiNavigationService.updateNavigationItem('admin', {
+                hidden: false
+            });
                const userToken: any = data["JwtToken"];
                const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
                this.alertifyService.success('Sisteme giriş yapıldı');    
@@ -152,82 +154,82 @@ export class LoginComponent implements OnInit
     }
 
     signInWithGoogle(): void {
-        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-        this.authService.authState.subscribe(data=>{
+        // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+        // this.authService.authState.subscribe(data=>{
         
-            this.authServiceLocal.loginV3(data, '')
-            .subscribe(async data => {
-                if (data){
-                    this.authServiceLocal.saveToken(data["JwtToken"]);
-                    const userToken: any = data["JwtToken"];
-                    const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-                    this.alertifyService.success('Sisteme giriş yapıldı');    
-                    const userName = decodedToken.sub;
-                    if (userName == null){
-                      this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-                      this.router.navigateByUrl('/profile');
-                    }
-                    else {
-                    this.router.navigateByUrl('/questions');
-                }
+        //     this.authServiceLocal.loginV3(data, '')
+        //     .subscribe(async data => {
+        //         if (data){
+        //             this.authServiceLocal.saveToken(data["JwtToken"]);
+        //             const userToken: any = data["JwtToken"];
+        //             const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+        //             this.alertifyService.success('Sisteme giriş yapıldı');    
+        //             const userName = decodedToken.sub;
+        //             if (userName == null){
+        //               this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+        //               this.router.navigateByUrl('/profile');
+        //             }
+        //             else {
+        //             this.router.navigateByUrl('/questions');
+        //         }
           
                 
-            }
-              },
-              error => {
-                this.progressBarService.hide();
-                if (error.status === 401){
-                    this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-                }
-                else {
-                    // this.reloadImage();
-                    this.alertifyService.error(error.error);
+        //     }
+        //       },
+        //       error => {
+        //         this.progressBarService.hide();
+        //         if (error.status === 401){
+        //             this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
+        //         }
+        //         else {
+        //             // this.reloadImage();
+        //             this.alertifyService.error(error.error);
      
-                }
-                this.activeLoginButton();
-            });   
+        //         }
+        //         this.activeLoginButton();
+        //     });   
 
 
-        });
+        // });
       }
      
       signInWithFB(): void {
-        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-        this.authService.authState.subscribe(data=>{
+        // this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+        // this.authService.authState.subscribe(data=>{
         
-            this.authServiceLocal.loginV3(data, '')
-            .subscribe(async data => {
-                if (data){
-                    this.authServiceLocal.saveToken(data["JwtToken"]);
-                    const userToken: any = data["JwtToken"];
-                    const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-                    this.alertifyService.success('Sisteme giriş yapıldı');    
-                    const userName = decodedToken.sub;
-                    if (userName == null){
-                      this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-                      this.router.navigateByUrl('/profile');
-                    }
-                    else {
-                    this.router.navigateByUrl('/questions');
-                }
+        //     this.authServiceLocal.loginV3(data, '')
+        //     .subscribe(async data => {
+        //         if (data){
+        //             this.authServiceLocal.saveToken(data["JwtToken"]);
+        //             const userToken: any = data["JwtToken"];
+        //             const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+        //             this.alertifyService.success('Sisteme giriş yapıldı');    
+        //             const userName = decodedToken.sub;
+        //             if (userName == null){
+        //               this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+        //               this.router.navigateByUrl('/profile');
+        //             }
+        //             else {
+        //             this.router.navigateByUrl('/questions');
+        //         }
           
                 
-            }
-              },
-              error => {
-                this.progressBarService.hide();
-                if (error.status === 401){
-                    this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-                }
-                else {
-                    // this.reloadImage();
-                    this.alertifyService.error(error.error);
+        //     }
+        //       },
+        //       error => {
+        //         this.progressBarService.hide();
+        //         if (error.status === 401){
+        //             this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
+        //         }
+        //         else {
+        //             // this.reloadImage();
+        //             this.alertifyService.error(error.error);
      
-                }
-                this.activeLoginButton();
-            });   
+        //         }
+        //         this.activeLoginButton();
+        //     });   
 
-        });
+        // });
       }
 
 }

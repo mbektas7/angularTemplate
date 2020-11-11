@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from '../questions/questions.service';
 import { PostModel } from '../admin/posts/PostModel';
 import { MypostDetailComponent } from './mypost-detail/mypost-detail.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-myposts',
@@ -11,9 +12,12 @@ import { MatDialog } from '@angular/material';
 })
 export class MypostsComponent implements OnInit {
 
+  confirmDialogRef: MatDialogRef<MirapiConfirmDialogComponent>;
   myPosts : PostModel[];
+  myAnswer : PostModel[];
   isEditing = false;
   constructor(
+    public _matDialog: MatDialog,
     private questionService : QuestionsService,
     public dialog: MatDialog,) { }
 
@@ -25,7 +29,9 @@ this.getMyPosts();
 
   async getMyPosts(){
     await this.questionService.getUserPosts().then(data=>{
-      this.myPosts = data;
+      this.myAnswer = data.filter(x=>x['parent'] != null);
+      console.log(this.myAnswer);
+      this.myPosts = data.filter(x=>x['parent'] == null);
       console.log(this.myPosts);
     });
   }
@@ -66,9 +72,26 @@ this.getMyPosts();
   }
 
   async deletePost(data : PostModel){
-    await this.questionService.deletePost(data).then(()=>{
-      this.getMyPosts();
-    });
+
+    this.confirmDialogRef = this._matDialog.open(MirapiConfirmDialogComponent, {
+      disableClose: false
+  });
+
+  this.confirmDialogRef.componentInstance.confirmMessage = 'Bu gönderiyi silmek için emin misiniz?';
+
+
+  this.confirmDialogRef.afterClosed()
+  .subscribe(result => {
+      if ( result )
+      {
+         this.questionService.deletePost(data).then(()=>{
+          this.getMyPosts();
+        });
+      }
+      this.confirmDialogRef = null;
+  });
+
+    
   }
 
 

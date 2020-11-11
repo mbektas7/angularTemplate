@@ -9,7 +9,7 @@
     
                 <header  fxLayoutAlign="space-between center" >
                     <div class="user" fxLayout="row" fxLayoutAlign="start center">
-                         <img class="avatar" src="{{post.user.avatar}}"> 
+                         <img class="avatar" src="{{post.user.photo?.path}}"> 
     
                         <div fxLayout="column">
                             <div class="title">
@@ -72,7 +72,7 @@
                         <div class="p-20" class="period-media"  fxLayout="row wrap">
                             
                             <div class="p-24" *ngFor="let item of images" fxLayoutAlign="start center" fxLayout="column" >
-                               <img  style=" width: 450px; " class="preview" src="{{item}}" >
+                               <img  style=" width: 450px; " class="preview" src="{{item.path}}" >
                               
                            </div>
                          </div>
@@ -80,7 +80,7 @@
                        
                     </div>
     
-                    <div fxLayout="row" fxLayoutAlign="start center">
+                    <div *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="start center">
                         <button (click)="like(liked)" mat-button class="like-button">
                             <span fxLayout="row" fxLayoutAlign="start center">
                                 <mat-icon  class="s-16">favorite</mat-icon>
@@ -118,7 +118,7 @@
                     </div>
     
                     <div class="comment" fxLayout="row" fxFlexFill *ngFor="let answer of post.answers">
-                        <img  src="{{answer.user.avatar}}" class="avatar"/>
+                        <img  src="{{answer.user.photo?.path}}" class="avatar"/>
     
                         <div fxLayout="column" fxFlex>
                             <div fxLayout="row" fxLayoutAlign="start center">
@@ -135,10 +135,15 @@
                         </div>
                     </div>
     
-                    <div class="reply" fxLayout="row" fxFlexFill>
+                    <div *ngIf="!isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
+                        <button [routerLink]="['/auth/login']" routerLinkActive="router-link-active"  mat-raised-button color="accent" class="post-comment-button"  aria-label="Post Comment">
+                            Cevaplamak için giriş yap
+                        </button>
+                    </div>
+                    <div *ngIf="isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
                         <img  src="{{ profileImage}}" class="avatar"/>
     
-                        <form fxFlex>
+                        <form (keyup.enter)="sendAnswer()" fxFlex>
                             <textarea placeholder="Add a comment..." [(ngModel)]="answer" name="answer"></textarea>
                             <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
                                 Cevap Ver

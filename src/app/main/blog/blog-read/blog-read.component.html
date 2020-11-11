@@ -1,0 +1,89 @@
+
+<div class="w-100-p pt-24"  >
+    <div id="timeline" fxLayout="row" fxLayoutAlign="center none">
+    
+        <div class="timeline-content"  fxLayoutAlign="center none" fxLayout="column"  fxFlex="100" fxFlex.gt-sm="55" fxFlex.gt-md="65">
+    
+    
+            <div class="timeline-item"  >
+    
+                <header  fxLayoutAlign="space-between center" >
+                    <div class="user" fxLayout="row" fxLayoutAlign="start center">
+                         <img class="avatar" src="{{post.user.photo?.path}}"> 
+    
+                        <div fxLayout="column">
+                            <div class="title">
+                                <span class="username">{{post.user.Name}}</span>
+                                <span > bir blog yazısı oluşturdu</span>
+                            </div>
+                            <div class="time">{{post.creationDate}}</div>
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="pl-100" *ngIf="isEditable"  >
+                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+            
+                        <mat-menu #moreMenu="matMenu">
+           
+                            <button *ngIf="isEditable" [routerLink]="['/update-question/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
+                                <mat-icon>edit</mat-icon>
+                                <span>Düzenle</span>
+                            </button>
+                            <button *ngIf="isEditable" (click)="deletePost(post)" mat-menu-item aria-label="Sil">
+                                <mat-icon>delete</mat-icon>
+                                <span>Sil</span>
+                            </button>
+            
+                        </mat-menu>
+                    </div>
+
+
+                </header>
+
+                <div class="p-24" fxLayoutAlign="space-between center">
+                    <h2 class="title" >{{post.title}}</h2>
+                    <div class="pl-100"  fxLayoutAlign="end center"  >
+                        <mat-chip-list >
+                            <mat-chip class="green-50-bg" *ngFor="let tag of post.categories" [removable]="false">
+                                <mat-icon>{{tag.category.iconName}}</mat-icon>
+                                {{tag.category.name}}
+                            </mat-chip>
+                        </mat-chip-list>
+    
+                    </div>
+    
+                </div>
+             
+               
+    
+                <div class="content">
+                    <div *ngIf="post.message" class="message" [innerHTML]="post.message">
+                       
+                    </div>
+                    <div  fxLayout="column" class="article">
+
+                        <div class="p-20" class="period-media"  fxLayout="row wrap">
+                            
+                            <div class="p-24" *ngFor="let item of images" fxLayoutAlign="start center" fxLayout="column" >
+                               <img  style=" width: 450px; " class="preview" src="{{item.path}}" >
+                              
+                           </div>
+                         </div>
+
+                       
+                    </div>
+    
+                    
+                </div>
+
+            </div>
+        </div>
+    
+    </div>
+</div>
+

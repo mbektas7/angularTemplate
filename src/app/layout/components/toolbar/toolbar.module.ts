@@ -6,6 +6,8 @@ import { MirapiSearchBarModule, MirapiShortcutsModule } from '@mirapi/components
 import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
+import { AuthService } from 'app/shared/services/auth.service';
+
 
 @NgModule({
     declarations: [
@@ -22,6 +24,7 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
         MirapiSearchBarModule,
         MirapiShortcutsModule
     ],
+    providers:[],
     exports     : [
         ToolbarComponent
     ]

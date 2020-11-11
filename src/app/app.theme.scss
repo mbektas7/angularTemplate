@@ -87,6 +87,7 @@ $typography: mat-typography-config(
 @import "src/app/main/authentication/forgot-password/forgot-password.theme";
 @import "src/app/main/authentication/forgot-password/verifyForgotPassword/verifyForgotPassword.theme";
 @import "src/app/main/profile/tabs/about/about.theme";
+@import "src/app/main/questions/question.theme";
 
 
 // Define a mixin for easier access
@@ -104,7 +105,7 @@ $typography: mat-typography-config(
     @include register-theme($theme);
     @include  mail-confirm-theme($theme);
     @include verifyForgotPassword-theme($theme);
-
+    @include question-theme($theme);
 
     
 

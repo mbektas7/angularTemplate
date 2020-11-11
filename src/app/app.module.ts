@@ -29,10 +29,15 @@ import {QuicklinkStrategy, QuicklinkModule} from 'ngx-quicklink';
 
 import { LoginGuard } from './shared/guards/login.guard';
 
-import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 import { AdminModule } from './main/admin/admin.module';
 import { QuestionsModule } from './main/questions/questions.module';
 import { MypostsModule } from './main/myposts/myposts.module';
+import { BlogModule } from './main/blog/blog.module';
+import { PageTypes } from 'enums/pageTypes.enum';
+import { AuthService } from './shared/services/auth.service';
+import { ToolbarModule } from './layout/components/toolbar/toolbar.module';
+import { HomeGueard } from './shared/guards/home.guard';
+import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
 
 
 
@@ -57,46 +62,45 @@ const appRoutes: Routes = [
         
     },
     {
-        path      : 'dashboard',
-        pathMatch: 'full',
-        loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
-        canActivate: [ LoginGuard]
-    },
-    {
         path        : 'questions',
-        pathMatch: 'full',
-        loadChildren: () => import('./main/questions/questions.module').then(m => m.QuestionsModule)
+        loadChildren: './main/questions/questions.module#QuestionsModule',
+        canActivate: [LoginGuard],
        
     },
     {
+        path        : 'blog',
+        loadChildren: './main/blog/blog.module#BlogModule',
+
+        data: {pageType: PageTypes.blog}
+    },
+    {
         path        : 'profile',
-        pathMatch: 'full',
+       
         loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
+        canActivate: [LoginGuard],
+        data: {pageType: PageTypes.profile}
     },
     {
         path        : 'myposts',
-        pathMatch: 'full',
+       
         loadChildren: () => import('./main/myposts/myposts.module').then(m => m.MypostsModule),
+        canActivate: [LoginGuard],
+        data: {pageType: PageTypes.myposts}
     },
     {
         path        : 'admin',
         canActivate: [ LoginGuard],
-        pathMatch: 'full',
+      
         loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
+        data: {pageType: PageTypes.admin},
     },
 
     {
         path      : 'password',
-        pathMatch: 'full',
+      
         loadChildren : () => import('./main/password/password.module').then(m => m.PasswordModule),
         canActivate: [ LoginGuard]
 
-    },
-    {
-        path    : '',
-        pathMatch: 'full',
-        redirectTo: 'dashboard',
-        canActivate: [ LoginGuard]
     },
     {
         path      : '**',
@@ -134,17 +138,19 @@ const appRoutes: Routes = [
         SocialLoginModule,
 
         // App modules
+        ToolbarModule,
         LayoutModule,
         AdminModule,
         QuestionsModule,
-        MypostsModule
+        MypostsModule,
+        BlogModule
         
     ],
     bootstrap   : [
         AppComponent
     ],
     providers: 
-    [AlertifyService,
+    [AlertifyService,  
     LoginGuard,  
     {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
     {provide: LocationStrategy, useClass: HashLocationStrategy},

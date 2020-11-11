@@ -45,7 +45,7 @@ const routes = [
         FormsModule,                            
         ReactiveFormsModule 
     ],
-    providers: [AlertifyService,AuthService],
+    providers: [AlertifyService],
 })
 export class LoginModule
 {

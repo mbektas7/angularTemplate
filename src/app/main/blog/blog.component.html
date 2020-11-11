@@ -1,0 +1,52 @@
+
+<div id="forms" class="page-layout simple " fxLayout="column">
+
+  <div  *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="end none">
+    <div  class="pr-40 pt-2" >
+      <button mat-raised-button   [routerLink]="'/new-blog'" routerLinkActive="router-link-active" >
+        <mat-icon>add</mat-icon>
+          Yeni Gönderi Ekle</button>
+  </div>
+  
+  </div>
+
+
+
+
+    <!-- CONTENT -->
+ <div  class="content pt-16 mt-16" fxLayout="row" fxLayoutAlign="center none"  >
+
+
+    <div class="px-4" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
+
+    </div>
+
+
+    <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
+
+            <div class="mat-card p-24 px-24 mb-24"  [routerLink]="'/blog-read/'+item.Id"  *ngFor="let item of posts"  fxLayout="row" fxLayoutAlign="start" >
+ 
+              <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch" >
+                      <div class="h2 mb-24 border-bottom">{{item.title}}</div>
+                
+                      <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">
+                          <p class="pt-16 " innerHTML="{{ item.message.length>300 ? (item.message | slice:0:300)+'..':(item.message) }}">
+                          
+                          </p>
+                      </div>
+            </div>
+            </div>
+
+    </div>
+
+    <div class="px-4" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
+       
+
+    </div>
+
+ </div>
+    <!-- / CONTENT -->
+
+</div>
+
+

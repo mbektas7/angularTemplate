@@ -14,103 +14,199 @@
 
     <!-- CONTENT -->
     <div class="content ">
+        <mat-tab-group dynamicHeight="true">
 
-        <div class="w-50">
+            <mat-tab label="Sorularım">
+                <div class="w-50">
 
-            <div class="p-24 " fxLayout="column" fxLayoutAlign="center stretch">
-
-                <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myPosts"
-                    fxLayout="row" fxLayoutAlign="start" fxFlex="1 0">
-
-                    <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch">
-
-                        <div fxLayout="row" fxLayoutAlign="space-between center">
-                            <a class="h2 mb-24 border-bottom"  [routerLink]="'/questions/'+item.Id" >{{item.title}}</a>
-
-                            <div fxLayout="row" fxLayoutAlign="space-between center">
-                            <button mat-icon-button class="warn"
-                                (click)="deletePost(item)">
-                                <mat-icon>delete</mat-icon>
-                                
-                            </button>
-                            <button mat-icon-button class="blue" 
-                            [routerLink]="['/update-question/'+ item.Id]" >
-                                <mat-icon>edit</mat-icon>  
-                            </button>
-                        </div>
-                        </div>
-
-                        <div *ngIf="!isEditing" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <p class="pt-16 ">
-                                {{item.message}}
-                            </p>
-                        </div>
-
-                        <form *ngIf="isEditing" fxFlex>
-                            <textarea placeholder="Add a comment..." [(ngModel)]="item.message" name="answer"></textarea>
-                            <button mat-raised-button color="accent" class="post-comment-button" (click)="update(item)" aria-label="Post Comment">
-                                Güncelle
-                            </button>
-                        </form>
-
-                        <div>
-                            <mat-chip-list>
-                                <mat-chip class="green-50-bg" [removable]="false">
-                                    <mat-icon>blur_on</mat-icon>
-                                    Aksesuar
-                                </mat-chip>
-
-                                <mat-chip class="cyan-100-bg" [removable]="false">
-                                    <mat-icon>brightness_5</mat-icon>
-                                    Motor
-                                </mat-chip>
-                            </mat-chip-list>
-
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                            <mat-icon>person</mat-icon>
-                            <div>
-                                <p class="pt-16 ">
-                                    {{item.user.Name}}
-                                </p>
+                    <div class="p-24 " fxLayout="column" fxLayoutAlign="center stretch">
+        
+                        <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myPosts"
+                            fxLayout="row" fxLayoutAlign="start" fxFlex="1 0">
+        
+                            <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch">
+        
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <a class="h2 mb-24 border-bottom"  [routerLink]="'/questions/'+item.Id" >{{item.title}}</a>
+        
+                                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <button mat-icon-button class="warn"
+                                        (click)="deletePost(item)">
+                                        <mat-icon>delete</mat-icon>
+                                        
+                                    </button>
+                                    <button mat-icon-button class="blue" 
+                                    [routerLink]="['/update-question/'+ item.Id]" >
+                                        <mat-icon>edit</mat-icon>  
+                                    </button>
+                                </div>
+                                </div>
+        
+                                <div *ngIf="!isEditing" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <p [innerHTML]="item.message" class="pt-16 ">
+                                       
+                                    </p>
+                                </div>
+        
+                                <form *ngIf="isEditing" fxFlex>
+                                    <textarea placeholder="Add a comment..." [(ngModel)]="item.message" name="answer"></textarea>
+                                    <button mat-raised-button color="accent" class="post-comment-button" (click)="update(item)" aria-label="Post Comment">
+                                        Güncelle
+                                    </button>
+                                </form>
+        
+                                <div>
+                                    <mat-chip-list >
+                                        <mat-chip class="green-50-bg" *ngFor="let tag of item.categories" [removable]="false">
+                                            <mat-icon>{{tag.category?.iconName}}</mat-icon>
+                                            {{tag.category?.name}}
+                                        </mat-chip>
+                                    </mat-chip-list>
+        
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <img  src="{{item.user.photo?.path}}" class="avatar"/>
+                                    <div>
+                                        <p class="pt-16 ">
+                                            {{item.user.Name}}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
+                            <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center">
+        
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="blue-800-fg font-size-72 line-height-72">
+                                            {{item.view}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Görüntüleme
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="grey-700-fg font-size-72 line-height-72">
+                                            {{item.answer}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Cevap
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="orange-800-fg font-size-72 line-height-72">
+                                            {{item.vote}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Oy
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
                         </div>
+        
                     </div>
-                    <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center">
-
-                        <div class="fuse-widget-front p-12">
-                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                                <div class="blue-800-fg font-size-72 line-height-72">
-                                    {{item.view}}
-                                </div>
-                                <div class="h3 secondary-text font-weight-500">Görüntüleme
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fuse-widget-front p-12">
-                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                                <div class="grey-700-fg font-size-72 line-height-72">
-                                    {{item.answer}}
-                                </div>
-                                <div class="h3 secondary-text font-weight-500">Cevap
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fuse-widget-front p-12">
-                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                                <div class="orange-800-fg font-size-72 line-height-72">
-                                    {{item.vote}}
-                                </div>
-                                <div class="h3 secondary-text font-weight-500">Oy
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+            </mat-tab>
 
-            </div>
-        </div>
+            <mat-tab label="Cevaplarım">
+                <div class="w-50">
+
+                    <div class="p-24 " fxLayout="column" fxLayoutAlign="center stretch">
+        
+                        <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myAnswer"
+                            fxLayout="row" fxLayoutAlign="start" fxFlex="1 0">
+        
+                            <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch">
+        
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <a class="h2 mb-24 border-bottom"  [routerLink]="'/questions/'+item.Id" >{{item.title}}</a>
+        
+                                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <button mat-icon-button class="warn"
+                                        (click)="deletePost(item)">
+                                        <mat-icon>delete</mat-icon>
+                                        
+                                    </button>
+                                    <button mat-icon-button class="blue" 
+                                    [routerLink]="['/update-question/'+ item.Id]" >
+                                        <mat-icon>edit</mat-icon>  
+                                    </button>
+                                </div>
+                                </div>
+        
+                                <div *ngIf="!isEditing" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <p [innerHTML]="item.message" class="pt-16 ">
+                                      
+                                    </p>
+                                </div>
+        
+                                <form *ngIf="isEditing" fxFlex>
+                                    <textarea placeholder="Add a comment..." [(ngModel)]="item.message" name="answer"></textarea>
+                                    <button mat-raised-button color="accent" class="post-comment-button" (click)="update(item)" aria-label="Post Comment">
+                                        Güncelle
+                                    </button>
+                                </form>
+        
+                                <div>
+                                    <mat-chip-list >
+                                        <mat-chip class="green-50-bg" *ngFor="let tag of item.categories" [removable]="false">
+                                            <mat-icon>{{tag.category.iconName}}</mat-icon>
+                                            {{tag.category.name}}
+                                        </mat-chip>
+                                    </mat-chip-list>
+        
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <img  src="{{item.user.photo?.path}}" class="avatar"/>
+                                    <div>
+                                        <p class="pt-16 ">
+                                            {{item.user.Name}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center">
+        
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="blue-800-fg font-size-72 line-height-72">
+                                            {{item.view}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Görüntüleme
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="grey-700-fg font-size-72 line-height-72">
+                                            {{item.answer}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Cevap
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fuse-widget-front p-12">
+                                    <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                        <div class="orange-800-fg font-size-72 line-height-72">
+                                            {{item.vote}}
+                                        </div>
+                                        <div class="h3 secondary-text font-weight-500">Oy
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+        
+                    </div>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+
+
 
 
     </div>

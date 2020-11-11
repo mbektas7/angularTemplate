@@ -7,11 +7,12 @@ import { QuestionDetailService } from '../questions/question-detail/question-det
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSortModule, MatSnackBarModule, MatTableModule, MatTabsModule, MatExpansionModule, MatDialogModule, MatDividerModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatRadioModule, MatGridListModule, MatCardModule } from '@angular/material';
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { MirapiWidgetModule } from '@mirapi/components';
+import { MirapiConfirmDialogModule, MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { QuestionsService } from '../questions/questions.service';
 import { MypostDetailComponent } from './mypost-detail/mypost-detail.component';
+import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
 
 const routes = [
   {
@@ -50,7 +51,8 @@ const routes = [
     MatRadioModule,
     MatSelectModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MirapiConfirmDialogModule
     
   ],
   providers :[ QuestionsService , QuestionDetailService],
@@ -60,6 +62,7 @@ const routes = [
  
   ],
   entryComponents: [
+    MirapiConfirmDialogComponent,
     MypostDetailComponent
   ]
  

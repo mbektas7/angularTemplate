@@ -2,7 +2,8 @@ export const locale = {
     lang: 'en',
     data: {
         'NAV': {
-            'APPLICATIONS': 'Applications',
+            'HOMEPAGE': 'Home',
+            'BLOG': 'Blog',
             'ADMIN': 'Administrator',
             'QUESTIONS'        : {
                 'TITLE': 'Questions',

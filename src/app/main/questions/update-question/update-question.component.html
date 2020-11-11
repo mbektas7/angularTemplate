@@ -44,7 +44,7 @@
 <div class="p-20" class="period-media"  fxLayout="row wrap">
 
   <div class="p-24" *ngFor="let item of images" fxLayoutAlign="start center" fxLayout="column" >
-    <img  style="height: 25%;width: 25%; height: 256px; width: 256px; " class="preview" [src]="item" >
+    <img  style="height: 25%;width: 25%; height: 256px; width: 256px; " class="preview" [src]="item.path" >
     <button mat-raised-button class="accent-bg w-60 my-12 mt-sm-0" (click)="deletePhoto(item)" >Sil</button>
 </div>
 </div>
@@ -64,7 +64,7 @@
 
                   <input placeholder="Yeni Etiket Ekle..." #fruitInput [formControl]="tagCtrl" [matAutocomplete]="auto" 
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  [matChipInputAddOnBlur]="addOnBlur"   (ngModelChange)="searchAddressText($event)"   >
+                    (ngModelChange)="searchAddressText($event)"   >
                   
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

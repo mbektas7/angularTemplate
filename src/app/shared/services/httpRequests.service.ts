@@ -38,6 +38,7 @@ export class HttpRequestsService {
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Origin': '*',
+      'withCredentials ' : true,
       'Authorization': this.tokenValue
     };
 
@@ -73,7 +74,7 @@ export class HttpRequestsService {
   postEski(data: any, path: string) {
 
     this.httpClient
-      .post(environment.rootPath + path, data)
+      .post(environment.rootPath + path, data,)
       .subscribe(data => {
       },
         error => {
@@ -101,6 +102,17 @@ export class HttpRequestsService {
 
         this.httpClient.get(environment.rootPath + path, {headers: this.getHeaders()}).subscribe((response: any) => {
             resolve(response['data']);
+          }, error => {
+              
+              reject(error);
+          });
+        });
+  }
+  getJwtToken(path:string){
+    return new Promise((resolve, reject) => {
+
+        this.httpClient.get(environment.rootPath + path, {headers: this.getHeaders()}).subscribe((response: any) => {
+            resolve(response['JwtToken']);
           }, error => {
               
               reject(error);
