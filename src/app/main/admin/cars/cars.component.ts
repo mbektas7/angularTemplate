@@ -6,7 +6,7 @@ import { mirapiAnimations } from '@mirapi/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { CarModel } from './CarModel';
+import { CarModel } from '../../../shared/models/CarModel';
 
 
 @Component({

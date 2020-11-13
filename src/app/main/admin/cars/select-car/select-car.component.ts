@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminService } from '../../admin.service';
 import { BrandModel } from '../../brands/BrandModel';
-import { CarModel } from '../CarModel';
+import { CarModel } from '../../../../shared/models/CarModel';
 
 export interface  dialogData {
   

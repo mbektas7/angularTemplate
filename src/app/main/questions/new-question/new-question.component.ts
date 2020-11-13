@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostModel } from 'app/main/admin/posts/PostModel';
-import { CarModel } from 'app/main/admin/cars/CarModel';
+import { CarModel } from 'app/shared/models/CarModel';
 import { AdminService } from 'app/main/admin/admin.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -107,7 +107,7 @@ export class NewQuestionComponent implements OnInit {
     this.post.categories = this.selectedTags;
     this.post.imageList = this.imgURL;
      this.adminService.addItem('post',this.post).then( data => {
-   //   this.router.navigate(['questions']);
+     this.router.navigate(['questions/'+data]);
 
    });
   }

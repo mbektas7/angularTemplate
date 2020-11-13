@@ -8,9 +8,10 @@ import { MirapiNavigationService } from '@mirapi/components/navigation/navigatio
 import { MirapiPerfectScrollbarDirective } from '@mirapi/directives/mirapi-perfect-scrollbar/mirapi-perfect-scrollbar.directive';
 import { MirapiSidebarService } from '@mirapi/components/sidebar/sidebar.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ProfileService } from 'app/main/profile/profile.service';
+
 import { AuthService } from 'app/shared/services/auth.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ProfileDetailService } from 'app/main/profile/profil-detail.service';
 
 @Component({
     selector     : 'navbar-horizontal-style-1',
@@ -46,7 +47,7 @@ export class NavbarHorizontalStyle1Component implements OnInit, OnDestroy
         private _mirapiSidebarService: MirapiSidebarService,
         private _router: Router,
         private _authService: AuthService,
-        private profileService: ProfileService,
+        private profileService: ProfileDetailService,
         private _sanitizer: DomSanitizer
     )
     {

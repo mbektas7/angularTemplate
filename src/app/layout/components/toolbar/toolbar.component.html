@@ -48,7 +48,7 @@
 
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
 
-                <button mat-menu-item routerLink="/profile">
+                <button mat-menu-item [routerLink]="['/profile', user?.Id]">
                     <mat-icon>account_circle</mat-icon>
                     <span>Profilim</span>
                 </button>

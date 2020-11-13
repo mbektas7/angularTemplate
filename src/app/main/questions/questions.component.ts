@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { AdminService } from "../admin/admin.service";
 import { PostModel } from "../admin/posts/PostModel";
 import { mirapiAnimations } from "@mirapi/animations";
 import { AuthService } from "app/shared/services/auth.service";
 import { TestService } from 'app/shared/test.service';
 import { Subscription } from 'rxjs';
+import { User } from '../../shared/models/user';
+import { map, tap } from 'rxjs/operators';
+import { LocalStorageService } from 'app/shared/services/local-storage.service';
 
 @Component({
     selector: "app-questions",
@@ -13,33 +16,43 @@ import { Subscription } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     animations: mirapiAnimations,
 })
-export class QuestionsComponent implements OnInit {
+export class QuestionsComponent implements OnInit , OnDestroy {
     posts: any;
     isLoggedIn = false;
     searchText: "string";
     summary: any;
-    user: any;
-    subscription: Subscription;
+    user: User;
+    userSub: Subscription;
     
     constructor(
         private adminService: AdminService,
         private authService: AuthService,
-        private testService : TestService
+        private testService : TestService,
+        private localStorageService : LocalStorageService
     ) {
-      
-     
-        if (this.authService.loggedIn()) {
-            this.isLoggedIn = true;
-        } else {
-            this.isLoggedIn = false;
-        }
+
+        console.log("question module loaded");
+        
+      this.authService.getCurrentUser().subscribe();
+
+
     }
 
     ngOnInit() {
-       
+        this.userSub = this.authService.user$.subscribe((user: User) => {
+            this.user = user;
+            if (this.user) {
+                this.isLoggedIn = true;
+            }
+            
+          });
     
         this.getList();
         this.getSummary();
+    }
+
+    ngOnDestroy(){
+        this.userSub.unsubscribe();
     }
 
 
@@ -56,11 +69,16 @@ export class QuestionsComponent implements OnInit {
     }
 
     search() {
-        this.adminService
+        if (this.searchText.length>0) {
+            this.adminService
             .getList("post/filter/" + this.searchText)
             .then((data) => {
                 this.posts = data;
             });
+        } else {
+            this.getList();
+        }
+        
     }
 
     getSummary() {

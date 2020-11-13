@@ -31,7 +31,7 @@ export class HttpRequestsService {
   getHeaders() {
 
 
-    this.tokenValue = 'Bearer ' + this.authService.getToken();
+    this.tokenValue = 'Bearer ' ;
 
     this.headers = {
       'Content-Type': 'application/json',

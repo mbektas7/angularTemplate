@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { mirapiAnimations } from '@mirapi/animations';
 import { QuestionsService } from '../questions.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { PostModel } from 'app/main/admin/posts/PostModel';
 import { QuestionDetailService } from './question-detail.service';
 import { request } from 'http';
@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 
 import 'moment/locale/tr';
+import { User } from 'app/shared/models/user';
 
 @Component({
   selector: 'app-question-detail',
@@ -36,18 +37,18 @@ export class QuestionDetailComponent implements OnInit {
   liked : boolean;
   moment: any = moment;
   isLoggedIn : boolean;
+  user: User;
+  userSub: Subscription;
   constructor(
     private questionService : QuestionsService,
     private router : Router,
     private questionDeatilService : QuestionDetailService,
-    private autService: AuthService,
+    private authService: AuthService,
     private httpReq : HttpRequestsService) {
 
     this._unsubscribeAll = new Subject();
     this.isLoggedIn =  false;
-    this.isLoggedIn = this.autService.isTokenValid();
-    console.log("questions-detail");
-    console.log(this.autService.isTokenValid());
+    
    }
 
   ngOnInit() {
@@ -61,16 +62,28 @@ export class QuestionDetailComponent implements OnInit {
         this.likeCount = this.post.likes.length;
         this.isLiked();
      });
+
      this.getPostImages();
-     this.profileImage = this.autService.userProfileImage;
 
-
-     if (this.autService.getCurrentUserId()==this.post.user.Id) {
-       this.isEditable = true;
+     this.userSub = this.authService.user$.subscribe((user: User) => {
+      this.user = user;
+      if (this.user) {
+         this.isLoggedIn = true;
+         this.profileImage = this.user.photo.path;
+         if (this.user.Id==this.post.user.Id) {
+          this.isEditable = true;
+        }
+      }
+        else{
+        this.isEditable = false;
      }
-     else
-     this.isEditable = false;
-  }
+      });
+   
+    }
+      
+
+
+   
 
   getPostImages(){
     this.questionDeatilService.getPostImages().then(data=>{
@@ -83,7 +96,7 @@ export class QuestionDetailComponent implements OnInit {
     for (let index = 0; index < this.likeList.length; index++) {
 
       const item = this.likeList[index];
-      if (item.user.Id==this.autService.getCurrentUserId()) {
+      if (item.user.Id==this.user.Id) {
         this.liked = true;
         break;
        } else {
@@ -98,7 +111,7 @@ export class QuestionDetailComponent implements OnInit {
     request.title =  ""
     request.parentId = this.post.Id;
     request.message = this.answer;
-    request.userId = this.autService.getCurrentUserId();
+    request.userId = this.user.Id.toString();
     request.carId = this.post.car.Id;
     request.isAnswered = false;
 
@@ -113,7 +126,7 @@ export class QuestionDetailComponent implements OnInit {
     let data = {
       'vote': vote,
       'postId' : this.post.Id,
-      'userId': this.autService.getCurrentUserId()
+      'userId': this.user.Id.toString()
     }
     this.httpReq.addItem("post/vote",data).then(()=>{
       this.questionDeatilService.getPost();
@@ -125,7 +138,7 @@ export class QuestionDetailComponent implements OnInit {
 
     let data = {
       'Id' : this.post.Id,
-      'userId' : this.autService.getCurrentUserId()
+      'userId' : this.user.Id.toString()
     }
 
     if (!like) {

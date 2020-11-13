@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { mirapiAnimations } from '@mirapi/animations';
-import { ProfileService } from 'app/main/profile/profile.service';
 import { UserAboutUpdateModal } from './userAboutUpdateModal';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AuthService } from 'app/shared/services/auth.service';
 import { formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { SelectCarComponent } from 'app/main/admin/cars/select-car/select-car.component';
+import { User } from '../../../../shared/models/user';
+import { ProfileDetailService } from '../../profil-detail.service';
 
 
 @Component({
@@ -31,7 +32,9 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     carName:  string;
     
     private _unsubscribeAll: Subject<any>;
-
+    user: User;
+    userLoggedIn : User;
+    userSub: Subscription;
   
     
     /**
@@ -41,7 +44,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
      */
     constructor(
         public dialog: MatDialog,
-        private _profileService: ProfileService,
+        private _profileService: ProfileDetailService,
         private httpService: HttpRequestsService,
         private authService: AuthService
     )
@@ -56,13 +59,21 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.isEditing = false;
-        this._profileService.aboutOnChanged
+        this._profileService.onProfileChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(about => {
-            this.about = about;
+            .subscribe(user => {
+              console.log(user);
+            this.user = user;
+
         });
+
+        this.userSub = this.authService.user$.subscribe((user: User) => {
+          this.userLoggedIn = user;
+         
+        });
+  
         
-        this.getUserDetails();
+      //  this.getUserDetails();
     }
 
     ngOnDestroy(): void
@@ -74,7 +85,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     }
 
     getUserDetails(){
-      const userId = this.authService.getCurrentUserId();
+      const userId = this.user.Id.toString();
        this.httpService.getList('Users/' + userId).then(data => {
           this.userAbout = data;
           this.carName = data['car']['name'];
@@ -92,17 +103,10 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     }
 
     save(){
-       
-
-       if (this.gender === '0') {
-             this.userAbout.isFemale = false;
-        }
-        else {
-             this.userAbout.isFemale = true;
-        }
-        // this.userAbout.birthday = formatDate(this.userAbout.birthday, 'yyyy-MM-dd HH:mm:ss', 'en-US')
-       
-         this._profileService.updateUserAbout(this.userAbout);
+     
+         this.user.Birthday =formatDate(this.user.Birthday, 'yyyy-MM-dd hh:mm:ssZZZZZ', 'en_US')
+  
+         this._profileService.updateUserAbout(this.user);
          this.isEditing = false;
      
     }
@@ -119,8 +123,8 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         dialogRef.afterClosed().subscribe(result => {
           if (result != null) {    
 
-            this.userAbout.carId = result.carId;
-            this._profileService.updateUserAbout(this.userAbout);
+            this.user.car.id = result.carId;
+            this._profileService.updateUserAbout(this.user);
           } 
         });
       }

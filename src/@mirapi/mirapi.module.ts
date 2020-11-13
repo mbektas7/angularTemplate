@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { FUSE_CONFIG } from '@mirapi/services/config.service';
+import { mirapi_CONFIG } from '@mirapi/services/config.service';
 
 @NgModule()
 export class MirapiModule
@@ -19,7 +19,7 @@ export class MirapiModule
             ngModule : MirapiModule,
             providers: [
                 {
-                    provide : FUSE_CONFIG,
+                    provide : mirapi_CONFIG,
                     useValue: config
                 }
             ]

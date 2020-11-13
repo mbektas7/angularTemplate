@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostModel } from 'app/main/admin/posts/PostModel';
-import { CarModel } from 'app/main/admin/cars/CarModel';
+import { CarModel } from 'app/shared/models/CarModel';
 import { AdminService } from 'app/main/admin/admin.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MatChipInputEvent } from '@angular/material/chips';

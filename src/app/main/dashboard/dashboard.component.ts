@@ -5,6 +5,8 @@ import { MirapiNavigationService } from '@mirapi/components/navigation/navigatio
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from '../../shared/models/user';
 
 @Component({
     selector: 'app-dashboard',
@@ -18,29 +20,35 @@ export class DashboardComponent implements OnInit {
     navigation: any;
     uploadUrl: 'dasdad';
     userList: any;
+    user: User;
+    userSub: Subscription;
     constructor(
         private authService: AuthService,
         private mirapiNavigationService: MirapiNavigationService,
         private httpRequestService: HttpRequestsService,
         private router: Router
     ) {
-        this.userId = this.authService.getCurrentUserId();
- 
-   
+        
 
         // this.getEmployees();
     }
 
 
     async ngOnInit() {
-
+        this.userSub = this.authService.user$.subscribe((user: User) => {
+            this.user = user;
+            if (this.user) {
+              this.router.navigateByUrl("questions");
+            }
+           
+          });
     }
 
  
     private async setNavigations() {
         this.navigation = navigation.slice();
         this.navigation = await this.removeUnauthorizedUrlsFromNavigation(
-            this.navigation
+            this.navigation 
         );
         this.mirapiNavigationService.unregister('main');
         this.navigation = this.mirapiNavigationService.register(

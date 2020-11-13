@@ -1,16 +1,18 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 
 import { mirapiAnimations } from '@mirapi/animations';
-import { ProfileService } from './profile.service';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { AuthService } from 'app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlertifyService } from 'app/shared/services/alertify.service';
-import { User } from './user';
+import { User } from '../../shared/models/user';
 import { UserAboutUpdateModal } from './tabs/about/userAboutUpdateModal';
 import { UserPhoto } from './UserPhoto';
+import { Subject, Subscription } from 'rxjs';
+import { ProfileDetailService } from './profil-detail.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector     : 'profile',
@@ -21,32 +23,41 @@ import { UserPhoto } from './UserPhoto';
 })
 export class ProfileComponent implements OnInit
 {
-
+  private _unsubscribeAll: Subject<any>;
     name: string;
     userModal = new UserAboutUpdateModal;
     profileImage: any;
+    isLoggedIn : false;
+    userLoggedIn: User;
+    userSub: Subscription;
+    user : User;
     constructor(
-        private profileService: ProfileService,
+        private profileDetailService: ProfileDetailService,
         private httpservice: HttpRequestsService,
         private authService: AuthService,
         private _sanitizer: DomSanitizer,
         private dialog: MatDialog,
         private alertifyService: AlertifyService)
     {
+      this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void {
-       this.name = this.authService.getCurrentUserName();
 
-    this.profileService.getUserDetails().subscribe(data=>{
-      console.log(data["data"]['photo']['path']);
-      this.profileImage = data["data"]['photo']['path'];
-     
-      if (data["isSocialLogin"]) {
-        this.profileImage = 'data:image/jpg;base64,' +
-        (this._sanitizer.bypassSecurityTrustResourceUrl(this.profileImage) as any).changingThisBreaksApplicationSecurity;
-      }
-     
+      this.userSub = this.authService.user$.subscribe((user: User) => {
+        this.userLoggedIn = user;
+        if (this.userLoggedIn) {
+          this.userLoggedIn.Name = user.Name;
+          this.profileImage = user.photo ? user.photo : "";
+        }
+       
+      });
+
+      this.profileDetailService.onProfileChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(data => {
+       this.user = data;
+      
     });
 
     }
@@ -90,11 +101,14 @@ export class ProfileComponent implements OnInit
        photo.baseData = image;
 
        this.httpservice.addItem("users/addPhoto",photo).then( ()=>{
-        this.profileService.getUserDetails().subscribe(data=>{
-          this.profileImage = data["data"]['photo']['path'];
-        });
+
        } );
 
+     }
+
+
+     sendMessage(){
+       console.log("mesaj gönder");
      }
 
 

@@ -13,18 +13,25 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { ProfileService } from 'app/main/profile/profile.service';
+
+
 import { ProfileComponent } from 'app/main/profile/profile.component';
 import { ProfileAboutComponent } from 'app/main/profile/tabs/about/about.component';
 import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { AuthGuard } from 'app/shared/guards/auth.guard';
 import { LoginGuard } from 'app/shared/guards/login.guard';
 import { SelectCarComponent } from '../admin/cars/select-car/select-car.component';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatSlideToggleModule } from '@angular/material';
+import { ProfileDetailService } from './profil-detail.service';
 const routes = [
+
     {
-        path: '',
+        path: ':id',
+        pathMatch: 'full',
         component: ProfileComponent,
+        resolve: {
+            data: ProfileDetailService
+        }
 
     }
 ];
@@ -47,16 +54,17 @@ const routes = [
         MatNativeDateModule,
         MatChipsModule,
         MatAutocompleteModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSlideToggleModule
         
     ],
-    providers: [ProfileService],
+    providers: [ProfileDetailService],
     entryComponents :[
         SelectCarComponent
     ]
 })
 export class ProfileModule {
     constructor(private dateAdapter: DateAdapter<Date>) {
-        dateAdapter.setLocale('tr-tr'); // DD/MM/YYYY
+        dateAdapter.setLocale('en-in'); // DD/MM/YYYY
     }
 }

@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit
 
     constructor(
         private authService: SocialAuthService,
-        private _fuseConfigService: MirapiConfigService,
+        private _mirapiConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,
         private authServiceLocal: AuthService,
         private alertifyService: AlertifyService,
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit
     {   
        
         // Configure the layout
-        this._fuseConfigService.config = {
+        this._mirapiConfigService.config = {
             layout: {
                 navbar   : {
                     hidden: true
@@ -78,13 +78,6 @@ export class LoginComponent implements OnInit
             }
         };
 
-     
-        if (this.authServiceLocal.loggedIn()) { 
-            this._MirapiNavigationService.updateNavigationItem('admin', {
-                hidden: false
-            });
-            this.router.navigateByUrl('/questions');
-        }
         
         this.jwtHelper = new JwtHelperService();
     }
@@ -100,46 +93,62 @@ export class LoginComponent implements OnInit
 
     }
 
-
-    login() {
-        this.progressBarService.show();
+    login(): void {
+        if (this.loginForm.valid) {
+            this.progressBarService.show();
        this.disableLoginButton();
        this.loginUser = Object.assign({}, this.loginForm.value);
 
-       this.authServiceLocal.loginV2(this.loginUser,'')
-       .subscribe(async data => {
-           if (data){
-               // Menüler açılır
-               this._MirapiNavigationService.updateNavigationItem('admin', {
-                hidden: false
-            });
-               const userToken: any = data["JwtToken"];
-               const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-               this.alertifyService.success('Sisteme giriş yapıldı');    
-               const userName = decodedToken.sub;
-               if (userName == null){
-                 this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-                 this.router.navigateByUrl('/profile');
-               }
-               else {
-               this.router.navigateByUrl('/questions');
-           }
+          this.authServiceLocal.login(this.loginUser).subscribe(() => {
+
+           
+          }, err => {
+           
+          });
+        } else {
+            this.alertifyService.error('Please enter valid data');
+        }
+      }
+
+    loginEski() {
+    //     this.progressBarService.show();
+    //    this.disableLoginButton();
+    //    this.loginUser = Object.assign({}, this.loginForm.value);
+
+    //    this.authServiceLocal.loginV2(this.loginUser)
+    //    .subscribe(async data => {
+    //        if (data){
+    //            // Menüler açılır
+    //            this._MirapiNavigationService.updateNavigationItem('admin', {
+    //             hidden: false
+    //         });
+    //            const userToken: any = data["JwtToken"];
+    //            const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+    //            this.alertifyService.success('Sisteme giriş yapıldı');    
+    //            const userName = decodedToken.sub;
+    //            if (userName == null){
+    //              this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+    //              this.router.navigateByUrl('/profile');
+    //            }
+    //            else {
+    //            this.router.navigateByUrl('/questions');
+    //        }
      
            
-       }
-         },
-         error => {
-           this.progressBarService.hide();
-           if (error.status === 401){
-               this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-           }
-           else {
-               // this.reloadImage();
-               this.alertifyService.error(error.error);
+    //    }
+    //      },
+    //      error => {
+    //        this.progressBarService.hide();
+    //        if (error.status === 401){
+    //            this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
+    //        }
+    //        else {
+    //            // this.reloadImage();
+    //            this.alertifyService.error(error.error);
 
-           }
-           this.activeLoginButton();
-       });       
+    //        }
+    //        this.activeLoginButton();
+    //    });       
 
    
    }

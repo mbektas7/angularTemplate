@@ -12,8 +12,8 @@
                          <img class="avatar" src="{{post.user.photo?.path}}"> 
     
                         <div fxLayout="column">
-                            <div class="title">
-                                <span class="username">{{post.user.Name}}</span>
+                            <div [routerLink]="['/profile', post.user?.Id]" class="title">
+                                <a class="username">{{post.user.Name}}</a>
                                 <span > bir gönderi oluşturdu</span>
                             </div>
                             <div class="time">{{post.creationDate}}</div>
@@ -122,7 +122,7 @@
     
                         <div fxLayout="column" fxFlex>
                             <div fxLayout="row" fxLayoutAlign="start center">
-                                <span class="username">{{answer.user.Name}}</span>
+                                <a [routerLink]="'/questions/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
                                 <span class="time">{{ moment(answer.CreationDate).calendar()}}</span>
                             </div>
                             <div class="message">
@@ -141,10 +141,10 @@
                         </button>
                     </div>
                     <div *ngIf="isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
-                        <img  src="{{ profileImage}}" class="avatar"/>
+                        <img  src="{{ user?.photo?.path}}" class="avatar"/>
     
                         <form (keyup.enter)="sendAnswer()" fxFlex>
-                            <textarea placeholder="Add a comment..." [(ngModel)]="answer" name="answer"></textarea>
+                            <textarea placeholder="Bir yorum yazın..." [(ngModel)]="answer" name="answer"></textarea>
                             <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
                                 Cevap Ver
                             </button>

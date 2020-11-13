@@ -17,7 +17,7 @@
                                         matInput
                                         name="name"
                                         disabled="{{!isEditing}}"
-                                        [(ngModel)]="userAbout.Name"
+                                        [(ngModel)]="user.Name"
                                         placeholder="Adınız"
                                         required
                                     />
@@ -29,30 +29,29 @@
                                         matInput
                                         name="surname"
                                         disabled="{{!isEditing}}"
-                                        [(ngModel)]="userAbout.Surname"
+                                        [(ngModel)]="user.Surname"
                                         placeholder="Soyadınız"
                                         required
                                     />
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
-                                        <mat-label>Cinsiyet</mat-label>
-                                        <mat-select placeholder="Cinsiyet" [disabled]="!isEditing" [(ngModel)]="gender" >
-                                                        <mat-option  value="0">
-                                                          BAY
-                                                         </mat-option>
-                                                        <mat-option  value="1">
-                                                              BAYAN
-                                                            </mat-option>
-                                                      </mat-select>
-                        </mat-form-field>
+                        <div  style="padding-left: 10px;  padding-bottom: 30px;" appearance="outline" floatLabel="always"  class="w-80-p mat-form-field ng-tns-c40-22 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder" >
+                            Erkek
+                            <mat-slide-toggle  disabled="{{!isEditing}}"     [(ngModel)]="user.IsFemale"  [checked]="user.IsFemale" ></mat-slide-toggle>
+                           Kadın 
+                        </div>
+                        
+                          
+                                                    
+
+                   
 
 
 
    
                     <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
                          <mat-label>Doğum Tarihi</mat-label>
-                            <input [disabled]="!isEditing"  matInput [matDatepicker]="picker" placeholder="Bir tarih seçin" [(ngModel)]="userAbout.Birthday">
+                            <input [disabled]="!isEditing"  matInput [matDatepicker]="picker" placeholder="Bir tarih seçin" [(ngModel)]="user.Birthday">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                  </mat-form-field>    
@@ -64,7 +63,7 @@
                                       name="about"
                                       matInput 
                                       placeholder="Hakkınızda bir şeyler girin"
-                                    [(ngModel)]="userAbout.About">
+                                    [(ngModel)]="user.About">
                             </textarea>
                 </mat-form-field>
             </div>
@@ -85,7 +84,7 @@
                                         matInput
                                         name="arac"
                                         disabled="{{!isEditing}}"
-                                        [(ngModel)]="carName"
+                                        [(ngModel)]="user.car.name"
                                         placeholder="Model"
                                         required
                                     />
@@ -112,7 +111,7 @@
                                         name="address"
                                         matInput 
                                         placeholder="Açık adresiniz"
-                                      [(ngModel)]="userAbout.Address">
+                                      [(ngModel)]="user.Address">
                               </textarea>
                         </mat-form-field>
 
@@ -123,7 +122,7 @@
                                         type="number"
                                         name="telefon"
                                         disabled="{{!isEditing}}"
-                                        [(ngModel)]="userAbout.Phone"
+                                        [(ngModel)]="user.Phone"
                                         placeholder="Telefon"
                                         
                                     />
@@ -136,7 +135,7 @@
     <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="30" fxFlex.gt-md="35">
 
        
-        <diV class="content">
+        <diV *ngIf="user.Id == userLoggedIn.Id" class="content">
                                  
          <div  [hidden]="isEditing" >
            <button mat-raised-button [hidden]="!isEditing" (click)="edit()" color="primary" aria-label="Send Message">Düzenle</button>

@@ -5,7 +5,8 @@ import { MirapiNavigationModule } from '@mirapi/components';
 import { MirapiSharedModule } from '@mirapi/shared.module';
 
 import { NavbarHorizontalStyle1Component } from 'app/layout/components/navbar/horizontal/style-1/style-1.component';
-import { ProfileService } from 'app/main/profile/profile.service';
+import { ProfileDetailService } from 'app/main/profile/profil-detail.service';
+
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { ProfileService } from 'app/main/profile/profile.service';
     exports     : [
         NavbarHorizontalStyle1Component
     ],
-    providers: [ProfileService]
+    providers: [ProfileDetailService]
 })
 export class NavbarHorizontalStyle1Module
 {

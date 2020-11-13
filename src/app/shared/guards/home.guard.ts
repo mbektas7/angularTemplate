@@ -6,19 +6,18 @@ import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { PageTypes } from 'enums/pageTypes.enum';
 
 @Injectable()
-export class HomeGueard implements CanActivate ,CanLoad {
+export class HomeGueard implements CanActivate  {
     constructor(private authService : AuthService, private router: Router, private httpRequestService: HttpRequestsService){}
 
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
-       return this.canLoad();
+      
+      if (localStorage.getItem('token')) {
+         return true;
+       }
+      
     }
 
-    canLoad() {
-        if (!this.authService.loggedIn()) {
-          this.router.navigate(['/login']);
-        }
-        return this.authService.loggedIn();
-      }
+
 
 }

@@ -95,17 +95,17 @@ export class RegisterComponent implements OnInit, OnDestroy
  register(form: HTMLFormElement) {
     this.mirapiProgressBar.show();
     this.isSubmitClicked = true;
-    this.authService.register(this.userRegister)
-    .subscribe(data => {   
-        this.alertifyService.success('Hesabınız başarıyla oluşturuldu.');
-        this.router.navigateByUrl('/auth/login');  
-        //this.router.navigateByUrl('/auth/register/mail-confirm');  
-      },
-       error => {
-        this.alertifyService.error('Kayıt işlemi sırasında hata oluştu. \n' + error.error);
-        this.isSubmitClicked = false;
-        this.mirapiProgressBar.hide();
-    });
+    // this.authService.register(this.userRegister)
+    // .subscribe(data => {   
+    //     this.alertifyService.success('Hesabınız başarıyla oluşturuldu.');
+    //     this.router.navigateByUrl('/auth/login');  
+    //     //this.router.navigateByUrl('/auth/register/mail-confirm');  
+    //   },
+    //    error => {
+    //     this.alertifyService.error('Kayıt işlemi sırasında hata oluştu. \n' + error.error);
+    //     this.isSubmitClicked = false;
+    //     this.mirapiProgressBar.hide();
+    // });
   }
 
   registerEmployee(){

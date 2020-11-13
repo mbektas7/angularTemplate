@@ -70,9 +70,9 @@ export class MirapiShortcutsComponent implements OnInit, OnDestroy
         // Get the navigation items and flatten them
         //this.filteredNavigationItems = this.navigationItems = this._mirapiNavigationService.getFlatNavigation(this.navigation);
 
-        if ( this._cookieService.check('FUSE2.shortcuts') )
+        if ( this._cookieService.check('mirapi2.shortcuts') )
         {
-        /*    this.shortcutItems = JSON.parse(this._cookieService.get('FUSE2.shortcuts'));*/
+        /*    this.shortcutItems = JSON.parse(this._cookieService.get('mirapi2.shortcuts'));*/
         }
         else
         {
@@ -171,7 +171,7 @@ export class MirapiShortcutsComponent implements OnInit, OnDestroy
                 this.shortcutItems.splice(i, 1);
 
                 // Save to the cookies
-                this._cookieService.set('FUSE2.shortcuts', JSON.stringify(this.shortcutItems));
+                this._cookieService.set('mirapi2.shortcuts', JSON.stringify(this.shortcutItems));
 
                 return;
             }
@@ -180,7 +180,7 @@ export class MirapiShortcutsComponent implements OnInit, OnDestroy
         this.shortcutItems.push(itemToToggle);
 
         // Save to the cookies
-        this._cookieService.set('FUSE2.shortcuts', JSON.stringify(this.shortcutItems));*/
+        this._cookieService.set('mirapi2.shortcuts', JSON.stringify(this.shortcutItems));*/
     }
 
     /**

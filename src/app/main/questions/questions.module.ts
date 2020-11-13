@@ -41,6 +41,7 @@ import { AuthService } from 'app/shared/services/auth.service';
 const routes = [
   {
       path     : '',
+      pathMatch: 'full',
       component: QuestionsComponent,
   },
   {

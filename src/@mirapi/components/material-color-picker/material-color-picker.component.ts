@@ -4,7 +4,7 @@ import { mirapiAnimations } from '@mirapi/animations';
 import { MatColors } from '@mirapi/mat-colors';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export const FUSE_MATERIAL_COLOR_PICKER_VALUE_ACCESSOR: any = {
+export const mirapi_MATERIAL_COLOR_PICKER_VALUE_ACCESSOR: any = {
     provide    : NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => MirapiMaterialColorPickerComponent),
     multi      : true
@@ -16,7 +16,7 @@ export const FUSE_MATERIAL_COLOR_PICKER_VALUE_ACCESSOR: any = {
     styleUrls    : ['./material-color-picker.component.scss'],
     animations   : mirapiAnimations,
     encapsulation: ViewEncapsulation.None,
-    providers    : [FUSE_MATERIAL_COLOR_PICKER_VALUE_ACCESSOR]
+    providers    : [mirapi_MATERIAL_COLOR_PICKER_VALUE_ACCESSOR]
 })
 export class MirapiMaterialColorPickerComponent implements ControlValueAccessor
 {

@@ -35,36 +35,33 @@ import { SaveCarComponent } from './cars/save-car/save-car.component';
 import { PostsComponent } from './posts/posts.component';
 import { SavePostComponent } from './posts/save-post/save-post.component';
 import { SelectCarComponent } from './cars/select-car/select-car.component';
+import { AuthGuard } from 'app/shared/guards/auth.guard';
 
 
 
 const routes = [
-  {
-      path     : '',
-      component: AdminComponent,
-      canActivate: [LoginGuard]
-  },
+
   {
     path     : 'brands',
     component: BrandsComponent,
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
   },
   {
     path     : 'cars',
     component: CarsComponent,
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
 
   },
   {
     path     : 'posts',
     component: PostsComponent,
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
 
   },
   {
     path     : 'new/post',
     component: SavePostComponent,
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
 
   }
   ];

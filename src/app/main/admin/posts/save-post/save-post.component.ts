@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PostModel } from '../PostModel';
 import { mirapiAnimations } from '@mirapi/animations';
 import { AdminService } from '../../admin.service';
-import { CarModel } from '../../cars/CarModel';
+import { CarModel } from '../../../../shared/models/CarModel';
 
 @Component({
   selector: 'app-save-post',

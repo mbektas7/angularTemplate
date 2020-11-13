@@ -1,37 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
+import { map, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
+
+
 @Injectable({
-    providedIn: 'root'
-  })
-  export class AuthGuard implements CanActivate  {
-      /**
-       *
-       */
-      constructor(private http: HttpClient, private router: Router,private authService:AuthService) {
-          
-          
-      }
-      async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Promise<boolean>{
-                  
-          try {
-              const result: any = await this.authService.isTokenValid();
-              this.router.navigateByUrl('/questions')
-              console.log("authguard try");
-         
-          } catch (error) {
-            console.log("authguard catch");
-              return true;
-          }
-      
-          
-        
-    
-    
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService,
+              private router: Router) { }
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.authService.getCurrentUser().pipe(
+      map(user => !!user),
+      tap(isLogged => {
+        if (!isLogged) {
+          this.router.navigateByUrl('auth/login');
+        }
+      })
+    );
   }
-    
-  }
+}

@@ -21,7 +21,7 @@
 
     <div  *ngIf="!isLoggedIn" class="pr-40" >
         <button [routerLink]="['/auth/login']"   mat-raised-button="" 
-        class="mat-focus-indicator add-product-button fuse-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+        class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
         tabindex="0"><span class="mat-button-wrapper">
            
             <span>Sormak için giriş yap</span></span>
@@ -41,14 +41,13 @@
     <!-- CONTENT -->
  <div  class="content " fxLayout="row" fxLayoutAlign="center none"  >
 
-    <div *ngFor="let message of messages" class="alert alert-success">{{message.text}}</div>
 
     <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
 
 
         <button [routerLink]="['/auth/login']" class="action ask-question" *ngIf="!isLoggedIn"  mat-raised-button="" 
         color="accent"
-        class="mat-focus-indicator add-product-button fuse-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+        class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
         tabindex="0"><span class="mat-button-wrapper">
             <mat-icon>add</mat-icon>
             <span>Bir soru sor</span></span>
@@ -60,11 +59,11 @@
 
     <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
 
-            <div class="mat-card p-24 px-24 mb-24"  [routerLink]="'/questions/'+item.Id"   *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start" >
+            <div class="mat-card p-24 px-24 mb-24"    *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start" >
 
                 <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch" >
 
-                    <div class="h2 mb-24 border-bottom">{{item.title}}</div>
+                    <a  [routerLink]="'/questions/'+item.Id" class="h2 mb-24 border-bottom">{{item.title}}</a>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <p class="pt-16 " innerHTML="{{ (item.message.length>6)? (item.message | slice:0:200)+'..':(item.message) }}">
                         
@@ -79,7 +78,7 @@
                         </mat-chip-list>
 
                     </div>
-                    <div fxLayout="row" fxLayoutAlign="start center">
+                    <a [routerLink]="['/profile', item.user?.Id]" fxLayout="row" fxLayoutAlign="start center">
                         
                         <img  src="{{item.user.photo?.path}}" class="avatar"/>
                         <div>
@@ -87,7 +86,7 @@
                             {{item.user.Name}}
                              </p>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center" >
 
@@ -164,7 +163,7 @@
                                     <li *ngFor="let item of summary?.topUsers; let i = index">
                             <span class="number">{{i}}</span>
                             <span class="username ">
-                                <a href="https://qaengine.enginethemes.com/blog/member/tatthien/" title="56789">
+                                <a [routerLink]="['/profile', item.Id]" title="56789">
                                     {{item.name}}                    	</a>
                             </span>
                                                 <span class="points-count" title="56789 Point(s)">

@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { MirapiConfigService } from '@mirapi/services/config.service';
@@ -14,9 +14,9 @@ import { MirapiTranslationLoaderService } from '@mirapi/services/translation-loa
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
-import { User } from './main/profile/user';
+import { User } from './shared/models/user';
 import { AuthService } from './shared/services/auth.service';
-import { UserDTO } from './shared/models/UserDTO';
+import { LoginDTO } from './shared/models/LoginDTO';
 
 @Component({
     selector   : 'app',
@@ -27,10 +27,11 @@ export class AppComponent implements OnInit, OnDestroy
 {
     mirapiConfig: any;
     navigation: any;
-    user: User;
+   
     // Private
     private _unsubscribeAll: Subject<any>;
-    currentUser: UserDTO;
+    user: User;
+    userSub: Subscription;
 
     constructor(
         private authService : AuthService,
@@ -43,12 +44,6 @@ export class AppComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
     )
     {
-
-        if (this.authService.loggedIn()) {
-            this._mirapiNavigationService.updateNavigationItem('admin', {
-                hidden: false
-            });
-          }
 
         
         // Get default navigation
@@ -72,12 +67,12 @@ export class AppComponent implements OnInit, OnDestroy
         // Use a language
         this._translateService.use('en');
 
-        
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void
     {
+
         // Subscribe to config changes
         this._mirapiConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -109,18 +104,6 @@ export class AppComponent implements OnInit, OnDestroy
                 this.document.body.classList.add(this.mirapiConfig.colorTheme);
             });
 
-            this.authService.getTokenObservable().subscribe((token) => {
-                if (this.authService.loggedIn()){
-                   
-                    this._mirapiNavigationService.updateNavigationItem('admin', {
-                        hidden: false
-                    });
-                   
-            }
-            else {
-               
-            }
-            });
            
     }
 
@@ -130,6 +113,7 @@ export class AppComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.userSub.unsubscribe();
     }
 
    

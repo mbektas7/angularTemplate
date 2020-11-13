@@ -7,13 +7,14 @@ import { AlertifyService } from "./alertify.service";
 import { UserRegister } from "../models/UserRegister";
 import { MirapiProgressBarService } from "@mirapi/components/progress-bar/progress-bar.service";
 import { environment } from "environments/environment";
-import { tap, share, map, catchError, distinctUntilChanged } from "rxjs/operators";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { tap, share, map, catchError, distinctUntilChanged, switchMap, take } from "rxjs/operators";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { SocialUser } from 'angularx-social-login';
 
-import { User } from 'app/main/profile/user';
-import { UserDTO } from '../models/UserDTO';
+import { User } from 'app/shared/models/user';
+import { LoginDTO } from '../models/LoginDTO';
 import { HttpRequestsService } from './httpRequests.service';
+import { LocalStorageService } from './local-storage.service';
 
 
 let jwtToken: string;
@@ -22,166 +23,78 @@ let jwtToken: string;
   providedIn: 'root'
 })
 export class AuthService {
+  user$ = new BehaviorSubject(null);
 
-   
+  constructor(private http: HttpClient,
+    private router : Router,
+              private localStorageService: LocalStorageService) { }
 
-    jwtHelper = new JwtHelper();
-    jwtTokenSubject: Subject<string>;
-   
-    
-    userToken: any;
-    decodedToken: any;
-    TOKEN_KEY = 'token';
-    REFRESH_TOKEN_KEY = '625bc9db-b443-4af4-96b1-d5526487de36';
-    userName: any;
-    userProfileImage : string;
-
-   
-    constructor(
-    private httpClient: HttpClient,
-    private router: Router,
-    private alertifyService: AlertifyService,
-    private _progressBarService: MirapiProgressBarService,
-  ) {
-    this.jwtHelper = new JwtHelper()
-    this.jwtTokenSubject = new Subject();
-   
-    
-  }
-
-
- 
-
-  loginV2(loginUser: UserLogin, captchaResponse) {
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-    return this.httpClient.post(`${environment.rootPath}Token`, loginUser, { headers: headers }).do(user=> {
+  login(user : any): Observable<LoginDTO> {
+    return this.http.post<LoginDTO>(`${environment.apiUrl}Token`, user)
+      .pipe(
+        tap(response => {
+          
+          this.user$.next(response.user);
+          this.setToken('token', response.JwtToken);
+          this.setToken('refreshToken', response.RefreshToken);
+          this.router.navigateByUrl('/questions');
+        })
+      );
      
-      this.saveToken(user["JwtToken"]);
-     console.log("login");
-      return user;
-    });
-    
   }
 
-  loginV3(login:SocialUser, captchaResponse) {
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-    return this.httpClient.post(`${environment.rootPath}Users/socialLoginControl`, login, { headers: headers }).shareReplay();
+  logout(): void {
+    this.localStorageService.removeItem('token');
+    this.localStorageService.removeItem('refreshToken');
+    this.user$.next(null);
   }
 
-
-  register(registerUser: UserRegister) {
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-    headers = headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers = headers.append('Accept', 'application/json');
-    return this.httpClient.post(environment.rootPath + 'Users', registerUser, { headers: headers });
-  }
-  saveToken(token) {
-   jwtToken = token;
-   this.jwtTokenSubject.next(jwtToken);
-  
-  }
-
-
-  async logOut(){
-    
-    await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
-    this.saveToken(null);
-    this.deleteRefreshToken();
-  
-    this.router.navigateByUrl('/auth/login');
-
-  }
-    async logOutWithoutRouting(){
-    await this.httpClient.get(environment.rootPath + `Token/logout`).toPromise();
-    this.deleteRefreshToken();
-    this.saveToken(null);
-    }
-
-
-    isTokenValid(){
-
-      const isExpired =  this.jwtHelper.isTokenExpired(jwtToken);
-      return !isExpired;
-    }
-
-
-    loggedIn(){
-      return tokenNotExpired(this.TOKEN_KEY, jwtToken);
-    }
-
-    deleteRefreshToken(){
-        localStorage.removeItem(this.REFRESH_TOKEN_KEY);
-    }
-    isUserLoggedInWithoutRefreshing(){
-    return this.httpClient.post(environment.rootPath + `Token/isUserLoggedInWithoutRefreshing`, null); 
-    }
-    getCurrentUserId(){
-    if (jwtToken) {
-       return this.jwtHelper.decodeToken(jwtToken).userid;
-    }
-    return null;
-  }
-
-  getClaimsFromToken(){
-    if (jwtToken){
-      return this.jwtHelper.decodeToken(jwtToken).claims;
-    }
-    return null;
-  }
-
-  getCurrentUserName(){
-       return this.jwtHelper.decodeToken(jwtToken).sub; 
-  }
-
-  getCurrentUserEmail(){
-    if (jwtToken) {
-        return this.jwtHelper.decodeToken(jwtToken).email;
-    }
-    return null;
-  }
-  refreshToken() {
-   
-    const url = environment.rootPath + '/Token';
-    const req  = this.httpClient.post(environment.rootPath + `Token/refresh-token`,{}).do((res) => {
-    if(res){
-      this.saveToken(res["JwtToken"]);
-      
+  getCurrentUser(): Observable<User> {
+    return this.user$.pipe(
+      switchMap(user => {
+        console.log(user);
+        // check if we already have user data
+        if (user) {
+          return of(user);
         }
-    });
-    return req;
-  }
 
-getRefreshToken() {
-  if ((document.cookie.split(';').find(x => x.includes('refreshToken')) || '=').split('=')[1] !=null) {
-     this.httpClient.post(environment.rootPath + `Token/refresh-token`,{}).subscribe(data=>{
-    this.saveToken(data["JwtToken"]);
-   
-  });
-  return (document.cookie.split(';').find(x => x.includes('refreshToken')) || '=').split('=')[1];
-  } else {
-    return "";
-  }
-  // get refresh token from cookie
- 
-   
-}
+        const token = this.localStorageService.getItem('token');
+        // if there is token then fetch the current user
+        if (token) {
+          return this.fetchCurrentUser();
+        }
 
-
-  getToken(){
-      return jwtToken;
-  }
-  getPageTypes(){
-      return this.jwtHelper.decodeToken(jwtToken).pageTypes;
-  }
-  getTokenObservable(){
-    this.jwtTokenSubject.next(jwtToken);
-    return this.jwtTokenSubject.asObservable();
+        return of(null);
+      })
+    );
   }
 
 
+  fetchCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}Token/current-user`)
+      .pipe(
+        tap(user => {
+          this.user$.next(user);
+        })
+      );
+  }
 
+  refreshToken(): Observable<{JwtToken: string; refreshToken: string}> {
+    const refreshToken = this.localStorageService.getItem('refreshToken');
 
+    return this.http.post<{JwtToken: string; refreshToken: string}>(
+      `${environment.apiUrl}Token/refresh-token`,
+      {
+        refreshToken
+      }).pipe(
+        tap(response => {
+          this.setToken('token', response.JwtToken);
+          this.setToken('refreshToken', response.refreshToken);
+        })
+    );
+  }
+
+  private setToken(key: string, token: string): void {
+    this.localStorageService.setItem(key, token);
+  }
 }

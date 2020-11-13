@@ -2,6 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdminService } from '../admin/admin.service';
 import { mirapiAnimations } from '@mirapi/animations';
 import { AuthService } from 'app/shared/services/auth.service';
+import { Subscription } from 'rxjs';
+import { User } from '../../shared/models/user';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog',
@@ -15,34 +18,34 @@ export class BlogComponent implements OnInit {
   posts: any;
   isLoggedIn : boolean ;
   searchText : "string";
+  user: User;
+  userSub: Subscription;
   constructor(
     private adminService : AdminService,
     private authService : AuthService
   ) {
 
-
-      if (this.authService.getRefreshToken()!=""){
-         
-         
-          this.isLoggedIn = true;
-         
-  }
-  else {
-      this.isLoggedIn = false;
-  }
-
-   
+    this.authService.getCurrentUser().subscribe();   
    }
 
   ngOnInit() {
+
+
    
+    this.userSub = this.authService.user$.subscribe((user: User) => {
+      this.user = user;
+    if (this.user) {
+      this.isLoggedIn = true;
+    }
+    
+    });
     this.getList();
   }
 
   getList(){
     this.adminService.getList('blog').then(data=>{
       this.posts = data;
-      console.log(this.posts);
+    
     });
   }
   

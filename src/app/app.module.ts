@@ -37,7 +37,11 @@ import { PageTypes } from 'enums/pageTypes.enum';
 import { AuthService } from './shared/services/auth.service';
 import { ToolbarModule } from './layout/components/toolbar/toolbar.module';
 import { HomeGueard } from './shared/guards/home.guard';
-import { HttpRequestInterceptor } from 'interceptors/http-interceptor';
+
+import { TokenInterceptor } from './shared/services/token.interceptor';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { DashboardModule } from './main/dashboard/dashboard.module';
+import { ChatModule } from './main/chat/chat.module';
 
 
 
@@ -64,33 +68,40 @@ const appRoutes: Routes = [
     {
         path        : 'questions',
         loadChildren: './main/questions/questions.module#QuestionsModule',
-        canActivate: [LoginGuard],
+      
        
     },
     {
         path        : 'blog',
         loadChildren: './main/blog/blog.module#BlogModule',
-
-        data: {pageType: PageTypes.blog}
     },
     {
         path        : 'profile',
-       
         loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
-        canActivate: [LoginGuard],
+        canActivate: [AuthGuard],
         data: {pageType: PageTypes.profile}
     },
     {
         path        : 'myposts',
        
         loadChildren: () => import('./main/myposts/myposts.module').then(m => m.MypostsModule),
-        canActivate: [LoginGuard],
+        canActivate: [AuthGuard],
         data: {pageType: PageTypes.myposts}
     },
     {
+        path        : 'dashboard',
+        loadChildren:() => import("./main/dashboard/dashboard.module").then(m=>m.DashboardModule),
+        canActivate: [AuthGuard],
+    },
+    {
+        path        : 'chat',
+        loadChildren:() => import("./main/chat/chat.module").then(m=>m.ChatModule),
+        canActivate: [AuthGuard],
+    },
+    {
         path        : 'admin',
-        canActivate: [ LoginGuard],
-      
+        canActivate: [AuthGuard],
+        
         loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
         data: {pageType: PageTypes.admin},
     },
@@ -99,13 +110,13 @@ const appRoutes: Routes = [
         path      : 'password',
       
         loadChildren : () => import('./main/password/password.module').then(m => m.PasswordModule),
-        canActivate: [ LoginGuard]
+        canActivate: [AuthGuard],
 
     },
     {
         path      : '**',
-        redirectTo: '../index.html',
-        
+        redirectTo: '/questions',
+        pathMatch   : 'full',
     }        
 ];
 
@@ -143,7 +154,9 @@ const appRoutes: Routes = [
         AdminModule,
         QuestionsModule,
         MypostsModule,
-        BlogModule
+        BlogModule,
+        DashboardModule,
+        ChatModule
         
     ],
     bootstrap   : [
@@ -151,8 +164,9 @@ const appRoutes: Routes = [
     ],
     providers: 
     [AlertifyService,  
-    LoginGuard,  
-    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
+    AuthGuard,  
+
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: MAT_DATE_LOCALE, useValue: 'tr'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

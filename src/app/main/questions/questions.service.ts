@@ -75,12 +75,23 @@ export class QuestionsService implements Resolve<any> {
 
   getUserPosts() : Promise<any>
   {
-     let userID = this.autService.getCurrentUserId();
-      return  new Promise((resolve, reject) => {
-         this._httpClient.get('post/getUserPosts/'+userID).subscribe((response: any) => {
-             resolve(response["data"]);
-         }, reject);
-     });
+      let userID = "";
+
+     this.autService.getCurrentUser().subscribe(user =>{
+        if (user) {
+            userID = user.Id.toString();
+        }
+     }); ;// this.autService.getCurrentUserId();
+     if (userID!="") {
+        return  new Promise((resolve, reject) => {
+            this._httpClient.get('post/getUserPosts/'+userID).subscribe((response: any) => {
+                resolve(response["data"]);
+            }, reject);
+        });
+     } else {
+        
+     }
+     
 
   }
 

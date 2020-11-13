@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
@@ -10,13 +10,15 @@ import { MirapiSidebarService } from '@mirapi/components/sidebar/sidebar.service
 import { navigation } from 'app/navigation/navigation';
 import { AuthService } from 'app/shared/services/auth.service';
 import { Router } from '@angular/router';
-import { ProfileService } from 'app/main/profile/profile.service';
+
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SocialAuthService } from 'angularx-social-login';
-import { UserDTO } from 'app/shared/models/UserDTO';
+import { LoginDTO } from 'app/shared/models/LoginDTO';
 import { JwtHelper } from 'angular2-jwt';
 import { TestService } from 'app/shared/test.service';
+import { User } from 'app/shared/models/user';
+import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
 
 @Component({
     selector     : 'toolbar',
@@ -31,8 +33,8 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {mirapiConfigService} _mirapiConfigService
+     * @param {mirapiSidebarService} _mirapiSidebarService
      * @param {TranslateService} _translateService
      */
     horizontalNavbar: boolean;
@@ -58,10 +60,13 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
     name = ''
     isLoggedIn : boolean;
     profilImage :any;
+    user: User;
+    userSub: Subscription;
     constructor(
         private http : HttpRequestsService,
-        private _fuseConfigService: MirapiConfigService,
-        private _fuseSidebarService: MirapiSidebarService,
+        private _mirapiConfigService: MirapiConfigService,
+        private _mirapiSidebarService: MirapiSidebarService,
+        private _mirapiNavigationService : MirapiNavigationService,
         private _translateService: TranslateService,
         private authService: AuthService,
         private _sanitizer: DomSanitizer,
@@ -114,15 +119,31 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
 
         
         this.navigation = navigation;
-            if (this.authService.loggedIn()){
+
+        this.userSub = this.authService.user$.subscribe((user: User) => {
+            this.user = user;
+            if (this.user) {
+             
+                if (user.photo) {
+                    this.profilImage = user.photo.path;
+                }
                
-                this.setProfileValues();
-                this.isLoggedIn = true;
-               
-        }
-        else {
-            this.isLoggedIn = false;
-        }
+                this.name = user.Name;
+                this._mirapiNavigationService.updateNavigationItem('admin', {
+                    hidden: false
+                });
+               // this.setProfileValues();
+             this.isLoggedIn = true;
+            } else {
+                this._mirapiNavigationService.updateNavigationItem('admin', {
+                    hidden: true
+                });
+                this.isLoggedIn = false; 
+            }
+             
+          });
+
+
 
         
         // Set the private defaults
@@ -143,7 +164,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
     ngOnInit(): void
     {  
 
-        this._fuseConfigService.config
+        this._mirapiConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
                 this.horizontalNavbar = settings.layout.navbar.position === 'top';
@@ -169,7 +190,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
 
     toggleSidebarOpen(key): void
     {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
+        this._mirapiSidebarService.getSidebar(key).toggleOpen();
     }
 
 
@@ -190,18 +211,17 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
 
 
     async logOut(){
-       await this.authService.logOut();
+       await this.authService.logout()
        await this.router.navigateByUrl('auth/login');
-       location.reload();
-      }
+     }
 
         getUserDetails(){
-        const userId = this.authService.getCurrentUserId();
+        const userId = this.user.Id.toString()
         
          this.http.getList('Users/' + userId).then(data => {
             this.name = data.Name;
             this.profilImage = data.avatar;
-            this.authService.userProfileImage = this.profilImage;
+           // this.authService.userProfileImage = this.profilImage;
             if (data.isSocialLogin) {
                 this.profilImage = 'data:image/jpg;base64,' +
             (this._sanitizer.bypassSecurityTrustResourceUrl(this.profilImage) as any).changingThisBreaksApplicationSecurity;
@@ -213,15 +233,13 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
 
       setProfileValues(){
 
-
-
-        const userId = this.authService.getCurrentUserId();
+        const userId = this.user.Id.toString()
         
         this.http.getList('Users/' + userId).then(data => {
            this.name = data.Name;
            this.profilImage = data['photo']['path'];
-           console.log(this.profilImage);
-           this.authService.userProfileImage = this.profilImage;
+         
+         //  this.authService.userProfileImage = this.profilImage;
            if (data.isSocialLogin) {
                this.profilImage = 'data:image/jpg;base64,' +
            (this._sanitizer.bypassSecurityTrustResourceUrl(this.profilImage) as any).changingThisBreaksApplicationSecurity;
