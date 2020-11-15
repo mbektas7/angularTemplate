@@ -63,11 +63,9 @@
                 </button>
                 <mat-menu #userMenu="matMenu">
                     <button mat-menu-item (click)="changeLeftSidenavView('user')">
-                        Profile
+                        Profilim
                     </button>
-                    <button mat-menu-item (click)="logout()">
-                        Logout
-                    </button>
+
                 </mat-menu>
             </div>
 
@@ -82,7 +80,7 @@
 
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="s-16 secondary-text">search</mat-icon>
-                    <input [(ngModel)]="searchText" type="text" placeholder="Search or start new chat" fxFlex>
+                    <input [(ngModel)]="searchText" type="text" placeholder="Ara veya yeni bir sohbet başlat" fxFlex>
                 </div>
 
             </div>
@@ -155,7 +153,7 @@
 
             <button mat-button class="contact"
                     *ngFor="let contact of contacts| filter: searchText"
-                    (click)="getChat(contact.id)"
+                    (click)="getChat(contact.Id)"
                     [@animate]="{value:'*',params:{y:'100%'}}">
 
                 <div fxLayout="row" fxLayoutAlign="start center">

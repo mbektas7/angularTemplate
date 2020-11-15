@@ -15,8 +15,10 @@ import { ChatViewComponent } from './chat-view/chat-view.component';
 import { ChatChatsSidenavComponent } from './sidenavs/left/chats/chats.component';
 import { ChatLeftSidenavComponent } from './sidenavs/left/left.component';
 import { ChatUserSidenavComponent } from './sidenavs/left/user/user.component';
-import { ChatRightSidenavComponent } from './sidenavs/right/right.component';
 import { MirapiSharedModule } from '@mirapi/shared.module';
+import { ChatRightSidenavComponent } from './sidenavs/right/right.component';
+import { ChatContactSidenavComponent } from './sidenavs/right/contact/contact.component';
+
 
 
 const routes: Routes = [
@@ -34,8 +36,9 @@ const routes: Routes = [
     declarations: [
         ChatComponent,
         ChatViewComponent,
+        ChatContactSidenavComponent,
         ChatStartComponent,
-
+        ChatRightSidenavComponent,
         ChatChatsSidenavComponent,
         ChatUserSidenavComponent,
         ChatLeftSidenavComponent,
@@ -54,6 +57,7 @@ const routes: Routes = [
         MatRadioModule,
         MatSidenavModule,
         MatToolbarModule,
+
         MirapiSharedModule,
 
     ],

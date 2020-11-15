@@ -42,6 +42,7 @@ export class ChatContactSidenavComponent implements OnInit, OnDestroy
         this._chatService.onContactSelected
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contact => {
+               
                 this.contact = contact;
             });
     }

@@ -25,13 +25,13 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     selectedChat: any;
     user : any;
 
-    @ViewChild(MirapiPerfectScrollbarDirective,null)
+    @ViewChild(MirapiPerfectScrollbarDirective, {static: false})
     directiveScroll: MirapiPerfectScrollbarDirective;
 
-    @ViewChildren('replyInput',)
+    @ViewChildren('replyInput')
     replyInputField;
 
-    @ViewChild('replyForm',null)
+    @ViewChild('replyForm', {static: false})
     replyForm: NgForm;
 
     // Private
@@ -65,7 +65,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             .subscribe(chatData => {
                 if ( chatData )
                 {
-                    console.log(chatData);
+
                     this.selectedChat = chatData;
                     this.contact = chatData.contact;
                     this.dialog = chatData.dialog;
@@ -106,9 +106,10 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
      */
     shouldShowContactAvatar(message, i): boolean
     {
+
         return (
-            message.who === this.contact.id &&
-            ((this.dialog[i + 1] && this.dialog[i + 1].who !== this.contact.id) || !this.dialog[i + 1])
+            message.who === this.contact.Id &&
+            ((this.dialog[i + 1] && this.dialog[i + 1].who !== this.contact.Id) || !this.dialog[i + 1])
         );
     }
 
@@ -141,7 +142,8 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
      */
     selectContact(): void
     {
-        this._chatService.selectContact(this.contact);
+       
+       this._chatService.selectContact(this.contact);
     }
 
     /**
@@ -195,9 +197,10 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             return;
         }
 
+       
         // Message
         const message = {
-            who    : this.user.Id,
+            who    : this.user.id,
             message: this.replyForm.form.value.message,
             time   : new Date().toISOString()
         };
@@ -209,7 +212,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         this.replyForm.reset();
 
         // Update the server
-        this._chatService.updateDialog(this.selectedChat.chatId, this.dialog).then(response => {
+        this._chatService.updateDialog(this.selectedChat.chatId, message).then(response => {
             this.readyToReply();
         });
     }

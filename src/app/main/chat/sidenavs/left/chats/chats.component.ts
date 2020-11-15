@@ -4,7 +4,7 @@ import { MediaObserver } from '@angular/flex-layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { mirapiAnimations } from '@Mirapi/animations';
+import { mirapiAnimations } from '@mirapi/animations';
 
 import { ChatService } from 'app/main/chat/chat.service';
 import { MirapiMatSidenavHelperService } from '@mirapi/directives/mirapi-mat-sidenav/mirapi-mat-sidenav.service';
@@ -32,12 +32,12 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {ChatService} _chatService
-     * @param {MirapiMatSidenavHelperService} _MirapiMatSidenavHelperService
+     * @param {MirapiMatSidenavHelperService} _mirapiMatSidenavHelperService
      * @param {MediaObserver} _mediaObserver
      */
     constructor(
         private _chatService: ChatService,
-        private _MirapiMatSidenavHelperService: MirapiMatSidenavHelperService,
+        private _mirapiMatSidenavHelperService: MirapiMatSidenavHelperService,
         public _mediaObserver: MediaObserver
     )
     {
@@ -90,11 +90,12 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 
     getChat(contact): void
     {
+        
         this._chatService.getChat(contact);
 
         if ( !this._mediaObserver.isActive('gt-md') )
         {
-            this._MirapiMatSidenavHelperService.getSidenav('chat-left-sidenav').toggle();
+            this._mirapiMatSidenavHelperService.getSidenav('chat-left-sidenav').toggle();
         }
     }
 

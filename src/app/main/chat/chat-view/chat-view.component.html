@@ -10,7 +10,7 @@
 
                 <!-- RESPONSIVE CHATS BUTTON-->
                 <button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"
-                        MirapiMatSidenavToggler="chat-left-sidenav"
+                        mirapiMatSidenavToggler="chat-left-sidenav"
                         aria-label="chats button">
                     <mat-icon>chat</mat-icon>
                 </button>
@@ -18,7 +18,7 @@
 
                 <!-- CHAT CONTACT-->
                 <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
-                     MirapiMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
+                     mirapiMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
 
                     <div class="avatar-wrapper">
 
@@ -45,8 +45,8 @@
                 </button>
 
                 <mat-menu #contactMenu="matMenu">
-                    <button mat-menu-item MirapiMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
-                        Contact Info
+                    <button mat-menu-item mirapiMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
+                        Kişi bilgisi
                     </button>
                 </mat-menu>
             </div>
@@ -64,14 +64,14 @@
             <!-- MESSAGE -->
             <div *ngFor="let message of dialog; let i = index" class="message-row"
                  [ngClass]="{
-                            'me': message.who === user.Id,
-                            'contact': message.who !== user.Id,
+                            'me': message.who === user.id,
+                            'contact': message.who !== user.id,
                             'first-of-group': isFirstMessageOfGroup(message, i),
                             'last-of-group': isLastMessageOfGroup(message, i)
                             }">
 
                 <img *ngIf="shouldShowContactAvatar(message, i)"
-                     src="{{contact.avatar}}"
+                     src="{{contact.photo.path}}"
                      class="avatar">
 
                 <div class="bubble">

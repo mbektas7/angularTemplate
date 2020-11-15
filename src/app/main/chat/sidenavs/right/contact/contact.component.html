@@ -18,8 +18,8 @@
 
         <!-- TOOLBAR BOTTOM -->
         <mat-toolbar-row class="toolbar-bottom" fxLayout="column" fxLayoutAlign="center center">
-            <img [src]="contact.avatar" class="avatar contact-avatar huge" alt="{{contact.name}}"/>
-            <div class="contact-name my-8">{{contact.name}}</div>
+            <img [src]="contact.photo.path" class="avatar contact-avatar huge" alt="{{contact.Name}}"/>
+            <div class="contact-name my-8">{{contact.Name}}</div>
         </mat-toolbar-row>
         <!-- / TOOLBAR BOTTOM -->
 
@@ -32,7 +32,7 @@
 
     <!-- CONTACT MOOD -->
     <div class="secondary-text mb-8">Mood</div>
-    <div>{{contact.mood}}</div>
+    <div>{{contact.About}}</div>
     <!-- / CONTACT MOOD -->
 
 </div>

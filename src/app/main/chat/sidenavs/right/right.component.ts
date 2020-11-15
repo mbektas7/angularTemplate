@@ -44,6 +44,7 @@ export class ChatRightSidenavComponent implements OnInit, OnDestroy
         this._chatService.onRightSidenavViewChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(view => {
+              
                 this.view = view;
             });
     }

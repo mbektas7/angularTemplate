@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { MirapiUtils } from '@Mirapi/utils';
+import { MirapiUtils } from '@mirapi/utils';
 import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 
 @Injectable()
@@ -19,16 +19,12 @@ export class ChatService implements Resolve<any>
     onLeftSidenavViewChanged: Subject<any>;
     onRightSidenavViewChanged: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
+ 
     constructor(
         private _httpClient: HttpRequestsService
     )
     {
-        // Set the defaults
+
         this.onChatSelected = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
@@ -37,24 +33,17 @@ export class ChatService implements Resolve<any>
         this.onRightSidenavViewChanged = new Subject();
     }
 
-    /**
-     * Resolver
-     *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
-     */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getContacts(),
-                this.getChats(),
+                
                 this.getUser()
             ]).then(
-                ([contacts, chats, user]) => {
+                ([contacts, user]) => {
                     this.contacts = contacts;
-                    this.chats = chats;
+                   // this.chats = chats;
                     this.user = user;
                     resolve();
                 },
@@ -72,7 +61,7 @@ export class ChatService implements Resolve<any>
         });
 
 
-        // Create new chat, if it's not created yet.
+        // Eğer daha önce böyle bir chat yoksa yeni bir sohbet başlat
         if ( !chatItem )
         {
             this.createNewChat(contactId).then((newChats) => {
@@ -104,64 +93,62 @@ export class ChatService implements Resolve<any>
 
     }
 
+    // yeni bir chat başlatmak için kullanılır.
     createNewChat(contactId): Promise<any>
     {
         return new Promise((resolve, reject) => {
 
+
+            //eğer bu sohbet daha önce varsa o sohbete gidilir.
             const contact = this.contacts.find((item) => {
-                return item.id === contactId;
+                return item.Id === contactId;
             });
 
             const chatId = MirapiUtils.generateGUID();
-
-            const chat = {
-                id    : chatId,
-                dialog: []
-            };
 
             const chatListItem = {
                 contactId      : contactId,
                 id             : chatId,
                 lastMessageTime: '2017-02-18T10:30:18.931Z',
-                name           : contact.name,
-                unread         : null
+                name           : contact.Name,
+                unread         : false,
+                avatar : contact.photo.path
             };
 
-            // Add new chat list item to the user's chat list
+            // yeni bir chat oluşturulur ve bu soldaki chat listesine eklenir.
             this.user.chatList.push(chatListItem);
 
-            // Post the created chat
-            this._httpClient.post('api/chat-chats', {...chat})
-                .subscribe((response: any) => {
-
-                    // Post the new the user data
-                    this._httpClient.post('api/chat-user/' + this.user.id, this.user)
+                    // Bir chat kaydet
+                    this._httpClient.post('messages/createChat/' + this.user.id, chatListItem)
                         .subscribe(newUserData => {
 
-                            // Update the user data from server
+                            //kayıt sonrası kullanıcı detayını güncelle.
                             this.getUser().then(updatedUser => {
                                 this.onUserUpdated.next(updatedUser);
                                 resolve(updatedUser);
                             });
                         });
-                }, reject);
+            
         });
     }
 
- 
+   // bir kullanıcı seçildi
     selectContact(contact): void
     {
-        console.log("selecterd");
-        console.log(contact);
+
         this.onContactSelected.next(contact);
     }
 
 
+    // kullanının durumunu görüntülemek için.
     setUserStatus(status): void
     {
         this.user.status = status;
     }
 
+
+
+    // kullanıcı güncellemek için. henüz kullanılmadı.
     updateUserData(userData): void
     {
         this._httpClient.post('api/chat-user/' + this.user.id, userData)
@@ -172,16 +159,14 @@ export class ChatService implements Resolve<any>
     }
 
 
-    updateDialog(chatId, dialog): Promise<any>
+    // Konuşma güncelleme metodu. burada son mesaj servise gönderilir.
+    updateDialog(chatId, message): Promise<any>
     {
         return new Promise((resolve, reject) => {
 
-            const newData = {
-                id    : chatId,
-                dialog: dialog
-            };
 
-            this._httpClient.post('api/chat-chats/' + chatId, newData)
+
+            this._httpClient.post('messages/updateChat/' + chatId, message)
                 .subscribe(updatedChat => {
                     resolve(updatedChat);
                 }, reject);
@@ -189,6 +174,7 @@ export class ChatService implements Resolve<any>
     }
 
   
+    // Sohbet penceresine kullanıcı listesini getirir.
     getContacts(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -200,6 +186,8 @@ export class ChatService implements Resolve<any>
     }
 
 
+
+    // ne yaptığına dair fikrim yok. sorun olursa bakacağız.
     getChats(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -210,10 +198,12 @@ export class ChatService implements Resolve<any>
         });
     }
 
+    // kullanıcının chatlist verilerini getirir.
+    // bu sayede sohbetler sol tarafta listelenir.
     getUser(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('messages/74f4e69b-5fc9-48e3-9069-67f6f9376e0d')
+            this._httpClient.get('messages')
                 .subscribe((response: any) => {
                     resolve(response["data"]);
                 }, reject);

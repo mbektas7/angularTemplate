@@ -52,7 +52,7 @@ export class AuthService {
   getCurrentUser(): Observable<User> {
     return this.user$.pipe(
       switchMap(user => {
-        console.log(user);
+      
         // check if we already have user data
         if (user) {
           return of(user);

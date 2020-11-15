@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { mirapiAnimations } from '@Mirapi/animations';
+import { mirapiAnimations } from '@mirapi/animations';
 import { ChatService } from '../../chat.service';
 
 
