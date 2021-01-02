@@ -8,7 +8,7 @@ import { string } from 'prop-types';
 import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 
 @Injectable()
-export class verifyForgotPasswordService implements Resolve<any>
+export class verifyforgotpasswordService implements Resolve<any>
 {
     routeParams: any;
     user: any;
@@ -63,6 +63,7 @@ export class verifyForgotPasswordService implements Resolve<any>
                         this.onUserChanged.next(this.user);
                         resolve(response['data']);
                     }, reject);
+                   
             
         });
         return null;

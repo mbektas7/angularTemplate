@@ -14,7 +14,7 @@ import { MirapiNavigationService } from '@mirapi/components/navigation/navigatio
 export class MirapiNavigationComponent implements OnInit
 {
     @Input()
-    layout = 'vertical';
+    layout = 'horizontal';
 
     @Input()
     navigation: any;

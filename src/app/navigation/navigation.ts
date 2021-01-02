@@ -7,7 +7,7 @@ export const navigation: MirapiNavigation[] = [
         url      : '/questions',
         translate: 'NAV.HOMEPAGE',
         icon     : 'question_answer',
-        type     : 'group',
+        type     : 'item',
         // children : [
         //     {
         //         id       : 'questions',
@@ -31,7 +31,7 @@ export const navigation: MirapiNavigation[] = [
         url      : '/blog',
         translate: 'NAV.BLOG',
         icon     : 'speaker_notes',
-        type     : 'group',
+        type     : 'item',
 
     },
     {

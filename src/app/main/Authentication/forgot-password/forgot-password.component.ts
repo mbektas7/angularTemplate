@@ -18,8 +18,8 @@ export class ForgotPasswordComponent implements OnInit
 {
     forgotPasswordForm: FormGroup;
     isSubmitClicked = false;
-    user: any = {};
-    
+    user: any = {}; 
+     
     constructor(
         private _mirapiConfigService: MirapiConfigService,
         private _formBuilder: FormBuilder,

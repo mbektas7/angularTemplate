@@ -3,6 +3,7 @@
     <!-- Vertical Navigation Layout -->
     <ng-container *ngIf="layout === 'vertical'">
 
+       
         <ng-container *ngFor="let item of navigation">
 
             <mirapi-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></mirapi-nav-vertical-group>

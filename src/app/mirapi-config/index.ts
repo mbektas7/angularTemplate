@@ -21,7 +21,7 @@ export const mirapiConfig: MirapiConfig = {
             folded             : false,
             hidden             : false,
             position           : 'top',
-            variant            : 'horizontal-style-1'
+            variant            : 'vertical-style-1'
         },
         toolbar  : {
             customBackgroundColor: false,
@@ -33,11 +33,14 @@ export const mirapiConfig: MirapiConfig = {
             customBackgroundColor: true,
             background           : 'mirapi-navy-900',
             hidden               : false,
-            position             : 'below-fixed'
+            position             : 'above-fixed'
         },
         sidepanel: {
             hidden  : false,
             position: 'right'
         }
     }
+
+
+
 };

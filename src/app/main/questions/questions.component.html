@@ -60,49 +60,47 @@
 
     <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
 
-    <diV  class="mat-card p-24 px-24 mb-24" style="max-height: 10% !important"  fxLayout="row" fxLayoutAlign="space-between center">
-            <div class="kategori" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
-                <div class="title">Kategori Seç</div>
-                <mat-form-field floatLabel="never">
-                    <mat-select class="account-selection"  (selectionChange)="filterByCategory()" placeholder="Kategori Seç"
-                    [(ngModel)]="selectedCategory">
-                        <mat-option *ngFor="let item of tags"  [value]="item.Id">
-                          {{item.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-    
-            <div class="paging" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
-                <div class="title">Her Sayfada</div>
-                <mat-form-field floatLabel="never">
-                    <mat-select class="account-selection"     (selectionChange)="getRecordPerPage()"  [(ngModel)]="questionPerPage">
-                        <mat-option [value]="10">
-                           10
-                        </mat-option>
-                        <mat-option [value]="15">
-                            15
-                         </mat-option>
-                         <mat-option [value]="20">
-                            20
-                         </mat-option>
-                         <mat-option [value]="999999">
-                            Tümü
-                         </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </diV>
+            <diV  class="mat-card p-24 px-24 mb-24" style="max-height: 10% !important"  fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="kategori" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                        <div class="title">Kategori Seç</div>
+                        <mat-form-field floatLabel="never">
+                            <mat-select class="account-selection"  (selectionChange)="filterByCategory()" placeholder="Kategori Seç"
+                            [(ngModel)]="selectedCategory">
+                                <mat-option *ngFor="let item of tags"  [value]="item.Id">
+                                {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+            
+                    <div class="paging" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                        <div class="title">Her Sayfada</div>
+                        <mat-form-field floatLabel="never">
+                            <mat-select class="account-selection"     (selectionChange)="getRecordPerPage()"  [(ngModel)]="questionPerPage">
+                                <mat-option [value]="10">
+                                10
+                                </mat-option>
+                                <mat-option [value]="15">
+                                    15
+                                </mat-option>
+                                <mat-option [value]="20">
+                                    20
+                                </mat-option>
+                                <mat-option [value]="999999">
+                                    Tümü
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+            </diV>
 
+            <div class="mat-card p-24 px-24 mb-24"   *ngFor="let item of posts" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutAlign="space-between none" >
 
-
-            <div class="mat-card p-24 px-24 mb-24"    *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start" >
-
-                <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch" >
+                <div fxLayout="column" fxLayoutAlign="center stretch" >
 
                     <a  [routerLink]="'/questions/'+item.Id" class="h2 mb-24 border-bottom">{{item.title}}</a>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <p class="pt-16 " innerHTML="{{ (item.message.length>6)? (item.message | slice:0:200)+'..':(item.message) }}">
+                        <p class="pt-16 " innerHTML="{{ (item.message.length>60)? (item.message | slice:0:200)+'..':(item.message) }}">
                         
                         </p>
                     </div>
@@ -126,7 +124,7 @@
                     </a>
                 </div>
 
-                <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center" >
+                <div fxLayout="row"  fxLayoutAlign="center center" >
 
                     <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">

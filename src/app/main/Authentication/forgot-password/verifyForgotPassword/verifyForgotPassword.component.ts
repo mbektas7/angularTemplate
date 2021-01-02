@@ -6,18 +6,18 @@ import { takeUntil } from 'rxjs/operators';
 import { MirapiConfigService } from '@mirapi/services/config.service';
 import { mirapiAnimations } from '@mirapi/animations';
 
-import { verifyForgotPasswordService } from './verifyForgotPassword.service';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { Router } from '@angular/router';
+import { verifyforgotpasswordService } from './verifyforgotpassword.service';
 
 @Component({
-    selector   : 'verifyForgotPassword',
-    templateUrl: './verifyForgotPassword.component.html',
-    styleUrls  : ['./verifyForgotPassword.component.scss'],
+    selector   : 'verifyforgotpassword',
+    templateUrl: './verifyforgotpassword.component.html',
+    styleUrls  : ['./verifyforgotpassword.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations : mirapiAnimations
 })
-export class verifyForgotPasswordComponent implements OnInit, OnDestroy
+export class verifyforgotpasswordComponent implements OnInit, OnDestroy
 {
     sifre;
     isSubmitClicked=false;
@@ -26,7 +26,7 @@ export class verifyForgotPasswordComponent implements OnInit, OnDestroy
 
     constructor(
         private _mirapiConfigService: MirapiConfigService,
-        private _verifyForgotPasswordService :verifyForgotPasswordService,
+        private _verifyforgotpasswordService :verifyforgotpasswordService,
         private alertiyfyService:AlertifyService,
         private router:Router
     )
@@ -70,7 +70,7 @@ export class verifyForgotPasswordComponent implements OnInit, OnDestroy
 
     verifyForgotPassword() {
         this.isSubmitClicked = true;
-        this._verifyForgotPasswordService.updatePassword(this.sifre)
+        this._verifyforgotpasswordService.updatePassword(this.sifre)
         .subscribe((res) => {
             this.alertiyfyService.success('Şifre başarıyla değiştirildi');
             this.router.navigateByUrl('/auth/login');
