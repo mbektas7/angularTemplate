@@ -4,8 +4,8 @@
     <!-- HEADER -->
     <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center start">
-
-            <div class="h1 mt-16"> Yeni bir gönderi ekle</div>
+            
+            <div class="h1 mt-16"> <mat-icon>add</mat-icon>Yeni bir gönderi ekle</div>
         </div>
     </div>
     <!-- / HEADER -->
@@ -18,9 +18,11 @@
 
         <div  fxLayout="column" fxLayoutAlign="center stretch" >      
 
+
             <div fxLauout="row">
 
                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Başlık</mat-label>
                 <input
                     matInput
                     name="title"
@@ -32,8 +34,8 @@
             </div>
 
 
-
-            <ckeditor [(ngModel)]="post.message"  [editor]="Editor" (ready)="onReady($event)" data="<p></p>"></ckeditor>
+              <!-- editor boyu app.scss üzerinden ayarlanıyor. -->
+            <ckeditor [(ngModel)]="post.message"  [editor]="Editor" (ready)="onReady($event)" data=""></ckeditor>
 
             <div class="pt-24" fxLayout="row" fxLayoutAlign="start center">
               <input #file type="file" style="display: none" accept='image/*' (change)="preview(file.files)" />
@@ -80,7 +82,7 @@
               
 
             <div class="p-24" fxLayout="row" fxLayoutAlign="end center" >
-                <button  mat-raised-button color="accent" class="post-comment-button" (click) ="addPost()" >
+                <button  *ngIf="post.message && post.title"  mat-raised-button color="accent" class="post-comment-button" (click) ="addPost()" >
                   Kaydet
                 </button>
 

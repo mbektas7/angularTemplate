@@ -124,6 +124,11 @@
                                     <a class="h2 mb-24 border-bottom"  [routerLink]="'/questions/'+item.Id" >{{item.title}}</a>
         
                                     <div fxLayout="row" fxLayoutAlign="space-between center">
+                                        <button mat-icon-button class="primary"
+                                        (click)="show(item)">
+                                        <mat-icon>pageview</mat-icon>
+                                        
+                                    </button>
                                     <button mat-icon-button class="warn"
                                         (click)="deletePost(item)">
                                         <mat-icon>delete</mat-icon>

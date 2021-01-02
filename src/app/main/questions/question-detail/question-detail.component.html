@@ -140,6 +140,11 @@
                             Cevaplamak için giriş yap
                         </button>
                     </div>
+                    <div *ngIf="!isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
+                        <button (click)="login()" routerLinkActive="router-link-active"  mat-raised-button color="accent" class="post-comment-button"  aria-label="Post Comment">
+                            Cevaplamak için giriş yap modal ile
+                        </button>
+                    </div>
                     <div *ngIf="isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
                         <img  src="{{ user?.photo?.path}}" class="avatar"/>
     

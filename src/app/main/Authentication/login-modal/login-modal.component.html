@@ -1,0 +1,36 @@
+<h1 mat-dialog-title >Giriş Yap</h1>
+<div>
+<div mat-dialog-content>
+
+<mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                <mat-label>Email</mat-label>
+            <input
+            matInput
+            name="name"
+            placeholder="Email adresinizi giriniz."
+            required
+            [(ngModel)]="data.Username"
+            />
+</mat-form-field>
+
+<mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+    <mat-label>Şifre</mat-label>
+<input
+matInput
+type="password"
+name="password"
+placeholder="Şifrenizi giriniz"
+required
+[(ngModel)]="data.Password"
+/>
+</mat-form-field>
+
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">iptal</button>
+        <button mat-raised-button color="accent" *ngIf="data.Username && data.Password" [mat-dialog-close]="data">Giriş</button>
+        
+    </div>
+
+</div>

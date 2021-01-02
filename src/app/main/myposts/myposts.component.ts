@@ -4,6 +4,8 @@ import { PostModel } from '../admin/posts/PostModel';
 import { MypostDetailComponent } from './mypost-detail/mypost-detail.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
+import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 
 @Component({
   selector: 'app-myposts',
@@ -19,7 +21,9 @@ export class MypostsComponent implements OnInit {
   constructor(
     public _matDialog: MatDialog,
     private questionService : QuestionsService,
-    public dialog: MatDialog,) { }
+    private httpService : HttpRequestsService,
+    public dialog: MatDialog,
+    private router:Router) { }
 
   ngOnInit() {
 
@@ -69,6 +73,17 @@ this.getMyPosts();
     });
 
      
+  }
+
+  show(data : PostModel){
+   
+   
+    this.httpService.getById("post/",data.Id).subscribe(a=>{
+    
+      this.router.navigateByUrl('/questions/'+a["data"]["parent"]["Id"]);
+    });
+
+   
   }
 
   async deletePost(data : PostModel){

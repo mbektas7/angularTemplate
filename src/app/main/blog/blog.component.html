@@ -1,14 +1,40 @@
 
 <div id="forms" class="page-layout simple " fxLayout="column">
 
-  <div  *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="end none">
-    <div  class="pr-40 pt-2" >
-      <button mat-raised-button   [routerLink]="'/new-blog'" routerLinkActive="router-link-active" >
-        <mat-icon>add</mat-icon>
-          Yeni Gönderi Ekle</button>
-  </div>
-  
-  </div>
+
+      <!-- HEADER -->
+      <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
+
+        <div fxLayout="column" fxLayoutAlign="center start">
+
+            <div class="h1 mt-16">
+              <mat-icon>event_note</mat-icon>Blog</div>
+        </div>
+
+        
+         <!-- SEARCH -->
+         <div class="search-wrapper mx-32 mx-md-0">
+            <div  class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon>search</mat-icon>
+                <input (keyup.enter)="search()" #filter [(ngModel)]="searchText"  placeholder="Neyi merak etmiştin?">
+            </div>
+        </div>    
+        <!-- / SEARCH -->
+
+        <div  *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="end none">
+          <div  class="pr-60 pt-20" >
+            <button mat-raised-button   [routerLink]="'/new-blog'" routerLinkActive="router-link-active" class="warn-A200-fg" >
+              <mat-icon>add</mat-icon>
+                Yeni Blog Yazısı Ekle</button>
+      
+        </div>
+        
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+
+
 
 
 

@@ -42,6 +42,18 @@ export class AuthService {
       );
      
   }
+  loginWithModal(user : any): Observable<LoginDTO> {
+    return this.http.post<LoginDTO>(`${environment.apiUrl}Token`, user)
+      .pipe(
+        tap(response => {
+          
+          this.user$.next(response.user);
+          this.setToken('token', response.JwtToken);
+          this.setToken('refreshToken', response.RefreshToken);
+        })
+      );
+     
+  }
 
   logout(): void {
     this.localStorageService.removeItem('token');

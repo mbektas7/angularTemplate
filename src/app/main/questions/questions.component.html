@@ -6,7 +6,8 @@
 
         <div fxLayout="column" fxLayoutAlign="center start">
 
-            <div class="h1 mt-16">Son Paylaşımlar</div>
+            <div class="h1 mt-16">
+               <mat-icon>notes</mat-icon> Son Paylaşımlar</div>
         </div>
 
         
@@ -16,11 +17,11 @@
                 <mat-icon>search</mat-icon>
                 <input (keyup.enter)="search()" #filter [(ngModel)]="searchText"  placeholder="Neyi merak etmiştin?">
             </div>
-        </div>
+        </div>    
         <!-- / SEARCH -->
 
     <div  *ngIf="!isLoggedIn" class="pr-40" >
-        <button [routerLink]="['/auth/login']"   mat-raised-button="" 
+        <button (click)="login()"   mat-raised-button="" 
         class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
         tabindex="0"><span class="mat-button-wrapper">
            
@@ -45,19 +46,55 @@
     <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
 
 
-        <button [routerLink]="['/auth/login']" class="action ask-question" *ngIf="!isLoggedIn"  mat-raised-button="" 
+        <!-- <button [routerLink]="['/auth/login']" class="action ask-question"   mat-raised-button="" 
         color="accent"
         class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
         tabindex="0"><span class="mat-button-wrapper">
             <mat-icon>add</mat-icon>
             <span>Bir soru sor</span></span>
             <div matripple="" class="mat-ripple mat-button-ripple"></div>
-            <div class="mat-button-focus-overlay"></div></button>
+            <div class="mat-button-focus-overlay"></div></button> -->
 
     </div>
 
 
     <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
+
+    <diV  class="mat-card p-24 px-24 mb-24" style="max-height: 10% !important"  fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="kategori" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                <div class="title">Kategori Seç</div>
+                <mat-form-field floatLabel="never">
+                    <mat-select class="account-selection"  (selectionChange)="filterByCategory()" placeholder="Kategori Seç"
+                    [(ngModel)]="selectedCategory">
+                        <mat-option *ngFor="let item of tags"  [value]="item.Id">
+                          {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+    
+            <div class="paging" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                <div class="title">Her Sayfada</div>
+                <mat-form-field floatLabel="never">
+                    <mat-select class="account-selection"     (selectionChange)="getRecordPerPage()"  [(ngModel)]="questionPerPage">
+                        <mat-option [value]="10">
+                           10
+                        </mat-option>
+                        <mat-option [value]="15">
+                            15
+                         </mat-option>
+                         <mat-option [value]="20">
+                            20
+                         </mat-option>
+                         <mat-option [value]="999999">
+                            Tümü
+                         </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </diV>
+
+
 
             <div class="mat-card p-24 px-24 mb-24"    *ngFor="let item of posts" fxLayout="row" fxLayoutAlign="start" >
 
@@ -88,11 +125,12 @@
                         </div>
                     </a>
                 </div>
+
                 <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center" >
 
                     <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="blue-800-fg font-size-72 line-height-72">
+                            <div class="blue-800-fg font-size-36 line-height-36">
                                {{item.view}}
                             </div>
                             <div class="h3 secondary-text font-weight-500">Görüntüleme
@@ -101,7 +139,7 @@
                     </div>
                     <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="grey-700-fg font-size-72 line-height-72">
+                            <div class="grey-700-fg font-size-36 line-height-36">
                                 {{item.answer}}
                             </div>
                             <div class="h3 secondary-text font-weight-500">Cevap
@@ -110,7 +148,7 @@
                     </div>
                     <div class="mirapi-widget-front p-12">
                         <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="orange-800-fg font-size-72 line-height-72">
+                            <div class="orange-800-fg font-size-36 line-height-36">
                                 {{item.vote}}
                             </div>
                             <div class="h3 secondary-text font-weight-500">Oy
@@ -120,6 +158,15 @@
                 </div>
               
             </div>
+
+            <div fxLayout="row" fxLayoutAlign="center" class="pb-24">
+                <button   mat-raised-button class="primary p-w-50" (click)="loadMore()">
+                    <mat-icon>add</mat-icon>
+                    Daha Fazla
+                </button>
+               
+            </div>
+            <br>
 
     </div>
 
@@ -142,7 +189,7 @@
                 <h3>En çok kullanılan anahtarlar</h3>
                 <ul>
                                 <li *ngFor="let item of summary?.categories">
-                        <a class="q-tag" href="https://qaengine.enginethemes.com/blog/qa-tag/business-2/">{{item.name}}</a> x {{item.count}}         </li>
+                        <a class="q-tag" (click)="etiketeGoreListele(item.name)" >{{item.name}}</a> x {{item.count}}         </li>
                  </ul>
             </li><!-- END widget-related-tags -->
                 <li class="widget widget-hot-questions">

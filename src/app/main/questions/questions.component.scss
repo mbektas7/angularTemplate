@@ -4,10 +4,19 @@
 
 
 
+.kategori {
+	width: 100%;
+	max-width: 200px;
+}
+.paging {
+	width: 100%;
+	max-width: 100px;
+}
 
                 .search-wrapper {
                     width: 100%;
-                    max-width: 480px;
+					max-width: 480px;
+					max-height: 50px;
                     border-radius: 28px;
                     overflow: hidden;
                     @include mat-elevation(1);
@@ -32,7 +41,9 @@
                             outline: none;
                         }
                     }
-                }
+				}
+				
+
 
                 @include media-breakpoint('lt-md') {
                     padding: 8px 0;

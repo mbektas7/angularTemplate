@@ -42,6 +42,7 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardModule } from './main/dashboard/dashboard.module';
 import { ChatModule } from './main/chat/chat.module';
+import { LoginModalComponent } from './main/Authentication/login-modal/login-modal.component';
 
 
 
@@ -124,6 +125,7 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent
+        
     ],
     exports: [RouterModule],
     imports     : [

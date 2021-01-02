@@ -8,6 +8,12 @@ import { Subscription } from 'rxjs';
 import { User } from '../../shared/models/user';
 import { map, tap } from 'rxjs/operators';
 import { LocalStorageService } from 'app/shared/services/local-storage.service';
+import { TagsModel } from 'app/shared/models/TagsModel';
+import { PostFilterDTO } from 'app/shared/models/PostFilterDTO';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { MatDialog } from '@angular/material';
+import { AlertifyService } from 'app/shared/services/alertify.service';
+import { LoginModalComponent } from '../Authentication/login-modal/login-modal.component';
 
 @Component({
     selector: "app-questions",
@@ -23,12 +29,15 @@ export class QuestionsComponent implements OnInit , OnDestroy {
     summary: any;
     user: User;
     userSub: Subscription;
+    selectedCategory  = "0Tumu";
+    questionPerPage = 10;
+    tags : TagsModel[] = [];
     
     constructor(
         private adminService: AdminService,
         private authService: AuthService,
-        private testService : TestService,
-        private localStorageService : LocalStorageService
+        public dialog: MatDialog,
+        private alertifyService : AlertifyService
     ) {
 
         console.log("question module loaded");
@@ -49,6 +58,7 @@ export class QuestionsComponent implements OnInit , OnDestroy {
     
         this.getList();
         this.getSummary();
+        this.getCategories();
     }
 
     ngOnDestroy(){
@@ -68,16 +78,33 @@ export class QuestionsComponent implements OnInit , OnDestroy {
         });
     }
 
-    search() {
-        if (this.searchText.length>0) {
+    etiketeGoreListele(item){
+        let id = this.tags.find(({name})=> name ===item).Id;
+        var filter = {
+            categoryId : id,
+            searchtext : this.searchText,
+            questionPerPage : this.questionPerPage
+        }
             this.adminService
-            .getList("post/filter/" + this.searchText)
+            .addItem("post/filter" , filter)
             .then((data) => {
                 this.posts = data;
             });
-        } else {
-            this.getList();
+    }
+
+    search() {
+
+        
+        var filter = {
+            categoryId : this.selectedCategory,
+            searchtext : this.searchText,
+            questionPerPage : this.questionPerPage
         }
+            this.adminService
+            .addItem("post/filter" , filter)
+            .then((data) => {
+                this.posts = data;
+            });
         
     }
 
@@ -86,4 +113,56 @@ export class QuestionsComponent implements OnInit , OnDestroy {
             this.summary = data;
         });
     }
+
+    getCategories(){
+        this.adminService.getList('Categories').then(data=>{
+
+         let tumu = {
+             name : "Tümü",
+             Id : "0Tumu"
+         };
+          this.tags= data;
+          this.tags.push(tumu);
+          this.tags.sort((a,b) => a.Id.localeCompare(b.Id))
+          console.log(this.tags);
+        });
+      }
+
+      filterByCategory() {
+       this.search();
+    }
+
+    getRecordPerPage(){
+        this.search();
+    }
+
+    loadMore(){
+        this.questionPerPage = this.questionPerPage+10;
+        this.getRecordPerPage();
+    }
+
+    login(): void {
+        const dialogRef = this.dialog.open(LoginModalComponent, {
+          width: '500px',
+          data: { }
+    
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          if (result != null) { 
+           console.log(result);
+           this.authService.loginWithModal(result).subscribe(() => {
+            this.alertifyService.success('Giriş yapıldı.');
+            this.authService.getCurrentUser().subscribe();
+          }, err => {
+            this.alertifyService.error('Giriş sırasında hata oluştu. Bilgilerinizi kontrol ediniz.');
+          });
+        } else {
+           
+        }
+          } 
+        );
+      }
+
+      
 }

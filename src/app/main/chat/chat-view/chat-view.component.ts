@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MirapiPerfectScrollbarDirective } from '@mirapi/directives/mirapi-perfect-scrollbar/mirapi-perfect-scrollbar.directive';
+import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -44,6 +45,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
      */
     constructor(
         private _chatService: ChatService,
+        private _httpClient : HttpRequestsService
     )
     {
         // Set the private defaults
@@ -145,6 +147,15 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
        
        this._chatService.selectContact(this.contact);
     }
+
+    sil(){
+     
+ 
+            this._httpClient.delete('messages/chat/',this.selectedChat.chatId).subscribe(data=>{
+                    this._chatService.getChats();
+            });
+    
+        }
 
     /**
      * Ready to reply

@@ -209,4 +209,15 @@ export class ChatService implements Resolve<any>
                 }, reject);
         });
     }
+
+
+    deleteChat(id:string): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete('messages/chat/',id)
+                .subscribe((response: any) => {
+                    resolve(response["data"]);
+                }, reject);
+        });
+    }
 }

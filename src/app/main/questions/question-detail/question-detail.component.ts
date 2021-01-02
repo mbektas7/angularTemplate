@@ -15,6 +15,10 @@ import { Router } from '@angular/router';
 
 import 'moment/locale/tr';
 import { User } from 'app/shared/models/user';
+import { MatDialog } from '@angular/material';
+import { LoginDTO } from 'app/shared/models/LoginDTO';
+import { LoginModalComponent } from 'app/main/Authentication/login-modal/login-modal.component';
+import { AlertifyService } from 'app/shared/services/alertify.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -42,8 +46,10 @@ export class QuestionDetailComponent implements OnInit {
   constructor(
     private questionService : QuestionsService,
     private router : Router,
+    public dialog: MatDialog,
     private questionDeatilService : QuestionDetailService,
     private authService: AuthService,
+    private alertifyService : AlertifyService,
     private httpReq : HttpRequestsService) {
 
     this._unsubscribeAll = new Subject();
@@ -167,6 +173,29 @@ export class QuestionDetailComponent implements OnInit {
   
 
 
+  
+  login(): void {
+    const dialogRef = this.dialog.open(LoginModalComponent, {
+      width: '500px',
+      data: { }
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) { 
+       console.log(result);
+       this.authService.loginWithModal(result).subscribe(() => {
+        this.alertifyService.success('Giriş yapıldı.');
+        this.authService.getCurrentUser().subscribe();
+      }, err => {
+        this.alertifyService.error('Giriş sırasında hata oluştu. Bilgilerinizi kontrol ediniz.');
+      });
+    } else {
+       
+    }
+      } 
+    );
+  }
 
 
 
