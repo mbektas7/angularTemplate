@@ -1,20 +1,11 @@
 <div id="register" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
 
         <div id="register-intro" fxFlex fxHide fxShow.gt-xs>
-    
-            <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
-                <img src="~/../../../../../../assets/images/logos/api.svg">
-            </div>
-    
+
             <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
-             MirApi  .NET WEB API
-            </div>
-    
-            <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
-             Start-up to!
-            </div>
-    
-    
+                Volkswagen Amarok Hakkında Her Şey!
+                </div>
+
         </div>
     
     
@@ -31,6 +22,31 @@
                                 <div id="register-form">
                                 <form  #registerForm="ngForm" (ngSubmit)="register(registerForm)" id="manager">
                 
+                                    <mat-form-field>
+                                        <input matInput placeholder="Adınız"
+                                        required 
+                                        #adi="ngModel"
+                                        name="adi"
+                                        ngModel id="adi"
+                                        type="text"
+                                        adi
+                                        [(ngModel)]="userRegister.name"
+                                        >
+                                       
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Soyadınız"
+                                        required 
+                                        #surname="ngModel"
+                                         name="surname"
+                                        ngModel id="surname"
+                                        type="text"
+                                        surname
+                                        [(ngModel)]="userRegister.surname"
+                                        >
+                                       
+                                    </mat-form-field>
                 
                                         <mat-form-field>
                                             <input matInput placeholder="Email"
@@ -50,6 +66,7 @@
                                             </mat-error>
                                            
                                         </mat-form-field>
+
                                         <br>
                                         <mat-form-field class="passwordField">
                                                 <input type="password"

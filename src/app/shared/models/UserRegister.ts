@@ -3,4 +3,6 @@ export class UserRegister {
     password: string;
     confirmPassword: string;
     concurrencyToken: string;
+    name : string;
+    surname : string;
 }
