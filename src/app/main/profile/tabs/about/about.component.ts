@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { SelectCarComponent } from 'app/main/admin/cars/select-car/select-car.component';
 import { User } from '../../../../shared/models/user';
 import { ProfileDetailService } from '../../profil-detail.service';
+import { CarModel } from 'app/shared/models/CarModel';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
         private authService: AuthService
     )
     {
+          this.user = new User();
           this._unsubscribeAll = new Subject();
         this.userAbout = new UserAboutUpdateModal();
 
@@ -122,8 +124,9 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
     
         dialogRef.afterClosed().subscribe(result => {
           if (result != null) {    
-
-            this.user.car.id = result.carId;
+           this.user.car =  new CarModel();
+            this.user.car.Id = result.carId;
+            console.log(this.user);
             this._profileService.updateUserAbout(this.user);
           } 
         });

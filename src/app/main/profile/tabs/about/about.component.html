@@ -78,9 +78,9 @@
 
             <div class="content">
 
-                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                        <mat-form-field *ngIf="user.car" appearance="outline" floatLabel="always"  class="w-80-p">
                                         <mat-label>Araç</mat-label>
-                                    <input
+                                    <input 
                                         matInput
                                         name="arac"
                                         disabled="{{!isEditing}}"

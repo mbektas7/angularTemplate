@@ -57,7 +57,7 @@ getUserDetails(): Promise<any> {
 }
 
 updateUserAbout(userAbout: User){
-
+    console.log(userAbout);
     this._httpClient.put('Users/' + userAbout.Id, userAbout).subscribe(data => {   
         this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
         this.router.navigateByUrl('/dashboard');  

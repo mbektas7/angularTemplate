@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { delay, filter, take, takeUntil } from 'rxjs/operators';
 
 import { MirapiConfigService } from '@mirapi/services/config.service';
 import { MirapiNavigationService } from '@mirapi/components/navigation/navigation.service';
 import { MirapiPerfectScrollbarDirective } from '@mirapi/directives/mirapi-perfect-scrollbar/mirapi-perfect-scrollbar.directive';
 import { MirapiSidebarService } from '@mirapi/components/sidebar/sidebar.service';
+import { JwtHelper } from 'angular2-jwt';
+import { User } from 'app/shared/models/user';
+import { AuthService } from 'app/shared/services/auth.service';
+import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector     : 'navbar-vertical-style-1',
@@ -19,6 +24,15 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
     mirapiConfig: any;
     navigation: any;
 
+    jwtHelper: JwtHelper = new JwtHelper();
+    TOKEN_KEY = 'token';
+    pendingPermissionsCount;
+    name = '';
+    email = '';
+    isLoggedIn : boolean;
+    profilImage :any;
+    user: User;
+    userSub: Subscription;
     // Private
     private _mirapiPerfectScrollbar: MirapiPerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
@@ -35,11 +49,40 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _mirapiConfigService: MirapiConfigService,
         private _mirapiNavigationService: MirapiNavigationService,
         private _mirapiSidebarService: MirapiSidebarService,
-        private _router: Router
+        private _router: Router,
+        private authService : AuthService,
+        private http : HttpRequestsService,
+        private _sanitizer: DomSanitizer,
     )
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        this.userSub = this.authService.user$.subscribe((user: User) => {
+            this.user = user;
+            if (this.user) {
+             
+                if (user.photo) {
+                    this.profilImage = user.photo.path;
+                }
+               
+                this.name = user.Name;
+                this.email = user.Username;
+                this._mirapiNavigationService.updateNavigationItem('admin', {
+                    hidden: false
+                });
+               // this.setProfileValues();
+             this.isLoggedIn = true;
+            } else {
+                this._mirapiNavigationService.updateNavigationItem('admin', {
+                    hidden: true
+                });
+                this.isLoggedIn = false; 
+            }
+             
+          });
+
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -159,4 +202,38 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
     {
         this._mirapiSidebarService.getSidebar('navbar').toggleFold();
     }
+
+
+    getUserDetails(){
+        const userId = this.user.Id.toString()
+        
+         this.http.getList('Users/' + userId).then(data => {
+            this.name = data.Name;
+            this.profilImage = data.avatar;
+           // this.authService.userProfileImage = this.profilImage;
+            if (data.isSocialLogin) {
+                this.profilImage = 'data:image/jpg;base64,' +
+            (this._sanitizer.bypassSecurityTrustResourceUrl(this.profilImage) as any).changingThisBreaksApplicationSecurity;
+            }
+            
+        });
+        
+    }
+
+      setProfileValues(){
+
+        const userId = this.user.Id.toString()
+        
+        this.http.getList('Users/' + userId).then(data => {
+           this.name = data.Name;
+           this.profilImage = data['photo']['path'];
+         
+         //  this.authService.userProfileImage = this.profilImage;
+           if (data.isSocialLogin) {
+               this.profilImage = 'data:image/jpg;base64,' +
+           (this._sanitizer.bypassSecurityTrustResourceUrl(this.profilImage) as any).changingThisBreaksApplicationSecurity;
+           }
+           
+       });
+      }
 }
