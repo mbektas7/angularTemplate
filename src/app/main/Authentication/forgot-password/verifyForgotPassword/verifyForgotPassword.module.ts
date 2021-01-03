@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { verifyforgotpasswordComponent } from './verifyForgotPassword.component';
-import { verifyforgotpasswordService } from './verifyforgotpassword.service';
+import { verifyforgotpasswordComponent } from './verifyforgotpassword.component';
+import { verifyforgotpasswordservice } from './verifyforgotpassword.service';
 
 
 
@@ -16,7 +16,7 @@ const routes = [
         path     : ':id',
         component: verifyforgotpasswordComponent,
         resolve  : {
-            data: verifyforgotpasswordService
+            data: verifyforgotpasswordservice
         }
       }
 ];
@@ -26,7 +26,7 @@ const routes = [
         verifyforgotpasswordComponent
     ],
     providers :[
-        verifyforgotpasswordService
+        verifyforgotpasswordservice
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -40,6 +40,6 @@ const routes = [
         
     ]
 })
-export class verifyForgotPasswordModule
+export class verifyforgotpasswordModule
 {
 }

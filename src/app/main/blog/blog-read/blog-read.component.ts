@@ -16,7 +16,7 @@ import { BlogService } from '../blog.service';
 import { User } from 'app/shared/models/user';
 
 @Component({
-  selector: 'app-blog-read',
+  selector: 'blog-read',
   templateUrl: './blog-read.component.html',
   styleUrls: ['./blog-read.component.scss'],
   encapsulation: ViewEncapsulation.None,

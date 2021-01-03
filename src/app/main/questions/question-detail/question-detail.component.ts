@@ -17,7 +17,7 @@ import 'moment/locale/tr';
 import { User } from 'app/shared/models/user';
 import { MatDialog } from '@angular/material';
 import { LoginDTO } from 'app/shared/models/LoginDTO';
-import { LoginModalComponent } from 'app/main/Authentication/login-modal/login-modal.component';
+import { LoginModalComponent } from 'app/main/authentication/login-modal/login-modal.component';
 import { AlertifyService } from 'app/shared/services/alertify.service';
 
 @Component({

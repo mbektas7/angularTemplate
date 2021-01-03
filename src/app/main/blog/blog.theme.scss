@@ -1,9 +1,9 @@
-@mixin question-theme($theme) {
+@mixin blog-theme($theme) {
 
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     
-    questions{
+    blog{
 
         .header {
 
@@ -23,6 +23,5 @@
                 }
             }
         }
-
     }
 }

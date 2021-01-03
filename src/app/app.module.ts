@@ -42,7 +42,7 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardModule } from './main/dashboard/dashboard.module';
 import { ChatModule } from './main/chat/chat.module';
-import { LoginModalComponent } from './main/Authentication/login-modal/login-modal.component';
+import { LoginModalComponent } from './main/authentication/login-modal/login-modal.component';
 
 
 
@@ -54,16 +54,16 @@ const appRoutes: Routes = [
     {
         path        : 'auth/login',
         pathMatch   : 'full',
-        loadChildren: () => import('./main/Authentication/login/login.module').then(m=>m.LoginModule)
+        loadChildren: () => import('./main/authentication/login/login.module').then(m=>m.LoginModule)
     },
     {
         path        : 'auth/register',
-        loadChildren: () => import('./main/Authentication/register/register.module').then(m=>m.RegisterModule)
+        loadChildren: () => import('./main/authentication/register/register.module').then(m=>m.RegisterModule)
 
     },
     {
         path      : 'auth/np',
-        loadChildren: () => import('./main/authentication/forgot-password/verifyForgotPassword/verifyForgotPassword.module').then(m => m.verifyForgotPasswordModule),
+        loadChildren: () => import('./main/authentication/forgot-password/verifyforgotpassword/verifyforgotpassword.module').then(m => m.verifyforgotpasswordModule),
         
     },
     {

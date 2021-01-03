@@ -7,7 +7,7 @@ import { User } from '../../shared/models/user';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-blog',
+  selector: 'blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss'],
   encapsulation: ViewEncapsulation.None,

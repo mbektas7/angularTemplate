@@ -13,10 +13,10 @@ import { PostFilterDTO } from 'app/shared/models/PostFilterDTO';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { MatDialog } from '@angular/material';
 import { AlertifyService } from 'app/shared/services/alertify.service';
-import { LoginModalComponent } from '../Authentication/login-modal/login-modal.component';
+import { LoginModalComponent } from '../authentication/login-modal/login-modal.component';
 
 @Component({
-    selector: "app-questions",
+    selector: "questions",
     templateUrl: "./questions.component.html",
     styleUrls: ["./questions.component.scss"],
     encapsulation: ViewEncapsulation.None,

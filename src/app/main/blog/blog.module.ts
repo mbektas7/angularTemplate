@@ -24,7 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
+import { MirapiProgressBarModule, MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatBadgeModule } from '@angular/material';
@@ -88,7 +88,8 @@ const routes = [
       MatCardModule,
       CKEditorModule,
       MatChipsModule,
-      MatMenuModule
+      MatMenuModule,
+      MirapiProgressBarModule
     ],
     providers :[ AdminService,BlogService ],
     declarations: [

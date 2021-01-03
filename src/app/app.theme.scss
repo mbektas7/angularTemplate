@@ -85,11 +85,11 @@ $typography: mat-typography-config(
 @import "src/app/main/authentication/register/register.theme";
 @import "src/app/main/authentication/register/mail-confirm/mail-confirm.theme";
 @import "src/app/main/authentication/forgot-password/forgot-password.theme";
-@import "src/app/main/authentication/forgot-password/verifyForgotPassword/verifyForgotPassword.theme";
+@import "src/app/main/authentication/forgot-password/verifyforgotpassword/verifyforgotpassword.theme";
 @import "src/app/main/profile/tabs/about/about.theme";
 @import "src/app/main/questions/question.theme";
 @import "src/app/main/chat/chat.theme";
-
+@import "src/app/main/blog/blog.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -105,8 +105,9 @@ $typography: mat-typography-config(
     @include profile-about-theme($theme);
     @include register-theme($theme);
     @include  mail-confirm-theme($theme);
-    @include verifyForgotPassword-theme($theme);
+    @include verifyforgotpassword-theme($theme);
     @include question-theme($theme);
+    @include blog-theme($theme);
     @include chat-theme($theme);
 
     

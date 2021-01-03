@@ -1,233 +1,237 @@
 
-<div id="forms" class="page-layout simple " fxLayout="column">
 
-    <!-- HEADER -->
-    <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
+    <div id="questions" class="page-layout simple " fxLayout="column">
 
-        <div fxLayout="column" fxLayoutAlign="center start">
-
-            <div class="h1 mt-16">
-               <mat-icon>notes</mat-icon> Son Paylaşımlar</div>
-        </div>
-
-        
-         <!-- SEARCH -->
-         <div class="search-wrapper mx-32 mx-md-0">
-            <div  class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon>search</mat-icon>
-                <input (keyup.enter)="search()" #filter [(ngModel)]="searchText"  placeholder="Neyi merak etmiştin?">
+        <!-- HEADER -->
+        <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
+    
+            <div fxLayout="column" fxLayoutAlign="center start">
+    
+                <div class="h1 mt-16">
+                   <mat-icon>notes</mat-icon> Son Paylaşımlar</div>
             </div>
-        </div>    
-        <!-- / SEARCH -->
-
-    <div  *ngIf="!isLoggedIn" class="pr-40" >
-        <button (click)="login()"   mat-raised-button="" 
-        class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
-        tabindex="0"><span class="mat-button-wrapper">
-           
-            <span>Sormak için giriş yap</span></span>
-            <div matripple="" class="mat-ripple mat-button-ripple"></div>
-            <div class="mat-button-focus-overlay"></div></button>
-    </div>
-
-        <div *ngIf="isLoggedIn" class="pr-40" >
-            <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="warn-A200-fg" >
-                <mat-icon>add</mat-icon>
-                <span>Bir soru sor</span></button>
-        </div>
-       
-    </div>
-    <!-- / HEADER -->
-
-    <!-- CONTENT -->
- <div  class="content " fxLayout="row" fxLayoutAlign="center none"  >
-
-
-    <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
-
-
-        <!-- <button [routerLink]="['/auth/login']" class="action ask-question"   mat-raised-button="" 
-        color="accent"
-        class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
-        tabindex="0"><span class="mat-button-wrapper">
-            <mat-icon>add</mat-icon>
-            <span>Bir soru sor</span></span>
-            <div matripple="" class="mat-ripple mat-button-ripple"></div>
-            <div class="mat-button-focus-overlay"></div></button> -->
-
-    </div>
-
-
-    <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
-
-            <diV  class="mat-card p-24 px-24 mb-24" style="max-height: 10% !important"  fxLayout="row" fxLayoutAlign="space-between center">
-                    <div class="kategori" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
-                        <div class="title">Kategori Seç</div>
-                        <mat-form-field floatLabel="never">
-                            <mat-select class="account-selection"  (selectionChange)="filterByCategory()" placeholder="Kategori Seç"
-                            [(ngModel)]="selectedCategory">
-                                <mat-option *ngFor="let item of tags"  [value]="item.Id">
-                                {{item.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
+    
             
-                    <div class="paging" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
-                        <div class="title">Her Sayfada</div>
-                        <mat-form-field floatLabel="never">
-                            <mat-select class="account-selection"     (selectionChange)="getRecordPerPage()"  [(ngModel)]="questionPerPage">
-                                <mat-option [value]="10">
-                                10
-                                </mat-option>
-                                <mat-option [value]="15">
-                                    15
-                                </mat-option>
-                                <mat-option [value]="20">
-                                    20
-                                </mat-option>
-                                <mat-option [value]="999999">
-                                    Tümü
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-            </diV>
-
-            <div class="mat-card p-24 px-24 mb-24"   *ngFor="let item of posts" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutAlign="space-between none" >
-
-                <div fxLayout="column" fxLayoutAlign="center stretch" >
-
-                    <a  [routerLink]="'/questions/'+item.Id" class="h2 mb-24 border-bottom">{{item.title}}</a>
-                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <p class="pt-16 " innerHTML="{{ (item.message.length>60)? (item.message | slice:0:200)+'..':(item.message) }}">
-                        
-                        </p>
-                    </div>
-                    <div>
-                        <mat-chip-list >
-                            <mat-chip class="green-50-bg" *ngFor="let tag of item.categories" [removable]="false">
-                                <mat-icon>{{tag.category.iconName}}</mat-icon>
-                                {{tag.category.name}}
-                            </mat-chip>
-                        </mat-chip-list>
-
-                    </div>
-                    <a [routerLink]="['/profile', item.user?.Id]" fxLayout="row" fxLayoutAlign="start center">
-                        
-                        <img  src="{{item.user.photo?.path}}" class="avatar"/>
-                        <div>
-                            <p class="pt-16 ">
-                            {{item.user.Name}}
-                             </p>
-                        </div>
-                    </a>
+             <!-- SEARCH -->
+             <div class="search-wrapper mx-32 mx-md-0">
+                <div  class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input (keyup.enter)="search()" #filter [(ngModel)]="searchText"  placeholder="Neyi merak etmiştin?">
                 </div>
-
-                <div fxLayout="row"  fxLayoutAlign="center center" >
-
-                    <div class="mirapi-widget-front p-12">
-                        <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="blue-800-fg font-size-36 line-height-36">
-                               {{item.view}}
-                            </div>
-                            <div class="h3 secondary-text font-weight-500">Görüntüleme
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mirapi-widget-front p-12">
-                        <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="grey-700-fg font-size-36 line-height-36">
-                                {{item.answer}}
-                            </div>
-                            <div class="h3 secondary-text font-weight-500">Cevap
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mirapi-widget-front p-12">
-                        <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="orange-800-fg font-size-36 line-height-36">
-                                {{item.vote}}
-                            </div>
-                            <div class="h3 secondary-text font-weight-500">Oy
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              
+            </div>    
+            <!-- / SEARCH -->
+    
+            <div  *ngIf="!isLoggedIn" class="pr-40" >
+                <button (click)="login()"   mat-raised-button="" 
+                class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+                tabindex="0"><span class="mat-button-wrapper">
+                
+                    <span>Sormak için giriş yap</span></span>
+                    <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                    <div class="mat-button-focus-overlay"></div></button>
             </div>
-
-            <div fxLayout="row" fxLayoutAlign="center" class="pb-24">
-                <button   mat-raised-button class="primary p-w-50" (click)="loadMore()">
+    
+            <div *ngIf="isLoggedIn" class="pr-40" >
+                <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="warn-A200-fg" >
                     <mat-icon>add</mat-icon>
-                    Daha Fazla
-                </button>
-               
+                    <span>Bir soru sor</span></button>
             </div>
-            <br>
-
-    </div>
-
-    <div class="px-4" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
-        <div class="col-md-2 disable-mobile right-sidebar">
-            <ul>
-                <li class="widget widget-statistic">
-                <ul>
-                    <li class="questions-count">
-                        <p>Soru</p><p>
-                        <span>{{summary?.postCount}}</span>
-                    </p></li>
-                    <li class="members-count">
-                        <p>Üye</p><p>
-                        <span>{{summary?.userCount}}</span>
-                    </p></li>
-                </ul>
-            </li><!-- END widget-statistic -->
-                <li class="widget widget-related-tags">
-                <h3>En çok kullanılan anahtarlar</h3>
-                <ul>
-                                <li *ngFor="let item of summary?.categories">
-                        <a class="q-tag" (click)="etiketeGoreListele(item.name)" >{{item.name}}</a> x {{item.count}}         </li>
-                 </ul>
-            </li><!-- END widget-related-tags -->
-                <li class="widget widget-hot-questions">
-                <h3>En çok oylanan sorular</h3>
-                <ul>
-                                <li *ngFor="let item of summary?.mostVoted">
-                        <a [routerLink]="'/questions/'+item.Id"  >
-                            <span class="topic-title">{{item.title}}</span>
+           
+        </div>
+        <!-- / HEADER -->
+    
+        <!-- CONTENT -->
+     <div  class="content " fxLayout="row" fxLayoutAlign="center none"  >
+    
+    
+        <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
+    
+    
+            <!-- <button [routerLink]="['/auth/login']" class="action ask-question"   mat-raised-button="" 
+            color="accent"
+            class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
+            tabindex="0"><span class="mat-button-wrapper">
+                <mat-icon>add</mat-icon>
+                <span>Bir soru sor</span></span>
+                <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                <div class="mat-button-focus-overlay"></div></button> -->
+    
+        </div>
+    
+    
+        <div fxFlex="70" fxLayout="column" fxLayoutAlign="start none" >      
+    
+                <diV  class="mat-card p-24 px-24 mb-24" style="max-height: 10% !important"  fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="kategori" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                            <div class="title">Kategori Seç</div>
+                            <mat-form-field floatLabel="never">
+                                <mat-select class="account-selection"  (selectionChange)="filterByCategory()" placeholder="Kategori Seç"
+                                [(ngModel)]="selectedCategory">
+                                    <mat-option *ngFor="let item of tags"  [value]="item.Id">
+                                    {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                
+                        <div class="paging" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+                            <div class="title">Her Sayfada</div>
+                            <mat-form-field floatLabel="never">
+                                <mat-select class="account-selection"     (selectionChange)="getRecordPerPage()"  [(ngModel)]="questionPerPage">
+                                    <mat-option [value]="10">
+                                    10
+                                    </mat-option>
+                                    <mat-option [value]="15">
+                                        15
+                                    </mat-option>
+                                    <mat-option [value]="20">
+                                        20
+                                    </mat-option>
+                                    <mat-option [value]="999999">
+                                        Tümü
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                </diV>
+    
+                <div class="mat-card p-24 px-24 mb-24"   *ngFor="let item of posts" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutAlign="space-between none" >
+    
+                    <div fxLayout="column" fxLayoutAlign="center stretch" >
+    
+                        <a  [routerLink]="'/questions/'+item.Id" class="h2 mb-24 border-bottom">{{item.title}}</a>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <p class="pt-16 " innerHTML="{{ (item.message.length>60)? (item.message | slice:0:200)+'..':(item.message) }}">
+                            
+                            </p>
+                        </div>
+                        <div>
+                            <mat-chip-list >
+                                <mat-chip class="green-50-bg" *ngFor="let tag of item.categories" [removable]="false">
+                                    <mat-icon>{{tag.category.iconName}}</mat-icon>
+                                    {{tag.category.name}}
+                                </mat-chip>
+                            </mat-chip-list>
+    
+                        </div>
+                        <a [routerLink]="['/profile', item.user?.Id]" fxLayout="row" fxLayoutAlign="start center">
+                            
+                            <img  src="{{item.user.photo?.path}}" class="avatar"/>
+                            <div>
+                                <p class="pt-16 ">
+                                {{item.user.Name}}
+                                 </p>
+                            </div>
                         </a>
-                    </li>
-                               
-                            </ul>
-            </li><!-- END widget-related-tags -->
-                <li class="widget user-widget">
-                <h3 class="widgettitle">En çok soranlar</h3>
-                <div class="hot-user-question">
+                    </div>
+    
+                    <div fxLayout="row"  fxLayoutAlign="center center" >
+    
+                        <div class="mirapi-widget-front p-12">
+                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                <div class="blue-800-fg font-size-36 line-height-36">
+                                   {{item.view}}
+                                </div>
+                                <div class="h3 secondary-text font-weight-500">Görüntüleme
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mirapi-widget-front p-12">
+                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                <div class="grey-700-fg font-size-36 line-height-36">
+                                    {{item.answer}}
+                                </div>
+                                <div class="h3 secondary-text font-weight-500">Cevap
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mirapi-widget-front p-12">
+                            <div class="pt-8 pb-32 border-bottom" fxLayout="column" fxLayoutAlign="center center">
+                                <div class="orange-800-fg font-size-36 line-height-36">
+                                    {{item.vote}}
+                                </div>
+                                <div class="h3 secondary-text font-weight-500">Oy
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+    
+                <div fxLayout="row" fxLayoutAlign="center" class="pb-24">
+                    <button   mat-raised-button class="primary p-w-50" (click)="loadMore()">
+                        <mat-icon>add</mat-icon>
+                        Daha Fazla
+                    </button>
+                   
+                </div>
+                <br>
+    
+        </div>
+    
+        <div class="px-4" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
+            <div class="col-md-2 disable-mobile right-sidebar">
+                <ul>
+                    <li class="widget widget-statistic">
                     <ul>
-                                    <li *ngFor="let item of summary?.topUsers; let i = index">
-                            <span class="number">{{i}}</span>
-                            <span class="username ">
-                                <a [routerLink]="['/profile', item.Id]" title="56789">
-                                    {{item.name}}                    	</a>
-                            </span>
-                                                <span class="points-count" title="56789 Point(s)">
-                                <i class="fa fa-star"></i>
-                                <span>{{item.count}}</span>
-                            </span>
-                                            </li>
+                        <li class="questions-count">
+                            <p>Soru</p><p>
+                            <span>{{summary?.postCount}}</span>
+                        </p></li>
+                        <li class="members-count">
+                            <p>Üye</p><p>
+                            <span>{{summary?.userCount}}</span>
+                        </p></li>
+                    </ul>
+                </li><!-- END widget-statistic -->
+                    <li class="widget widget-related-tags">
+                    <h3>En çok kullanılan anahtarlar</h3>
+                    <ul>
+                                    <li *ngFor="let item of summary?.categories">
+                            <a class="q-tag" (click)="etiketeGoreListele(item.name)" >{{item.name}}</a> x {{item.count}}         </li>
+                     </ul>
+                </li><!-- END widget-related-tags -->
+                    <li class="widget widget-hot-questions">
+                    <h3>En çok oylanan sorular</h3>
+                    <ul>
+                                    <li *ngFor="let item of summary?.mostVoted">
+                            <a [routerLink]="'/questions/'+item.Id"  >
+                                <span class="topic-title">{{item.title}}</span>
+                            </a>
+                        </li>
                                    
                                 </ul>
-                </div>
-            </li>
-
-                </ul>
+                </li><!-- END widget-related-tags -->
+                    <li class="widget user-widget">
+                    <h3 class="widgettitle">En çok soranlar</h3>
+                    <div class="hot-user-question">
+                        <ul>
+                                        <li *ngFor="let item of summary?.topUsers; let i = index">
+                                <span class="number">{{i}}</span>
+                                <span class="username ">
+                                    <a [routerLink]="['/profile', item.Id]" title="56789">
+                                        {{item.name}}                    	</a>
+                                </span>
+                                                    <span class="points-count" title="56789 Point(s)">
+                                    <i class="fa fa-star"></i>
+                                    <span>{{item.count}}</span>
+                                </span>
+                                                </li>
+                                       
+                                    </ul>
+                    </div>
+                </li>
+    
+                    </ul>
+            </div>
         </div>
-    </div>
+    
+     </div>
+        <!-- / CONTENT -->
+    
+    </div>   
 
- </div>
-    <!-- / CONTENT -->
 
-</div>
+
 
 

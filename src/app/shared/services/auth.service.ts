@@ -61,6 +61,14 @@ export class AuthService {
     this.user$.next(null);
   }
 
+  register(registerUser: UserRegister) {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Access-Control-Allow-Headers', 'Content-Type');
+    headers = headers.append('Accept', 'application/json');
+    return this.http.post(environment.rootPath + 'Users', registerUser, { headers: headers });
+  }
+
   getCurrentUser(): Observable<User> {
     return this.user$.pipe(
       switchMap(user => {

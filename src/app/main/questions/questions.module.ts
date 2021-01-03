@@ -37,7 +37,7 @@ import { UpdateQuestionComponent } from './update-question/update-question.compo
 import { SafePipe } from 'app/shared/pipes/SafePipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from 'app/shared/services/auth.service';
-import { LoginModalComponent } from '../Authentication/login-modal/login-modal.component';
+import { LoginModalComponent } from '../authentication/login-modal/login-modal.component';
 
 const routes = [
   {

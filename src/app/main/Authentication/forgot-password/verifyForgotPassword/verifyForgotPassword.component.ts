@@ -8,7 +8,7 @@ import { mirapiAnimations } from '@mirapi/animations';
 
 import { AlertifyService } from 'app/shared/services/alertify.service';
 import { Router } from '@angular/router';
-import { verifyforgotpasswordService } from './verifyforgotpassword.service';
+import { verifyforgotpasswordservice } from './verifyforgotpassword.service';
 
 @Component({
     selector   : 'verifyforgotpassword',
@@ -26,7 +26,7 @@ export class verifyforgotpasswordComponent implements OnInit, OnDestroy
 
     constructor(
         private _mirapiConfigService: MirapiConfigService,
-        private _verifyforgotpasswordService :verifyforgotpasswordService,
+        private _verifyforgotpasswordService :verifyforgotpasswordservice,
         private alertiyfyService:AlertifyService,
         private router:Router
     )
@@ -68,7 +68,7 @@ export class verifyforgotpasswordComponent implements OnInit, OnDestroy
     }
 
 
-    verifyForgotPassword() {
+    verifyforgotpassword() {
         this.isSubmitClicked = true;
         this._verifyforgotpasswordService.updatePassword(this.sifre)
         .subscribe((res) => {

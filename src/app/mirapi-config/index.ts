@@ -32,7 +32,7 @@ export const mirapiConfig: MirapiConfig = {
         footer   : {
             customBackgroundColor: true,
             background           : 'mirapi-navy-900',
-            hidden               : false,
+            hidden               : true,
             position             : 'above-fixed'
         },
         sidepanel: {
