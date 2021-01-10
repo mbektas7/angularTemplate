@@ -160,7 +160,7 @@ export class HttpRequestsService {
 
       this.post(path, contactType).subscribe((response: any) => {
         resolve(response['data']);
-        this.alertifyService.success('İşlem Başarılı.');
+       
       },
         error => {
           if (error.status == 401) {
@@ -177,7 +177,7 @@ export class HttpRequestsService {
     return new Promise((resolve, reject) => {
       this.put(path + data.id, data).subscribe((response: any) => {
         resolve(response['data']);
-        this.alertifyService.success('İşlem başarılı.');
+      
       },
         error => {
           this.alertifyService.error('İşlem sırasında hata oluştu.');
@@ -189,7 +189,6 @@ export class HttpRequestsService {
     return new Promise((resolve, reject) => {
       this.put(path, data).subscribe((response: any) => {
         resolve(response['data']);
-        this.alertifyService.success('İşlem başarılı.');
       },
         error => {
           this.alertifyService.error('İşlem sırasında hata oluştu.');
@@ -201,7 +200,6 @@ export class HttpRequestsService {
     return new Promise((resolve, reject) => {
       this.delete(path, id).subscribe((response: any) => {
         resolve(response['data']);
-        this.alertifyService.success('İşlem başarılı.');
       },
         error => {
           this.alertifyService.error('İşlem sırasında hata oluştu.');

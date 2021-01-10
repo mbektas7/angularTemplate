@@ -3,15 +3,10 @@
     <div id="questions" class="page-layout simple " fxLayout="column">
 
         <!-- HEADER -->
-        <div class="header accent p-24" fxLayout="row" fxLayoutAlign="space-between none">
+        <div class="header accent p-24" fxLayout="row" fxLayout.xs="column"  fxLayoutAlign="space-between center">
     
-            <div fxLayout="column" fxLayoutAlign="center start">
-    
-                <div class="h1 mt-16">
-                   <mat-icon>notes</mat-icon> Son Paylaşımlar</div>
-            </div>
-    
-            
+   
+            <div fxLayout="row" >
              <!-- SEARCH -->
              <div class="search-wrapper mx-32 mx-md-0">
                 <div  class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -20,8 +15,11 @@
                 </div>
             </div>    
             <!-- / SEARCH -->
-    
-            <div  *ngIf="!isLoggedIn" class="pr-40" >
+            </div>
+
+            <div fxLayout="row" >
+                    
+            <div  *ngIf="!isLoggedIn"  >
                 <button (click)="login()"   mat-raised-button="" 
                 class="mat-focus-indicator add-product-button mirapi-white mt-24 mt-md-0 ng-tns-c306-32 mat-raised-button mat-button-base" 
                 tabindex="0"><span class="mat-button-wrapper">
@@ -31,11 +29,14 @@
                     <div class="mat-button-focus-overlay"></div></button>
             </div>
     
-            <div *ngIf="isLoggedIn" class="pr-40" >
+            <div *ngIf="isLoggedIn" >
                 <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="warn-A200-fg" >
                     <mat-icon>add</mat-icon>
                     <span>Bir soru sor</span></button>
             </div>
+            </div>
+
+
            
         </div>
         <!-- / HEADER -->

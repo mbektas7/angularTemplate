@@ -2,11 +2,11 @@
 
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
 
-        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="1 0 auto"  fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button class="navbar-toggle-button"
+            <button mat-icon-button class="navbar-toggle-button fuse-white--fg"
                     *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
-                <mat-icon class="secondary-text">menu</mat-icon>
+                <mat-icon >menu</mat-icon>
             </button>
 
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
@@ -15,10 +15,6 @@
                 <div class="logo ml-16">
                     <img class="logo-icon" src="assets/images/logos/amarok3.png">
                 </div>
-            </div>
-
-            <div class="px-8 px-md-16">
-                <mirapi-shortcuts [navigation]="navigation"></mirapi-shortcuts>
             </div>
 
         </div>
@@ -77,7 +73,7 @@
 
             <div class="toolbar-separator"></div>
 
-            <mirapi-search-bar (input)="search($event)"></mirapi-search-bar>
+        
 
             <div class="toolbar-separator"></div>
 
@@ -102,13 +98,6 @@
             </mat-menu>
 
             <div class="toolbar-separator" fxHide fxShow.gt-xs></div>
-
-            <button mat-icon-button
-                    class="quick-panel-toggle-button"
-                    (click)="toggleSidebarOpen('quickPanel')"
-                    aria-label="Toggle quick panel">
-                <mat-icon class="secondary-text">format_list_bulleted</mat-icon>
-            </button>
 
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && rightNavbar" fxHide fxShow.gt-xs></div>
 

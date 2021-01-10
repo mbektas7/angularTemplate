@@ -10,17 +10,18 @@
 
          <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
              fxLayoutAlign.gt-sm="start center">
-                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                 <ul class="xop-grid">
-                    <li>
-                        <div class="xop-box xop-img-1" *ngIf="user?.photo?.path" [ngStyle]="{'background': 'url(' + user?.photo?.path + ') no-repeat 0 0 / cover'}">
+
+           
+
+                        <div class="profile-image avatar huge"  [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}" *ngIf="user?.photo?.path" [ngStyle]="{'background': 'url(' + user?.photo?.path + ') no-repeat 0 0 / cover'}">
                             <a *ngIf="user.Id == userLoggedIn.Id"  href="#">
                             </a>
                              <div *ngIf="user.Id == userLoggedIn.Id" class="overlay" (click)="fileUpload.click()">
                              
-                               <span class='icon'>+</span>
+                               <span> <mat-icon>edit</mat-icon></span>
                              </div>
                           </div>
+
                           <div class="xop-box xop-img-1" *ngIf="!user?.photo?.path">
                               
                             <a href="#">
@@ -30,8 +31,7 @@
                              </div>
 
                           </div>
-                     </li>
-                 </ul>
+
             
            
             <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{user.Name +" "+  user.Surname}}
