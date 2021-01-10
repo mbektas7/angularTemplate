@@ -1,67 +1,58 @@
 <div id="profile" class="page-layout simple tabbed">
-        <input #fileUpload type="file"
-        id="file" hidden="true"
-        accept="image/*"
-        (change)="uploadProfileImage($event.target.files)"
-        >
-    <!-- HEADER -->
-    <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-         fxLayoutAlign.gt-sm="space-between end">
+    <input #fileUpload type="file"
+    id="file" hidden="true"
+    accept="image/*"
+    (change)="uploadProfileImage($event.target.files)"
+    >
+<!-- HEADER -->
+<div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+     fxLayoutAlign.gt-sm="space-between end">
 
 
-         <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-             fxLayoutAlign.gt-sm="start center">
+     <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+         fxLayoutAlign.gt-sm="start center">
 
+         <img matTooltip="Değiştirmek için dokunun" *ngIf="user.Id == userLoggedIn.Id"  (click)="fileUpload.click()" class="profile-image avatar huge" [src]="user?.photo?.path"    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
 
-                        <div matTooltip="Değiştirmek için dokunun" class="profile-image avatar huge" *ngIf="user?.photo?.path" [ngStyle]="{'background': 'url(' + user?.photo?.path + ') no-repeat 0 0 / cover'}">
-                            <a *ngIf="user.Id == userLoggedIn.Id"  href="#">
-                            </a>
-                             <div *ngIf="user.Id == userLoggedIn.Id" class="overlay" (click)="fileUpload.click()">
-                             
-                               <mat-icon>edit</mat-icon>
-                             </div>
-                          </div>
+                        <div class="xop-box xop-img-1" *ngIf="!user?.photo?.path">
+                          
+                        <a href="#">
+                        </a>
+                         <div class="overlay" (click)="fileUpload.click()">
+                           <span class='icon'>+</span>
+                         </div>
 
+                      </div>
 
-                          <div class="xop-box xop-img-1" *ngIf="!user?.photo?.path">
-                              
-                            <a href="#">
-                            </a>
-                             <div class="overlay" (click)="fileUpload.click()">
-                               <span class='icon'>+</span>
-                             </div>
-
-                          </div>
-
-            
-           
-            <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{user.Name +" "+  user.Surname}}
-            </div>
+        
+       
+        <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{user.Name +" "+  user.Surname}}
         </div>
-        <div  *ngIf="user.Id != userLoggedIn.Id" fxlayout="row" fxlayoutalign="end center" class="actions ng-tns-c227-46 ng-trigger ng-trigger-animate" style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center;">
-            <button mat-raised-button=""  routerLink="/chat"  color="primary" aria-label="Send Message" class="mat-focus-indicator ng-tns-c227-46 mat-raised-button mat-button-base mat-primary">
-                <span class="mat-button-wrapper">Mesaj Gönder</span>
-                <div matripple="" class="mat-ripple mat-button-ripple"></div>
-                <div class="mat-button-focus-overlay"></div>
-            </button>
     </div>
+    <div  *ngIf="user.Id != userLoggedIn.Id" fxlayout="row" fxlayoutalign="end center" class="actions ng-tns-c227-46 ng-trigger ng-trigger-animate" style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center flex-end; align-items: center;">
+        <button mat-raised-button=""  routerLink="/chat"  color="primary" aria-label="Send Message" class="mat-focus-indicator ng-tns-c227-46 mat-raised-button mat-button-base mat-primary">
+            <span class="mat-button-wrapper">Mesaj Gönder</span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div>
+        </button>
+</div>
 
-    </div>
-    <!-- / HEADER -->
+</div>
+<!-- / HEADER -->
 
-    <!-- CONTENT -->
-    <div class="content">
+<!-- CONTENT -->
+<div class="content">
 
-        <mat-tab-group dynamicHeight="true">
+    <mat-tab-group dynamicHeight="true">
 
-            <mat-tab label="Hakkında">
-                <profile-about></profile-about>
-            </mat-tab>
+        <mat-tab label="Hakkında">
+            <profile-about></profile-about>
+        </mat-tab>
 
 
-        </mat-tab-group>
+    </mat-tab-group>
 
-    </div>
-    <!-- / CONTENT -->
+</div>
+<!-- / CONTENT -->
 
 </div>
