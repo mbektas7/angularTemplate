@@ -21,7 +21,7 @@ import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { AuthGuard } from 'app/shared/guards/auth.guard';
 import { LoginGuard } from 'app/shared/guards/login.guard';
 import { SelectCarComponent } from '../admin/cars/select-car/select-car.component';
-import { MatDialogModule, MatSlideToggleModule } from '@angular/material';
+import { MatDialogModule, MatSlideToggleModule, MatTooltipModule } from '@angular/material';
 import { ProfileDetailService } from './profil-detail.service';
 const routes = [
 
@@ -55,7 +55,8 @@ const routes = [
         MatChipsModule,
         MatAutocompleteModule,
         MatDialogModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatTooltipModule
         
     ],
     providers: [ProfileDetailService],

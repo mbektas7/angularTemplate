@@ -8,19 +8,20 @@
     <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
          fxLayoutAlign.gt-sm="space-between end">
 
+
          <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
              fxLayoutAlign.gt-sm="start center">
 
-           
 
-                        <div class="profile-image avatar huge"  [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}" *ngIf="user?.photo?.path" [ngStyle]="{'background': 'url(' + user?.photo?.path + ') no-repeat 0 0 / cover'}">
+                        <div matTooltip="Değiştirmek için dokunun" class="profile-image avatar huge" *ngIf="user?.photo?.path" [ngStyle]="{'background': 'url(' + user?.photo?.path + ') no-repeat 0 0 / cover'}">
                             <a *ngIf="user.Id == userLoggedIn.Id"  href="#">
                             </a>
                              <div *ngIf="user.Id == userLoggedIn.Id" class="overlay" (click)="fileUpload.click()">
                              
-                               <span> <mat-icon>edit</mat-icon></span>
+                               <mat-icon>edit</mat-icon>
                              </div>
                           </div>
+
 
                           <div class="xop-box xop-img-1" *ngIf="!user?.photo?.path">
                               

@@ -54,6 +54,19 @@ export class AuthService {
       );
      
   }
+  loginV3(user:SocialUser, captchaResponse) {
+
+    return this.http.post<LoginDTO>(`${environment.apiUrl}Users/socialLoginControl`, user)
+    .pipe(
+      tap(response => {
+        
+        this.user$.next(response.user);
+        this.setToken('token', response.JwtToken);
+        this.setToken('refreshToken', response.RefreshToken);
+        this.router.navigateByUrl('/questions');
+      })
+    );
+  }
 
   logout(): void {
     this.localStorageService.removeItem('token');

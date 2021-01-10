@@ -13,6 +13,9 @@ import { UserPhoto } from './UserPhoto';
 import { Subject, Subscription } from 'rxjs';
 import { ProfileDetailService } from './profil-detail.service';
 import { takeUntil } from 'rxjs/operators';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'profile',
@@ -37,6 +40,8 @@ export class ProfileComponent implements OnInit
         private authService: AuthService,
         private _sanitizer: DomSanitizer,
         private dialog: MatDialog,
+        private progressBar : MirapiProgressBarService,
+        private router : Router,
         private alertifyService: AlertifyService)
     {
       this._unsubscribeAll = new Subject();
@@ -96,12 +101,14 @@ export class ProfileComponent implements OnInit
 
 
      updatePhoto(image : string){
-
+       this.progressBar.show();
        let photo = new UserPhoto();
        photo.baseData = image;
 
        this.httpservice.addItem("users/addPhoto",photo).then( ()=>{
-
+       
+        this.progressBar.hide();
+        this.router.navigateByUrl('/questions');  
        } );
 
      }

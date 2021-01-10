@@ -34,6 +34,17 @@
                                         required
                                     />
                         </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                            <mat-label>Email</mat-label>
+                        <input
+                            matInput
+                            name="email"
+                            disabled="true"
+                            [(ngModel)]="user.Email"
+                            placeholder="Email"
+                            required
+                        />
+            </mat-form-field>
 
                         <div  style="padding-left: 10px;  padding-bottom: 30px;" appearance="outline" floatLabel="always"  class="w-80-p mat-form-field ng-tns-c40-22 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder" >
                             Erkek

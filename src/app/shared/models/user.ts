@@ -6,6 +6,7 @@ export class User {
     Username: string;
     Password: string;
     IsFemale : boolean;
+    Email : string;
     Birthday : string;
     Name: string;
     Surname: string;

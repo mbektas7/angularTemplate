@@ -163,82 +163,55 @@ export class LoginComponent implements OnInit
     }
 
     signInWithGoogle(): void {
-        // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-        // this.authService.authState.subscribe(data=>{
+        this.progressBarService.show();
+        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+        this.authService.authState.subscribe(data=>{
         
-        //     this.authServiceLocal.loginV3(data, '')
-        //     .subscribe(async data => {
-        //         if (data){
-        //             this.authServiceLocal.saveToken(data["JwtToken"]);
-        //             const userToken: any = data["JwtToken"];
-        //             const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-        //             this.alertifyService.success('Sisteme giriş yapıldı');    
-        //             const userName = decodedToken.sub;
-        //             if (userName == null){
-        //               this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-        //               this.router.navigateByUrl('/profile');
-        //             }
-        //             else {
-        //             this.router.navigateByUrl('/questions');
-        //         }
-          
-                
-        //     }
-        //       },
-        //       error => {
-        //         this.progressBarService.hide();
-        //         if (error.status === 401){
-        //             this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-        //         }
-        //         else {
-        //             // this.reloadImage();
-        //             this.alertifyService.error(error.error);
-     
-        //         }
-        //         this.activeLoginButton();
-        //     });   
+            this.authServiceLocal.loginV3(data,'').subscribe(data => {
+                const userToken: any = data["JwtToken"];
+                const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+                this.alertifyService.success('Sisteme giriş yapıldı');    
+                const userName = decodedToken.sub;
+                if (userName == null){
+                  this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+                  this.router.navigateByUrl('/profile');
+                }
+                else {
+                this.router.navigateByUrl('/questions');
+            }
+           
+            }, err => {
+             
+            });
+
+ 
 
 
-        // });
+        });
       }
      
       signInWithFB(): void {
-        // this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-        // this.authService.authState.subscribe(data=>{
+        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+        this.authService.authState.subscribe(data=>{
         
-        //     this.authServiceLocal.loginV3(data, '')
-        //     .subscribe(async data => {
-        //         if (data){
-        //             this.authServiceLocal.saveToken(data["JwtToken"]);
-        //             const userToken: any = data["JwtToken"];
-        //             const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
-        //             this.alertifyService.success('Sisteme giriş yapıldı');    
-        //             const userName = decodedToken.sub;
-        //             if (userName == null){
-        //               this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
-        //               this.router.navigateByUrl('/profile');
-        //             }
-        //             else {
-        //             this.router.navigateByUrl('/questions');
-        //         }
-          
-                
-        //     }
-        //       },
-        //       error => {
-        //         this.progressBarService.hide();
-        //         if (error.status === 401){
-        //             this.alertifyService.error('Kullanıcı adı yada şifre yanlış');
-        //         }
-        //         else {
-        //             // this.reloadImage();
-        //             this.alertifyService.error(error.error);
-     
-        //         }
-        //         this.activeLoginButton();
-        //     });   
+            this.authServiceLocal.loginV3(data,'').subscribe(data => {
+                const userToken: any = data["JwtToken"];
+                const decodedToken = this.jwtHelper.decodeToken(userToken.toString());
+                this.alertifyService.success('Sisteme giriş yapıldı');    
+                const userName = decodedToken.sub;
+                if (userName == null){
+                  this.alertifyService.warning('Eksik Bilgilerinizi Lütfen Tamamlayınız.');
+                  this.router.navigateByUrl('/profile');
+                }
+                else {
+                this.router.navigateByUrl('/questions');
+            }
+           
+            }, err => {
+             
+            });
 
-        // });
+        });
       }
 
 }
