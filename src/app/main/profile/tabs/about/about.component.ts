@@ -66,7 +66,7 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
             .subscribe(user => {
               console.log(user);
             this.user = user;
-
+              
         });
 
         this.userSub = this.authService.user$.subscribe((user: User) => {
@@ -108,8 +108,13 @@ export class ProfileAboutComponent implements OnInit, OnDestroy
      
          this.user.Birthday =formatDate(this.user.Birthday, 'yyyy-MM-dd hh:mm:ssZZZZZ', 'en_US')
   
-         this._profileService.updateUserAbout(this.user);
+         this._profileService.updateUserAbout(this.user).then(a=>{
+          this.getUserDetails();
+         });
+
          this.isEditing = false;
+        
+       
      
     }
 

@@ -130,9 +130,12 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit
                 }
                
                 this.name = user.Name;
+               if ( this.user.Email=="m@m.com") {
                 this._mirapiNavigationService.updateNavigationItem('admin', {
                     hidden: false
                 });
+               }
+               
                // this.setProfileValues();
              this.isLoggedIn = true;
             } else {

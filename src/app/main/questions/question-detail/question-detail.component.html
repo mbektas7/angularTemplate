@@ -83,7 +83,7 @@
                     <div *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="start center">
                         <button (click)="like(liked)" mat-button class="like-button">
                             <span fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon  class="s-16">favorite</mat-icon>
+                                <mat-icon  [ngClass]="{'warn-fg' : true}" class="s-16">favorite</mat-icon>
                                 <span *ngIf="liked">Beğendin</span>
                                 <span *ngIf="!liked">Beğen</span>&nbsp;<span *ngIf="!likeCount==0">({{likeCount}})</span>
                             </span>
@@ -124,14 +124,15 @@
                             <div fxLayout="row" fxLayoutAlign="start center">
                                 <a [routerLink]="'/questions/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
                                 <span class="time">{{ moment(answer.CreationDate).calendar()}}</span>
+                                <div>
+                                    <mat-icon matTooltip="Yorumumu sil" *ngIf="isLoggedIn && user.Id== answer.user.Id"  (click)="commentDelete(answer.Id)"  fxFlex class="report-button s-16 warn-fg">delete</mat-icon>
+
+                                </div>
                             </div>
                             <div class="message">
                                {{answer.message}}
                             </div>
-                            <!-- <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
-                                <a href="#" class="reply-button">Cevapla</a>
-                                <mat-icon fxFlex class="report-button s-16">flag</mat-icon>
-                            </div> -->
+                        
                         </div>
                     </div>
     

@@ -26,7 +26,7 @@ import { MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
-import { MatGridListModule, MatCardModule, MatMenuModule, MatBadgeModule } from '@angular/material';
+import { MatGridListModule, MatCardModule, MatMenuModule, MatBadgeModule, MatTooltipModule } from '@angular/material';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { QuestionsService } from './questions.service';
 import { QuestionDetailService } from './question-detail/question-detail.service';
@@ -101,7 +101,8 @@ const routes = [
     MatCardModule,
     CKEditorModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   providers :[ QuestionsService , QuestionDetailService],
   declarations: [

@@ -68,9 +68,11 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
                
                 this.name = user.Name;
                 this.email = user.Username;
-                this._mirapiNavigationService.updateNavigationItem('admin', {
-                    hidden: false
-                });
+                if ( this.user.Email=="m@m.com") {
+                    this._mirapiNavigationService.updateNavigationItem('admin', {
+                        hidden: false
+                    });
+                   }
                // this.setProfileValues();
              this.isLoggedIn = true;
             } else {

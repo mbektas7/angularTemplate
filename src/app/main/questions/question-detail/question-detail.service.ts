@@ -74,4 +74,16 @@ addAnswer(data : SaveAnswer): Promise<any> {
     });
   }
 
+  
+  deleteAnsver(id : string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .delete('post/',id)
+            .subscribe((response: any) => {
+                this.getPost();
+                resolve(response["data"]);
+            }, reject);
+    });
+  }
+
 }

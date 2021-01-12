@@ -13,6 +13,7 @@
          fxLayoutAlign.gt-sm="start center">
 
          <img matTooltip="Değiştirmek için dokunun" *ngIf="user.Id == userLoggedIn.Id"  (click)="fileUpload.click()" class="profile-image avatar huge" [src]="user?.photo?.path"    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+         <img matTooltip="Değiştirmek için dokunun" *ngIf="user.Id != userLoggedIn.Id" class="profile-image avatar huge" [src]="user?.photo?.path"    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
 
                         <div class="xop-box xop-img-1" *ngIf="!user?.photo?.path">
                           
@@ -48,7 +49,12 @@
         <mat-tab label="Hakkında">
             <profile-about></profile-about>
         </mat-tab>
-
+        <mat-tab label="Sorular">
+            <app-sorularim></app-sorularim>
+        </mat-tab>
+        <mat-tab label="Cevaplar">
+            <app-cevaplarim></app-cevaplarim>
+        </mat-tab>
 
     </mat-tab-group>
 

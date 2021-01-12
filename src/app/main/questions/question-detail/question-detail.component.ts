@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material';
 import { LoginDTO } from 'app/shared/models/LoginDTO';
 import { LoginModalComponent } from 'app/main/authentication/login-modal/login-modal.component';
 import { AlertifyService } from 'app/shared/services/alertify.service';
+import { MirapiProgressBarService } from '@mirapi/components/progress-bar/progress-bar.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -45,6 +46,7 @@ export class QuestionDetailComponent implements OnInit {
   userSub: Subscription;
   constructor(
     private questionService : QuestionsService,
+    private progressBarService : MirapiProgressBarService,
     private router : Router,
     public dialog: MatDialog,
     private questionDeatilService : QuestionDetailService,
@@ -66,7 +68,7 @@ export class QuestionDetailComponent implements OnInit {
         this.post = data;
         this.likeList = this.post.likes;
         this.likeCount = this.post.likes.length;
-        this.isLiked();
+       
      });
 
      this.getPostImages();
@@ -74,6 +76,7 @@ export class QuestionDetailComponent implements OnInit {
      this.userSub = this.authService.user$.subscribe((user: User) => {
       this.user = user;
       if (this.user) {
+        this.isLiked();
          this.isLoggedIn = true;
          this.profileImage = this.user.photo.path;
          if (this.user.Id==this.post.user.Id) {
@@ -89,6 +92,11 @@ export class QuestionDetailComponent implements OnInit {
       
 
 
+    commentDelete(id: string){
+      this.progressBarService.show();
+      this.questionDeatilService.deleteAnsver(id).then();
+      this.progressBarService.hide();
+    }
    
 
   getPostImages(){

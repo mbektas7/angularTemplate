@@ -8,6 +8,7 @@ import { SaveAnswer } from 'app/main/admin/posts/saveAnswer';
 import { User } from '../../shared/models/user';
 import { UserAboutUpdateModal } from './tabs/about/userAboutUpdateModal';
 import { AlertifyService } from 'app/shared/services/alertify.service';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Injectable()
 export class ProfileDetailService   implements Resolve<any>{
@@ -22,6 +23,7 @@ export class ProfileDetailService   implements Resolve<any>{
       private alertifyService : AlertifyService,
       private _httpClient: HttpRequestsService,
       private http: HttpClient,
+      private authService : AuthService,
       private router: Router,
   )
   {
@@ -50,6 +52,9 @@ getUserDetails(): Promise<any> {
           .get('users/' + this.routeParams.id)
           .subscribe((response: any) => {
               this.user = response["data"];
+              // böyle olduğunda başkasının profilne girince kullanıcıyı değiştiriyor direk. kendi kullanıcısı ise yapmalı.
+            //   this.authService.user$.next(this.user);
+            //   this.authService.getCurrentUser().subscribe();
               this.onProfileChanged.next(this.user);
               resolve(response["data"]);
           }, reject);
@@ -57,15 +62,44 @@ getUserDetails(): Promise<any> {
 }
 
 updateUserAbout(userAbout: User){
-    console.log(userAbout);
-    this._httpClient.put('Users/' + userAbout.Id, userAbout).subscribe(data => {   
-        this.alertifyService.success('Profiliniz Başarıyla Güncellendi.');
-        this.router.navigateByUrl('/dashboard');  
-      },
-       error => {
-        this.alertifyService.error('Güncelleme işlemi sırasında hata oluştu. \n' + error.error);
-      } );
+
+    return new Promise((resolve, reject) => {
+
+        
+        
+        this._httpClient.put('Users/'+userAbout.Id,userAbout).subscribe((response: any) => {
+            this.user = response["data"];
+            this.authService.user$.next(this.user);
+            this.authService.getCurrentUser().subscribe();
+            this.onProfileChanged.next(this.user);
+            resolve(response["data"]);
+        }, reject);
+    });
+
 }
+
+
+getUserQuestions(): Promise<any> {
+
+
+        return  new Promise((resolve, reject) => {
+            this._httpClient.get('post/getUserPosts/'+this.routeParams.id).subscribe((response: any) => {
+                resolve(response["data"]);
+            }, reject);
+        });
+
+  }
+
+  updatePost(data:PostModel): Promise<any>
+  {
+
+      return  new Promise((resolve, reject) => {
+         this._httpClient.put('post/'+data.Id,data).subscribe((response:any) => {
+             resolve(response["data"]);
+         },reject)
+
+  });
+   }
 
 
 

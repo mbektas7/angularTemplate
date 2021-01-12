@@ -23,6 +23,11 @@ import { LoginGuard } from 'app/shared/guards/login.guard';
 import { SelectCarComponent } from '../admin/cars/select-car/select-car.component';
 import { MatDialogModule, MatSlideToggleModule, MatTooltipModule } from '@angular/material';
 import { ProfileDetailService } from './profil-detail.service';
+import { SorularimComponent } from './tabs/sorularim/sorularim.component';
+import { CevaplarimComponent } from './tabs/cevaplarim/cevaplarim.component';
+import { MypostDetailComponent } from '../myposts/mypost-detail/mypost-detail.component';
+import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
+import { MirapiConfirmDialogModule } from '@mirapi/components';
 const routes = [
 
     {
@@ -36,7 +41,7 @@ const routes = [
     }
 ];
 @NgModule({
-    declarations: [ProfileComponent, ProfileAboutComponent,SelectCarComponent],
+    declarations: [ProfileComponent, ProfileAboutComponent,SelectCarComponent, SorularimComponent, CevaplarimComponent],
     imports: [
         RouterModule.forChild(routes),
         MatButtonModule,
@@ -56,12 +61,14 @@ const routes = [
         MatAutocompleteModule,
         MatDialogModule,
         MatSlideToggleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MirapiConfirmDialogModule,
         
     ],
     providers: [ProfileDetailService],
     entryComponents :[
-        SelectCarComponent
+        SelectCarComponent,
+        MirapiConfirmDialogComponent,
     ]
 })
 export class ProfileModule {

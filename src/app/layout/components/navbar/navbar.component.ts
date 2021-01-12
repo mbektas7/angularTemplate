@@ -25,6 +25,7 @@ export class NavbarComponent
     {
       
         this._variant = 'horizontal-style-1';
+        
     }
 
 

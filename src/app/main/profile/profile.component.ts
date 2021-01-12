@@ -106,9 +106,9 @@ export class ProfileComponent implements OnInit
        photo.baseData = image;
 
        this.httpservice.addItem("users/addPhoto",photo).then( ()=>{
-       
+        this.authService.getCurrentUser().subscribe();
         this.progressBar.hide();
-        this.router.navigateByUrl('/questions');  
+        //this.router.navigateByUrl('/questions');  
        } );
 
      }
