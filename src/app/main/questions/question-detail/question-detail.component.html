@@ -83,7 +83,7 @@
                     <div *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="start center">
                         <button (click)="like(liked)" mat-button class="like-button">
                             <span fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon  [ngClass]="{'warn-fg' : true}" class="s-16">favorite</mat-icon>
+                                <mat-icon  [ngClass]="{'warn-fg' : liked}" class="s-16">favorite</mat-icon>
                                 <span *ngIf="liked">Beğendin</span>
                                 <span *ngIf="!liked">Beğen</span>&nbsp;<span *ngIf="!likeCount==0">({{likeCount}})</span>
                             </span>
@@ -125,7 +125,8 @@
                                 <a [routerLink]="'/questions/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
                                 <span class="time">{{ moment(answer.CreationDate).calendar()}}</span>
                                 <div>
-                                    <mat-icon matTooltip="Yorumumu sil" *ngIf="isLoggedIn && user.Id== answer.user.Id"  (click)="commentDelete(answer.Id)"  fxFlex class="report-button s-16 warn-fg">delete</mat-icon>
+                                    
+                                    <mat-icon matTooltip="Yorumumu sil" *ngIf="isLoggedIn && user.Id== answer.user.Id"  (click)="commentDelete(answer.Id)"  fxFlex class="report-button s-16 warn-fg pl-4">delete</mat-icon>
 
                                 </div>
                             </div>
@@ -136,11 +137,7 @@
                         </div>
                     </div>
     
-                    <div *ngIf="!isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
-                        <button [routerLink]="['/auth/login']" routerLinkActive="router-link-active"  mat-raised-button color="accent" class="post-comment-button"  aria-label="Post Comment">
-                            Cevaplamak için giriş yap
-                        </button>
-                    </div>
+
                     <div *ngIf="!isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
                         <button (click)="login()" routerLinkActive="router-link-active"  mat-raised-button color="accent" class="post-comment-button"  aria-label="Post Comment">
                             Cevaplamak için giriş yap modal ile
