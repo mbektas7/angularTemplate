@@ -22,7 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MirapiSharedModule } from '@mirapi/shared.module';
-import { MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
+import { MirapiConfirmDialogModule, MirapiSearchBarModule, MirapiWidgetModule } from '@mirapi/components';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MultiselectModule } from 'app/shared/components/multiselect/multiselect.module';
 import { NgModule } from '@angular/core';
@@ -38,6 +38,7 @@ import { SafePipe } from 'app/shared/pipes/SafePipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from 'app/shared/services/auth.service';
 import { LoginModalComponent } from '../authentication/login-modal/login-modal.component';
+import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
 
 const routes = [
   {
@@ -102,7 +103,8 @@ const routes = [
     CKEditorModule,
     MatChipsModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MirapiConfirmDialogModule
   ],
   providers :[ QuestionsService , QuestionDetailService],
   declarations: [
@@ -112,9 +114,9 @@ const routes = [
     NewQuestionComponent,
     UpdateQuestionComponent,
     LoginModalComponent
- 
+   
   ],
-    entryComponents: [ LoginModalComponent]
+    entryComponents: [ LoginModalComponent,MirapiConfirmDialogComponent]
  
 })
 export class QuestionsModule { }
