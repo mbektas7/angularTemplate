@@ -122,7 +122,7 @@
     
                         <div fxLayout="column" fxFlex>
                             <div fxLayout="row" fxLayoutAlign="start center">
-                                <a [routerLink]="'/questions/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
+                                <a [routerLink]="'/profile/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
                                 <span class="time">{{ moment(answer.CreationDate).calendar()}}</span>
                                 <div>
                                     

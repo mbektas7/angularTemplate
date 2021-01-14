@@ -105,7 +105,9 @@ export class ProfileComponent implements OnInit
        let photo = new UserPhoto();
        photo.baseData = image;
 
-       this.httpservice.addItem("users/addPhoto",photo).then( ()=>{
+       this.httpservice.addItem("users/addPhoto",photo).then( data=>{
+         this.user = data
+        this.authService.user$.next(this.user);
         this.authService.getCurrentUser().subscribe();
         this.progressBar.hide();
         //this.router.navigateByUrl('/questions');  

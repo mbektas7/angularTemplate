@@ -26,6 +26,7 @@ export class AuthService {
   user$ = new BehaviorSubject(null);
 
   constructor(private http: HttpClient,
+    private httpLocl : HttpRequestsService,
     private router : Router,
               private localStorageService: LocalStorageService) { }
 
@@ -115,11 +116,19 @@ export class AuthService {
   refreshToken(): Observable<{JwtToken: string; refreshToken: string}> {
     const refreshToken = this.localStorageService.getItem('refreshToken');
 
-    return this.http.post<{JwtToken: string; refreshToken: string}>(
-      `${environment.apiUrl}Token/refresh-token`,
-      {
-        refreshToken
-      }).pipe(
+
+  
+     let  header = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': '*',
+        'withCredentials ' : true,
+      };
+
+
+
+    return this.http.post<{JwtToken: string; refreshToken: string}>(`${environment.apiUrl}Token/refresh-token`, {  refreshToken } ).pipe(
         tap(response => {
           this.setToken('token', response.JwtToken);
           this.setToken('refreshToken', response.refreshToken);
