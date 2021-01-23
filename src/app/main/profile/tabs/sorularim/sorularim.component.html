@@ -87,5 +87,10 @@
 
         </div>
 
+        <div class="mat-card p-24 px-24 mb-24" [routerLink]="['/questions']" *ngIf="myPosts?.length<1"  >
+            <p>
+                Henüz bir soru sormadınız. Hemen sormak için tıklayın.
+            </p>
+        </div>
     </div>
 </div>

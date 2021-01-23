@@ -40,7 +40,7 @@ export class QuestionsComponent implements OnInit , OnDestroy {
         private alertifyService : AlertifyService
     ) {
 
-        console.log("question module loaded");
+      
         
       this.authService.getCurrentUser().subscribe();
 
@@ -124,7 +124,7 @@ export class QuestionsComponent implements OnInit , OnDestroy {
           this.tags= data;
           this.tags.push(tumu);
           this.tags.sort((a,b) => a.Id.localeCompare(b.Id))
-          console.log(this.tags);
+         
         });
       }
 
@@ -150,7 +150,7 @@ export class QuestionsComponent implements OnInit , OnDestroy {
     
         dialogRef.afterClosed().subscribe(result => {
           if (result != null) { 
-           console.log(result);
+       
            this.authService.loginWithModal(result).subscribe(() => {
             this.alertifyService.success('Giriş yapıldı.');
             this.authService.getCurrentUser().subscribe();
