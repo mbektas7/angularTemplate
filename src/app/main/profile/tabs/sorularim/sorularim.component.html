@@ -1,9 +1,8 @@
 <div class="w-50">
 
-    <div class="p-24 " fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="p-24 " fxLayout="column" fxLayoutAlign="start none">
 
-        <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myPosts"
-            fxLayout="row" fxLayoutAlign="start" fxFlex="1 0">
+        <div class="mat-card p-24 px-24 mb-24"  *ngFor="let item of myPosts" fxLayout.xs="column" fxLayout.sm="column"   fxLayout="row" fxLayoutAlign="space-between center">
 
             <div fxLayout="column" class="w-70-p" fxLayoutAlign="center stretch">
 
@@ -54,6 +53,7 @@
                     </div>
                 </div>
             </div>
+
             <div fxLayout="row" class="w-30-p" fxLayoutAlign="center center">
 
                 <div class="mirapi-widget-front p-12">

@@ -52,7 +52,7 @@ export class SorularimComponent implements OnInit {
       async getMyPosts(){
         await this.profileService.getUserQuestions().then(data=>{
           this.myPosts = data.filter(x=>x['parent'] == null);
-          console.log(this.myPosts);
+        
         });
       }
 

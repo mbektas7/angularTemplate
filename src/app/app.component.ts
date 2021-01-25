@@ -15,8 +15,7 @@ import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { User } from './shared/models/user';
-import { AuthService } from './shared/services/auth.service';
-import { LoginDTO } from './shared/models/LoginDTO';
+
 
 @Component({
     selector   : 'app',
@@ -34,7 +33,6 @@ export class AppComponent implements OnInit, OnDestroy
     userSub: Subscription;
 
     constructor(
-        private authService : AuthService,
         @Inject(DOCUMENT) private document: any,
         private _mirapiConfigService: MirapiConfigService,
         private _mirapiNavigationService: MirapiNavigationService,

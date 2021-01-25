@@ -19,19 +19,23 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.localStorageService.getItem('token');
-
+    req = req.clone({
+      withCredentials: true
+  });
     return next.handle(this.addAuthorizationHeader(req, accessToken)).pipe(
       catchError(err => {
         // in case of 401 http error
         if (err instanceof HttpErrorResponse && err.status === 401) {
+          console.log("get refresh tokens");
           // get refresh tokens
           const refreshToken = this.localStorageService.getItem('refreshToken');
 
           // if there are tokens then send refresh token request
           if (refreshToken && accessToken) {
+            console.log("refresh token çağrılır");
             return this.refreshToken(req, next);
           }
-
+          console.log("refresh token yok. çıkış yapılıyor.");
           // otherwise logout and redirect to login page
           return this.logoutAndRedirect(err);
         }
@@ -41,6 +45,7 @@ export class TokenInterceptor implements HttpInterceptor {
           // logout and redirect to login page
           return this.logoutAndRedirect(err);
         }
+        console.log("f error has status neither 401 nor 403 ");
         // if error has status neither 401 nor 403 then just return this error
         return throwError(err);
       })
@@ -63,6 +68,7 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   private refreshToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("refresh token- token interceptor");
     if (!this.refreshingInProgress) {
       this.refreshingInProgress = true;
       this.accessTokenSubject.next(null);
@@ -70,6 +76,9 @@ export class TokenInterceptor implements HttpInterceptor {
       return this.authService.refreshToken().pipe(
         switchMap((res) => {
           this.refreshingInProgress = false;
+          console.log("refresh token");
+          console.log(res);
+          this.authService.setToken('refreshToken', res.RefreshToken);
           this.accessTokenSubject.next(res.JwtToken);
           // repeat failed request with new token
           return next.handle(this.addAuthorizationHeader(request, res.JwtToken));

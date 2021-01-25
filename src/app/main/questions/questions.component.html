@@ -17,7 +17,7 @@
             <!-- / SEARCH -->
             </div>
 
-            <div fxLayout="row" >
+            <div class="mt-8" fxLayout="row" >
                     
             <div  *ngIf="!isLoggedIn"  >
                 <button (click)="login()"   mat-raised-button="" 
@@ -30,7 +30,7 @@
             </div>
     
             <div *ngIf="isLoggedIn" >
-                <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="warn-A200-fg" >
+                <button mat-raised-button   [routerLink]="'/new-questions'" routerLinkActive="router-link-active"  class="primary--fg" >
                     <mat-icon>add</mat-icon>
                     <span>Bir soru sor</span></button>
             </div>
@@ -47,7 +47,7 @@
     
         <div class="left-sidebar" class="p-16" fxFlex="15" fxLayout="column" fxLayoutAlign="start none" >
         
-            <img href="http://instagram.com/mud.motion" class="m-12" src="../../../assets/images/logos/mudmotion.jpg" />
+            <img href="http://instagram.com/mud.motion"  fxHide fxShow.gt-xs  class="m-12" src="../../../assets/images/logos/mudmotion.jpg" />
     
         </div>
     
