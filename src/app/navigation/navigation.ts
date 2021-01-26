@@ -34,6 +34,15 @@ export const navigation: MirapiNavigation[] = [
         type     : 'item',
 
     },
+    // {
+    //     id       : 'profile',
+    //     title    : 'Profil',
+    //     url      : '/profile',
+    //     translate: 'NAV.PROFILE',
+    //     icon     : 'person',
+    //     type     : 'item',
+
+    // },
     {
         id       : 'admin',
         title    : 'Yönetim',

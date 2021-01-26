@@ -36,7 +36,10 @@ export class SorularimComponent implements OnInit {
     private questionService : QuestionsService,
     private authService : AuthService,
     public dialog: MatDialog,
-    private router:Router) { }
+    private router:Router) { 
+
+      this.myPosts = [];
+    }
 
   ngOnInit() {
 

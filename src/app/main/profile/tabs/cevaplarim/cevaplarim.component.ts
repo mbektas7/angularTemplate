@@ -33,7 +33,11 @@ export class CevaplarimComponent implements OnInit {
     private httpService : HttpRequestsService,
     private authService : AuthService,
     public dialog: MatDialog,
-    private router:Router) { }
+    private router:Router) {
+
+      this.myAnswer = [];
+
+     }
 
 
   ngOnInit() {
@@ -49,7 +53,7 @@ export class CevaplarimComponent implements OnInit {
       async getMyPosts(){
         await this.profileService.getUserQuestions().then(data=>{
           this.myAnswer = data.filter(x=>x['parent'] != null);
-
+         
         });
       }
 
@@ -81,7 +85,7 @@ export class CevaplarimComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(async result => {
-          console.log(result);
+         
           if (result != null&& !result.mode) {    
           await  this.profileService.updatePost(result).then(()=>{
               this.getMyPosts();

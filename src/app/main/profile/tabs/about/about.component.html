@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <div class="profile-box info-box contact" fxLayout="column">
+        <div *ngIf="user.Id == userLoggedIn.Id" class="profile-box info-box contact" fxLayout="column">
 
             <header class="accent">
                 <div class="title">İletişim</div>

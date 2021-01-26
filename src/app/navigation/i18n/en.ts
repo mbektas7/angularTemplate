@@ -5,6 +5,7 @@ export const locale = {
             'HOMEPAGE': 'Home',
             'BLOG': 'Blog',
             'ADMIN': 'Administrator',
+            'PROFILE': 'Profile',
             'QUESTIONS'        : {
                 'TITLE': 'Questions',
                 'BADGE': '25'

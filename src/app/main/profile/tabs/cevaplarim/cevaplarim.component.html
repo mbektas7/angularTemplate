@@ -91,5 +91,10 @@
 
         </div>
 
+        <div class="mat-card p-24 px-24 mb-24"    [routerLink]="['/questions']" *ngIf="myAnswer?.length<1"  >
+            <p>
+                Henüz bir cevap yazmadınız. Hemen gönderileri inceleyip bir cevap verebilirsiniz.
+            </p>
+        </div>
     </div>
 </div>

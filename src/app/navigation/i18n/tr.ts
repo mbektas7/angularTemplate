@@ -5,6 +5,7 @@ export const locale = {
             'HOMEPAGE': 'Anasayfa',
             'ADMIN': 'Yönetim',
             'BLOG': 'Blog',
+            'PROFILE': 'Profil',
             'QUESTIONS'        : {
                 'TITLE': 'Soru-Cevap',
                 'BADGE': '15'

@@ -1,6 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { AlertifyService } from './alertify.service';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/throw';
@@ -19,7 +18,6 @@ export class HttpRequestsService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService,
     private router: Router,
     private alertifyService: AlertifyService,
     private injector: Injector
