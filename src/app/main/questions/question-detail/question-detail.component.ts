@@ -118,12 +118,12 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   sendAnswer() {
-
+  console.log(this.user.Id);
     let request = new SaveAnswer()
     request.title =  ""
     request.parentId = this.post.Id;
     request.message = this.answer;
-    request.userId = this.user.Id.toString();
+    request.userId = this.user.Id;
     request.carId = this.post.car.Id;
     request.isAnswered = false;
 
