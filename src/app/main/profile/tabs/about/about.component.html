@@ -10,8 +10,34 @@
 
             <div class="content" layout="column">
 
+
+                <div *ngIf="user.Id != userLoggedIn.Id">
+                    <div>
+                        Adı: {{user.Name}}
+                    </div>
+        
+                    <div>
+                        Soyadı: {{user.Surname}}
+                    </div>
+        
+                    <div>
+                        Email: {{user.Email}}
+                    </div>
+        
+                    <div  style="padding-bottom: 10px;" appearance="outline" floatLabel="always"  class="w-80-p mat-form-field ng-tns-c40-22 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder" >
+                        Erkek
+                        <mat-slide-toggle  disabled="{{!isEditing}}"     [(ngModel)]="user.IsFemale"  [checked]="user.IsFemale" ></mat-slide-toggle>
+                       Kadın 
+                    </div>
+        
+                    <div>
+                        Hakkında : {{user.About}}
+                    </div>
+                </div>
+           
                 
-                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+
+                        <mat-form-field *ngIf="user.Id == userLoggedIn.Id"  appearance="outline" floatLabel="always"  class="w-80-p">
                                         <mat-label>Ad</mat-label>
                                     <input
                                         matInput
@@ -23,7 +49,9 @@
                                     />
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                
+
+                        <mat-form-field *ngIf="user.Id == userLoggedIn.Id"  appearance="outline" floatLabel="always"  class="w-80-p">
                                         <mat-label>Soyad</mat-label>
                                     <input
                                         matInput
@@ -34,7 +62,7 @@
                                         required
                                     />
                         </mat-form-field>
-                        <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                        <mat-form-field *ngIf="user.Id == userLoggedIn.Id" appearance="outline" floatLabel="always"  class="w-80-p">
                             <mat-label>Email</mat-label>
                         <input
                             matInput
@@ -46,21 +74,13 @@
                         />
             </mat-form-field>
 
-                        <div  style="padding-left: 10px;  padding-bottom: 30px;" appearance="outline" floatLabel="always"  class="w-80-p mat-form-field ng-tns-c40-22 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder" >
+                        <div *ngIf="user.Id == userLoggedIn.Id" style="padding-left: 10px;  padding-bottom: 30px;" appearance="outline" floatLabel="always"  class="w-80-p mat-form-field ng-tns-c40-22 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder" >
                             Erkek
                             <mat-slide-toggle  disabled="{{!isEditing}}"     [(ngModel)]="user.IsFemale"  [checked]="user.IsFemale" ></mat-slide-toggle>
                            Kadın 
                         </div>
-                        
-                          
-                                                    
 
-                   
-
-
-
-   
-                    <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                    <mat-form-field *ngIf="user.Id == userLoggedIn.Id" appearance="outline" floatLabel="always"  class="w-80-p">
                          <mat-label>Doğum Tarihi</mat-label>
                             <input [disabled]="!isEditing"  matInput [matDatepicker]="picker" placeholder="Bir tarih seçin" [(ngModel)]="user.Birthday">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -68,7 +88,7 @@
                  </mat-form-field>    
   
 
-                <mat-form-field appearance="outline" floatLabel="always"  class="w-80-p">
+                <mat-form-field *ngIf="user.Id == userLoggedIn.Id" appearance="outline" floatLabel="always"  class="w-80-p">
                             <mat-label>Hakkımda</mat-label>
                             <textarea [disabled]="!isEditing"
                                       name="about"
