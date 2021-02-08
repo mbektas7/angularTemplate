@@ -174,15 +174,6 @@ export class QuestionDetailComponent implements OnInit {
 
 
 
-  async deletePost(data : PostModel){
-    await this.questionService.deletePost(data).then(()=>{
-      this.router.navigateByUrl("/questions");
-    });
-  }
-
-  
-
-
   
   login(): void {
     const dialogRef = this.dialog.open(LoginModalComponent, {
@@ -237,6 +228,29 @@ export class QuestionDetailComponent implements OnInit {
   this.progressBarService.hide();
   }
 
+
+  async deletePost(data : PostModel){
+    
+    this.confirmDialogRef = this._matDialog.open(MirapiConfirmDialogComponent, {
+      disableClose: false
+  });
+
+  this.confirmDialogRef.componentInstance.confirmMessage = 'Bu gönderiyi silmek istediğinizden emin misiniz?';
+
+
+  this.confirmDialogRef.afterClosed()
+  .subscribe(result => {
+      if ( result )
+      { 
+         this.questionService.deletePost(data).then(()=>{
+        this.router.navigateByUrl("/questions");
+      });
+      }
+      this.confirmDialogRef = null;
+  });
+
+    
+  }
 
 
 }

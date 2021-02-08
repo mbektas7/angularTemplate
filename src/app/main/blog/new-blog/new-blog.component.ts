@@ -108,8 +108,7 @@ export class NewBlogComponent implements OnInit {
     this.post.categories = this.selectedTags;
     this.post.imageList = this.imgURL;
      this.adminService.addItem('blog',this.post).then( data => {
-   //   this.router.navigate(['questions']);
-
+      this.router.navigate(['blog']);
    });
   }
 

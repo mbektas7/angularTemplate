@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import 'moment/locale/tr';
 import { BlogService } from '../blog.service';
 import { User } from 'app/shared/models/user';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'blog-read',
@@ -39,9 +41,14 @@ export class BlogReadComponent implements OnInit {
   isLoggedIn : boolean;
   user: User;
   userSub: Subscription;
+  confirmDialogRef: MatDialogRef<MirapiConfirmDialogComponent>;
+
   constructor(
+    public _matDialog: MatDialog,
     private blogService : BlogService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router:Router
+    ) {
 
     this._unsubscribeAll = new Subject();
    }
@@ -84,6 +91,29 @@ export class BlogReadComponent implements OnInit {
   }
 
 
+
+  async deleteBlog(data : PostModel){
+    
+    this.confirmDialogRef = this._matDialog.open(MirapiConfirmDialogComponent, {
+      disableClose: false
+  });
+
+  this.confirmDialogRef.componentInstance.confirmMessage = 'Bu gönderiyi silmek istediğinizden emin misiniz?';
+
+
+  this.confirmDialogRef.afterClosed()
+  .subscribe(result => {
+      if ( result )
+      {
+         this.blogService.deleteBlog(data).then(()=>{
+          this.router.navigate(['blog']);
+        });
+      }
+      this.confirmDialogRef = null;
+  });
+
+    
+  }
 
 
 

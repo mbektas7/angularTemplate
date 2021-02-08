@@ -5,6 +5,7 @@ import { HttpRequestsService } from 'app/shared/services/httpRequests.service';
 import { HttpClient } from '@angular/common/http';
 import { SaveAnswer } from 'app/main/admin/posts/saveAnswer';
 import { BlogModel } from 'app/shared/models/BlogModel';
+import { PostModel } from '../admin/posts/PostModel';
 
 
 @Injectable({
@@ -77,4 +78,14 @@ addAnswer(data : SaveAnswer): Promise<any> {
     });
   }
 
+
+  deleteBlog(data:PostModel): Promise<any>
+  {
+
+   return  new Promise((resolve, reject) => {
+       this._httpClient.delete('blog/',data.Id).subscribe((response:any) => {
+           resolve(response["data"]);
+       },reject)
+   });
+   }
 }
