@@ -33,6 +33,7 @@ import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { BlogReadComponent } from './blog-read/blog-read.component';
 import { BlogService } from './blog.service';
 import { NewBlogComponent } from './new-blog/new-blog.component';
+import { UpdateBlogComponent } from './update-blog/update-blog.component';
 
 
 const routes = [
@@ -46,6 +47,13 @@ const routes = [
     resolve: {
       data: BlogService
   }
+},
+{
+  path     : 'update-blog/:id',
+  component: UpdateBlogComponent,
+  resolve: {
+    data: BlogService
+}
 }
 ,{
   path     : 'new-blog',
@@ -96,7 +104,7 @@ const routes = [
     
       BlogComponent, 
       BlogReadComponent,  
-      NewBlogComponent,
+      NewBlogComponent, UpdateBlogComponent,
     ],
       entryComponents: [ ]
    

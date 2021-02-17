@@ -1,30 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { PostModel } from 'app/main/admin/posts/PostModel';
-import { CarModel } from 'app/shared/models/CarModel';
-import { AdminService } from 'app/main/admin/admin.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { MatChipInputEvent } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { ElementRef, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
-import {map, startWith} from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { TagsModel } from 'app/shared/models/TagsModel';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
 import { Router } from '@angular/router';
+import { AdminService } from 'app/main/admin/admin.service';
+import { PostModel } from 'app/main/admin/posts/PostModel';
 import { MyUploadAdapter } from 'app/main/questions/new-question/UploadAdapter';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-
-
-
+import { CarModel } from 'app/shared/models/CarModel';
+import { TagsModel } from 'app/shared/models/TagsModel';
+import { BlogService } from '../blog.service';
+import {map, startWith, takeUntil} from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
-  selector: 'app-new-blog',
-  templateUrl: './new-blog.component.html',
-  styleUrls: ['./new-blog.component.scss']
+  selector: 'app-update-blog',
+  templateUrl: './update-blog.component.html',
+  styleUrls: ['./update-blog.component.scss']
 })
-export class NewBlogComponent implements OnInit {
-
+export class UpdateBlogComponent implements OnInit {
+  private _unsubscribeAll: Subject<any>;
   public Editor = ClassicEditor;
   post = new PostModel;
   title = "";
@@ -47,7 +42,6 @@ export class NewBlogComponent implements OnInit {
         previewsInData: true
     }
 }
-
   visible = true;
   selectable = true;
   removable = true;
@@ -62,19 +56,24 @@ export class NewBlogComponent implements OnInit {
   
   constructor(
     private router : Router,
-    private adminService : AdminService
+    private adminService : AdminService,
+    private blogService : BlogService
   ) {
-    this.post.message = "";
-    this.post.carId = "55ea2d01-c844-4d4c-b8e0-00da333ee78b";
 
+    this._unsubscribeAll = new Subject();
+    this.post.carId = "55ea2d01-c844-4d4c-b8e0-00da333ee78b";
+   
 
    }
 
   async ngOnInit() {
 
-    this.getCarList();
-    this.getCategories();
-    // await this.adminService.getList('Categories');
+    this.blogService.onPostChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(data => {
+     this.post = data;
+     console.log(data)
+  });
 
   }
 
@@ -114,7 +113,7 @@ export class NewBlogComponent implements OnInit {
 
     this.post.categories = this.selectedTags;
     this.post.imageList = this.imgURL;
-     this.adminService.addItem('blog',this.post).then( data => {
+     this.adminService.updateData('blog/',this.post).then( data => {
       this.router.navigate(['blog']);
    });
   }

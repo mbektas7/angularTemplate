@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
 import { mirapiAnimations } from '@mirapi/animations';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
@@ -16,6 +16,9 @@ import { BlogService } from '../blog.service';
 import { User } from 'app/shared/models/user';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MirapiConfirmDialogComponent } from '@mirapi/components/confirm-dialog/confirm-dialog.component';
+
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'blog-read',
@@ -43,14 +46,28 @@ export class BlogReadComponent implements OnInit {
   userSub: Subscription;
   confirmDialogRef: MatDialogRef<MirapiConfirmDialogComponent>;
 
+  content : SafeHtml;
+  logOutputHtml ="";
+
+
   constructor(
     public _matDialog: MatDialog,
     private blogService : BlogService,
     private authService: AuthService,
-    private router:Router
+    private router:Router,
+    private sanitized: DomSanitizer
     ) {
-
+   
     this._unsubscribeAll = new Subject();
+    this.blogService.onPostChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(data => {
+     this.post = data;
+     this.logOutputHtml += data.message;
+     this.content = this.sanitized.bypassSecurityTrustHtml( this.logOutputHtml );
+
+
+  });
    }
 
   ngOnInit() {
@@ -64,15 +81,8 @@ export class BlogReadComponent implements OnInit {
     }
   
   });
-     this.blogService.onPostChanged
-       .pipe(takeUntil(this._unsubscribeAll))
-       .subscribe(data => {
-        this.post = data;
-     
-     });
+   
      this.getPostImages();
-    // this.profileImage = this.autService.userProfileImage;
-
 
     if (this.user) {
       if (this.user.Id==this.post.user.Id) {
@@ -84,12 +94,18 @@ export class BlogReadComponent implements OnInit {
     
   }
 
+
   getPostImages(){
     this.blogService.getPostImages().then(data=>{
         this.images = data;
     });
   }
 
+  getHTML(message :string){
+    let text = message
+    
+            return this.sanitized.bypassSecurityTrustHtml(text);
+    }
 
 
   async deleteBlog(data : PostModel){

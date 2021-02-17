@@ -33,7 +33,7 @@
             
                         <mat-menu #moreMenu="matMenu">
            
-                            <button *ngIf="isEditable" [routerLink]="['/update-question/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
+                            <button *ngIf="isEditable" [routerLink]="['/update-blog/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
                                 <mat-icon>edit</mat-icon>
                                 <span>Düzenle</span>
                             </button>
@@ -65,9 +65,10 @@
                
     
                 <div class="content">
-                    <div *ngIf="post.message" class="message" [innerHTML]="post.message">
+                    <div *ngIf="post.message" class="message" [innerHTML]="content">
                        
                     </div>
+
                     <div  fxLayout="column" class="article">
 
                         <div class="p-20" class="period-media"  fxLayout="row wrap">
