@@ -10,6 +10,8 @@ export const environment = {
 
    rootPath:'http://amaroktr.com/api/',
    apiUrl:'http://amaroktr.com/api/'
+
+
 };
 
 /*

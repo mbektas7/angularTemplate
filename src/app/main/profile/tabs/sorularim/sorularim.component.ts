@@ -112,7 +112,7 @@ export class SorularimComponent implements OnInit {
           disableClose: false
       });
     
-      this.confirmDialogRef.componentInstance.confirmMessage = 'Bu gönderiyi silmek için emin misiniz?';
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Bu gönderiyi silmek istediğinizden emin misiniz?';
     
     
       this.confirmDialogRef.afterClosed()

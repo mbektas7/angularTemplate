@@ -6,8 +6,14 @@ toolbar {
     display: flex;
     flex: 0 0 auto;
     z-index: 4;
+    @include media-breakpoint('xs') {
+        background: url('/assets/images/logos/toolbar1.jpg') no-repeat;
+        background-size: auto;
+    }
+
     background: url('/assets/images/logos/toolbar1.jpg') no-repeat;
     background-size: cover;
+
 
     &.below {
         z-index: 2;
