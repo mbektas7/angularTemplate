@@ -1,0 +1,5 @@
+@mixin ui-cards-theme($theme) {
+
+    $foreground: map-get($theme, foreground);
+
+}

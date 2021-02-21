@@ -1,0 +1,70 @@
+<div id="cards" class="page-layout simple fullwidth">
+
+    <!-- HEADER -->
+    <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <div class="h2 mt-16">İkinci El Alışveriş</div>
+        </div>
+
+        <div>
+            <button mat-button [routerLink]="'/new-ikinciel'" routerLinkActive="router-link-active"  class="primary"  > Bir şey sat</button>
+        </div>
+       
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content" >
+
+        <div class="cards">
+
+            <!-- CARD  -->
+              <div class="card"  *ngFor="let item of products">
+
+                            <!-- PREVIEW -->
+                            <div class="card-preview">
+            
+                                <div class="mirapi-card">
+            
+                                    <div class="p-16" fxLayout="row" fxLayoutAlign="start center">
+                                        <img class="w-40 h-40 border-radius-100" src="assets/images/avatars/Boyle.jpg">
+            
+                                        <div class="ml-16">
+                                            <div class="text-bold"> {{item.user.Name}}</div>
+                                            <div class="h5 text-bold secondary-text">20 dk. önce</div>
+                                        </div>
+                                    </div>
+            
+                                    <img src="{{item.user.photo?.path}}">
+            
+                                    <div class="p-16">
+                                        <div class="h1">{{item.title}}</div>
+                                        <div class="h4 secondary-text">{{item.ucret}}</div>
+                                    </div>
+            
+                                    <div class="p-16 pt-0 line-height-1.75">
+                                        {{item.message}}
+                                    </div>
+
+                                    <div class="p-8 pt-0" fxLayout="row" fxLayoutAlign="start center">
+                                        <button mat-button [routerLink]="'/ikinciel-detay/'+item.Id" routerLinkActive="router-link-active"   color="accent">İncele</button>
+                                    </div>
+            
+                                </div>
+            
+                            </div>
+                            <!-- / PREVIEW -->
+            
+            
+              </div>
+            <!-- / CARD  -->
+
+
+        </div>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

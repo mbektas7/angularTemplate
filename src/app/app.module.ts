@@ -43,6 +43,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardModule } from './main/dashboard/dashboard.module';
 import { ChatModule } from './main/chat/chat.module';
 import { LoginModalComponent } from './main/authentication/login-modal/login-modal.component';
+import { IkincielModule } from './main/ikinciel/ikinciel.module';
 
 
 
@@ -75,6 +76,10 @@ const appRoutes: Routes = [
     {
         path        : 'blog',
         loadChildren: './main/blog/blog.module#BlogModule',
+    },
+    {
+        path        : 'ikinciel',
+        loadChildren: './main/ikinciel/ikinciel.module#IkincielModule',
     },
     {
         path        : 'profile',
@@ -158,7 +163,8 @@ const appRoutes: Routes = [
         MypostsModule,
         BlogModule,
         DashboardModule,
-        ChatModule
+        ChatModule,
+        IkincielModule
         
     ],
     bootstrap   : [

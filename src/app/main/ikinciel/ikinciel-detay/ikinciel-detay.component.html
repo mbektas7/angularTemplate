@@ -1,0 +1,129 @@
+<div class="w-100-p"  >
+    <div id="timeline" fxLayout="row" fxLayoutAlign="center none">
+    
+        <div class="timeline-content"  fxLayoutAlign="center none" fxLayout="column"  fxFlex="100" fxFlex.gt-sm="55" fxFlex.gt-md="65">
+    
+    
+            <div class="timeline-item"  >
+    
+                <header  fxLayoutAlign="space-between center" >
+                    <div class="user" fxLayout="row" fxLayoutAlign="start center">
+                         <img class="avatar" src="{{post.user.photo?.path}}"> 
+    
+                        <div fxLayout="column">
+                            <div [routerLink]="['/profile', post.user?.Id]" class="title">
+                                <a class="username">{{post.user.Name}}</a>
+                                <span > bir gönderi oluşturdu</span>
+                            </div>
+                            <div class="time">{{post.creationDate}}</div>
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="pl-100" *ngIf="isEditable"  >
+                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation()">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+            
+                        <mat-menu #moreMenu="matMenu">
+           
+                            <button *ngIf="isEditable" [routerLink]="['/update-question/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
+                                <mat-icon>edit</mat-icon>
+                                <span>Düzenle</span>
+                            </button>
+                            <button *ngIf="isEditable" (click)="deletePost(post)" mat-menu-item aria-label="Sil">
+                                <mat-icon>delete</mat-icon>
+                                <span>Sil</span>
+                            </button>
+            
+                        </mat-menu>
+                    </div>
+
+
+                </header>
+
+                <div class="p-24" fxLayoutAlign="space-between center">
+                    <h2 class="title" >{{post.title}}</h2>
+                    <h2 class="title" >{{post.ucret}}</h2>
+                    <div class="pl-100"  fxLayoutAlign="end center"  >
+                        <mat-chip-list >
+                            <mat-chip class="green-50-bg" [removable]="false">
+                                <mat-icon>{{tag.category.iconName}}</mat-icon>
+                                {{post.ucret}}
+                            </mat-chip>
+                        </mat-chip-list>
+    
+                    </div>
+    
+                </div>
+             
+               
+    
+                <div class="content">
+                    <div *ngIf="post.message" class="message" [innerHTML]="post.message">
+                       
+                    </div>
+    
+    
+                    <div *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="start center">
+
+                        <button mat-button class="share-button">
+                            <span fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="s-16">share</mat-icon>
+                                <span>Paylaş</span>&nbsp;
+                            </span>
+                        </button>
+                    </div>
+                </div>
+    
+                 <footer class="" fxLayout="column" fxLayoutAlign="start start">
+                    <div *ngIf="post.comments" class="comment-count" fxLayout="row" fxLayoutAlign="start center">
+                        {{post.answers.length}} comments
+                        <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
+                    </div>
+    
+                    <div class="comment" fxLayout="row" fxFlexFill *ngFor="let answer of post.answers">
+                        <img  src="{{answer.user.photo?.path}}" class="avatar"/>
+    
+                        <div fxLayout="column" fxFlex>
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <a [routerLink]="'/profile/'+answer.user.Id" class="username">{{answer.user.Name}}</a>
+                                <span class="time">{{ moment(answer.CreationDate).calendar()}}</span>
+                                <div>
+                                    
+                                    <mat-icon matTooltip="Yorumumu sil" *ngIf="isLoggedIn && user.Id== answer.user.Id"  (click)="commentDelete(answer.Id)"  fxFlex class="report-button s-16 warn-fg pl-4">delete</mat-icon>
+
+                                </div>
+                            </div>
+                            <div class="message">
+                               {{answer.message}}
+                            </div>
+                        
+                        </div>
+                    </div>
+    
+
+                    <div *ngIf="!isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
+                        <button (click)="login()" routerLinkActive="router-link-active"  mat-raised-button color="accent" class="post-comment-button"  aria-label="Post Comment">
+                            Cevaplamak için giriş yap
+                        </button>
+                    </div>
+                    <div *ngIf="isLoggedIn" class="reply" fxLayout="row" fxFlexFill>
+                        <img  src="{{ user?.photo?.path}}" class="avatar"/>
+    
+                        <form (keyup.enter)="sendAnswer()" fxFlex>
+                            <textarea placeholder="Bir yorum yazın..." [(ngModel)]="answer" name="answer"></textarea>
+                            <button mat-raised-button color="accent" class="post-comment-button" (click)="sendAnswer()" aria-label="Post Comment">
+                                Cevap Ver
+                            </button>
+                        </form>
+                    </div>
+                </footer> 
+            </div>
+        </div>
+    
+    </div>
+</div>
+

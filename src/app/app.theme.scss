@@ -90,6 +90,7 @@ $typography: mat-typography-config(
 @import "src/app/main/questions/question.theme";
 @import "src/app/main/chat/chat.theme";
 @import "src/app/main/blog/blog.theme";
+@import "src/app/main/ikinciel/ikinciel.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -109,6 +110,7 @@ $typography: mat-typography-config(
     @include question-theme($theme);
     @include blog-theme($theme);
     @include chat-theme($theme);
+    @include ui-cards-theme($theme);
 
     
 
