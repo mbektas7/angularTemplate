@@ -109,6 +109,7 @@
 
             <div class="content">
 
+                <p *ngIf="!user.car"> Araç seçilmedi</p>
                         <mat-form-field *ngIf="user.car" appearance="outline" floatLabel="always"  class="w-80-p">
                                         <mat-label>Araç</mat-label>
                                     <input 
@@ -119,7 +120,9 @@
                                         placeholder="Model"
                                         required
                                     />
+
                         </mat-form-field>
+
 
                         <div >
                             <button mat-raised-button *ngIf="user.Id == userLoggedIn.Id" (click)="selectCar()" color="accent" aria-label="Save">Araç Seç</button>

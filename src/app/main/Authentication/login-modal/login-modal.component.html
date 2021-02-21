@@ -26,11 +26,14 @@ required
 </mat-form-field>
 
 
-    </div>
+</div>
     <div mat-dialog-actions>
+        <button mat-raised-button (click)="onNoClick()" [routerLink]="'/auth/register'"  >Kayıt ol</button>
         <button mat-button (click)="onNoClick()">iptal</button>
         <button mat-raised-button color="accent" *ngIf="data.Username && data.Password" [mat-dialog-close]="data">Giriş</button>
-        
+       
     </div>
+
+
 
 </div>
