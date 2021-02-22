@@ -4,16 +4,22 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { AdminService } from 'app/main/admin/admin.service';
 import { IkinciElModel } from 'app/shared/models/IkinciElModel';
 import { MyUploadAdapter } from 'app/main/questions/new-question/UploadAdapter';
+import { IkincielService } from '../ikinciel.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
-  selector: 'app-new-ikinciel',
-  templateUrl: './new-ikinciel.component.html',
-  styleUrls: ['./new-ikinciel.component.scss']
+  selector: 'app-update-ikinciel',
+  templateUrl: './update-ikinciel.component.html',
+  styleUrls: ['./update-ikinciel.component.scss']
 })
-export class NewIkincielComponent implements OnInit {
+
+export class UpdateIkincielComponent implements OnInit {
 
   public Editor = ClassicEditor;
-  post = new IkinciElModel;
+  private _unsubscribeAll: Subject<any>;
+  post = new IkinciElModel();
   htmlEditorConfig = {
     mediaEmbed: {
         previewsInData: true
@@ -23,10 +29,19 @@ export class NewIkincielComponent implements OnInit {
 
   constructor(
     private adminService : AdminService,
-    private router : Router
-  ) { 
+    private router : Router,
+    private ikinciElService : IkincielService
+  )
+   { 
 
+    this._unsubscribeAll = new Subject();
     this.post.message = "";
+
+      this.ikinciElService.onPostChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(data => {
+      this.post = data;         
+    });
   }
 
   ngOnInit() {
@@ -36,9 +51,10 @@ export class NewIkincielComponent implements OnInit {
 
 
   addPost(){
-     this.adminService.addItem('ikinciel',this.post).then( data => {
-      this.router.navigate(['ikinciel']);
-   });
+
+   this.adminService.updateData('ikinciel/',this.post).then( data => {
+    this.router.navigate(['ikinciel']);
+ });
   }
 
   public onReady(editor) {

@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { TagsModel } from 'app/shared/models/TagsModel';
 import { Router } from '@angular/router';
 import { MyUploadAdapter } from 'app/main/questions/new-question/UploadAdapter';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
+
 
 
 

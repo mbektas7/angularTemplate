@@ -48,7 +48,7 @@ export class IkincielService  implements Resolve<any> {
 getProduct(): Promise<any> {
   return new Promise((resolve, reject) => {
       this._httpClient
-          .get('product/' + this.routeParams.id)
+          .get('ikinciel/' + this.routeParams.id)
           .subscribe((response: any) => {
               this.post = response["data"];
               this.onPostChanged.next(this.post);
@@ -61,7 +61,7 @@ getProduct(): Promise<any> {
 addAnswer(data : SaveAnswer): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient
-            .post('product/addAnswer',data)
+            .post('ikinciel/addAnswer',data)
             .subscribe((response: any) => {
                 this.getProduct();
                 resolve(response["data"]);
@@ -74,7 +74,7 @@ addAnswer(data : SaveAnswer): Promise<any> {
   {
 
    return  new Promise((resolve, reject) => {
-       this._httpClient.delete('product/',data.Id).subscribe((response:any) => {
+       this._httpClient.delete('ikinciel/',data.Id).subscribe((response:any) => {
            resolve(response["data"]);
        },reject)
    });
@@ -83,7 +83,7 @@ addAnswer(data : SaveAnswer): Promise<any> {
    getProducts(): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient
-            .get('products/')
+            .get('ikinciel/')
             .subscribe((response: any) => {
                 this.post = response["data"];
                 resolve(response["data"]);
@@ -95,7 +95,7 @@ addAnswer(data : SaveAnswer): Promise<any> {
   deleteAnsver(id : string): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient
-            .delete('product/answer/',id)
+            .delete('ikinciel/answer/',id)
             .subscribe((response: any) => {
                 this.getProduct();
                 resolve(response["data"]);

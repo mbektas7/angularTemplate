@@ -72,7 +72,6 @@ export class UpdateBlogComponent implements OnInit {
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(data => {
      this.post = data;
-     console.log(data)
   });
 
   }

@@ -54,11 +54,12 @@ export class QuestionDetailComponent implements OnInit {
     private questionDeatilService : QuestionDetailService,
     private authService: AuthService,
     private alertifyService : AlertifyService,
-    private httpReq : HttpRequestsService) {
+    private httpReq : HttpRequestsService)
+     {
 
     this._unsubscribeAll = new Subject();
     this.isLoggedIn =  false;
-    
+    this.authService.getCurrentUser().subscribe();
    }
 
   ngOnInit() {

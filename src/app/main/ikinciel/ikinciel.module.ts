@@ -12,6 +12,7 @@ import { AdminService } from '../admin/admin.service';
 import { IkincielService } from './ikinciel.service';
 import { IkincielDetayComponent } from './ikinciel-detay/ikinciel-detay.component';
 import { NewIkincielComponent } from './new-ikinciel/new-ikinciel.component';
+import { UpdateIkincielComponent } from './update-ikinciel/update-ikinciel.component';
 
 
 
@@ -20,21 +21,24 @@ const routes = [
       path     : '',
       component: IkincielComponent,
   },
-  {
-    path     : 'ikinciel-detay/:id', 
-    component: IkincielDetayComponent
-},
 {
   path     : 'new-ikinciel', 
   component: NewIkincielComponent
 },
-//   {
-//     path     : 'ikinciel-detay/:id',
-//     component: IkincielDetayComponent,
-//     resolve: {
-//       data: IkincielService
-//   }
-// }
+  {
+    path     : 'ikinciel-detay/:id',
+    component: IkincielDetayComponent,
+    resolve: {
+      data: IkincielService
+  }
+},
+{
+  path     : 'update-ikinciel/:id',
+  component: UpdateIkincielComponent,
+  resolve: {
+    data: IkincielService
+}
+}
 
   ];
 
@@ -68,7 +72,9 @@ const routes = [
     
       IkincielDetayComponent,
     
-      NewIkincielComponent, 
+      NewIkincielComponent,
+    
+      UpdateIkincielComponent, 
 
     ],
       entryComponents: [ ]

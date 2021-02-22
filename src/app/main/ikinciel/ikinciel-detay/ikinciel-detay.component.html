@@ -29,7 +29,7 @@
             
                         <mat-menu #moreMenu="matMenu">
            
-                            <button *ngIf="isEditable" [routerLink]="['/update-question/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
+                            <button *ngIf="isEditable" [routerLink]="['/update-ikinciel/'+ post.Id]"  mat-menu-item aria-label="Düzenle">
                                 <mat-icon>edit</mat-icon>
                                 <span>Düzenle</span>
                             </button>
@@ -46,12 +46,13 @@
 
                 <div class="p-24" fxLayoutAlign="space-between center">
                     <h2 class="title" >{{post.title}}</h2>
-                    <h2 class="title" >{{post.ucret}}</h2>
+                   
                     <div class="pl-100"  fxLayoutAlign="end center"  >
                         <mat-chip-list >
                             <mat-chip class="green-50-bg" [removable]="false">
-                                <mat-icon>{{tag.category.iconName}}</mat-icon>
-                                {{post.ucret}}
+                               
+                               <span *ngIf="post.ucret">{{post.ucret}} ₺ </span> 
+                               <span *ngIf="!post.ucret">Ücretsiz</span>
                             </mat-chip>
                         </mat-chip-list>
     

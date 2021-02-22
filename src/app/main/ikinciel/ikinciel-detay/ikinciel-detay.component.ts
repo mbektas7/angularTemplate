@@ -46,37 +46,37 @@ export class IkincielDetayComponent implements OnInit {
     private progressBarService : MirapiProgressBarService,
     private router : Router,
     public dialog: MatDialog,
-    private questionDeatilService : QuestionDetailService,
     private authService: AuthService,
     private alertifyService : AlertifyService,
     private ikinciElService : IkincielService) {
 
     this._unsubscribeAll = new Subject();
     this.isLoggedIn =  false;
-    
+    this.ikinciElService.onPostChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(data => {
+     this.post = data;         
+  });
    }
 
   ngOnInit() {
-     this.ikinciElService.onPostChanged
-       .pipe(takeUntil(this._unsubscribeAll))
-       .subscribe(data => {
-        this.post = data;         
-     });
 
-     this.userSub = this.authService.user$.subscribe((user: User) => {
+
+    this.userSub = this.authService.user$.subscribe((user: User) => {
       this.user = user;
       if (this.user) {
-         this.isLoggedIn = true;
-         this.profileImage = this.user.photo.path;
-         if (this.user.Id==this.post.user.Id) {
-          this.isEditable = true;
-        }
+        this.isLoggedIn = true;
       }
-        else{
-        this.isEditable = false;
-     }
-      });
-   
+    
+    });
+    if (this.user) {
+      if (this.user.Id==this.post.user.Id) {
+        this.isEditable = true;
+      }
+      else
+      this.isEditable = false;
+    }
+    
     }
       
 
@@ -85,12 +85,12 @@ export class IkincielDetayComponent implements OnInit {
 
   sendAnswer() {
 
+
     let request = new SaveAnswer()
     request.title =  ""
     request.parentId = this.post.Id;
     request.message = this.answer;
     request.userId = this.user.Id;
-    request.carId = this.post.car.Id;
     request.isAnswered = false;
 
     this.ikinciElService.addAnswer(request).then();

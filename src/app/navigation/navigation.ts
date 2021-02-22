@@ -43,6 +43,13 @@ export const navigation: MirapiNavigation[] = [
     //     type     : 'item',
 
     // },
+     {
+        id       : 'ikinciel',
+        title    : 'İkinci El',
+        type     : 'item',
+        icon     : 'shopping_cart',
+        url      : '/ikinciel',
+    },
     {
         id       : 'admin',
         title    : 'Yönetim',
@@ -72,12 +79,6 @@ export const navigation: MirapiNavigation[] = [
                 type     : 'item',
                 icon     : 'bookmark_border',
                 url      : '/posts',
-            }, {
-                id       : 'ikinciel',
-                title    : 'İkinci El',
-                type     : 'item',
-                icon     : 'bookmark_border',
-                url      : '/ikinciel',
             }
         ]
     }

@@ -1,0 +1,70 @@
+
+<div id="forms" class="page-layout simple " fxLayout="column">
+
+    <!-- HEADER -->
+    <div [routerLink]="'/ikinciel'" class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+        
+
+            <mat-icon>arrow_back</mat-icon>
+            <div class="h1 mt-0"> Yeni bir gönderi ekle</div>
+    
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+ <div class="content p-24 mat-card ">
+
+
+
+
+        <div  fxLayout="column" fxLayoutAlign="center stretch" >      
+
+            <div fxLauout="row">
+
+                <div>
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <input
+                            matInput
+                            name="title"
+                            [(ngModel)]="post.title"
+                            placeholder="Gönderiniz için bir başlık giriniz"
+                            required
+                        />
+                       </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                        <input
+                            matInput
+                            name="ucret"
+                            [(ngModel)]="post.ucret"
+                            placeholder="Ücret, ücretsizse boş bırakınız"
+                            required
+                        />
+                       </mat-form-field>
+                </div>
+
+            </div>
+
+
+
+            <ckeditor [(ngModel)]="post.message"  [config]="htmlEditorConfig" [editor]="Editor" (ready)="onReady($event)" data="<p></p>"></ckeditor>
+ 
+
+            <div class="p-24" fxLayout="row" fxLayoutAlign="end center" >
+                <button  mat-raised-button color="accent" class="post-comment-button" (click) ="addPost()" >
+                  Kaydet
+                </button>
+
+            </div>
+        </div>
+
+
+
+ </div>
+
+
+</div>
+
+

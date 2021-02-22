@@ -1,18 +1,18 @@
 <div id="cards" class="page-layout simple fullwidth">
 
     <!-- HEADER -->
-    <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="space-between center">
 
-        <div fxLayout="column" fxLayoutAlign="center start">
-            <div class="h2 mt-16">İkinci El Alışveriş</div>
+    <div [routerLink]="'/ikinciel'" class="header accent p-24 h-160" fxLayout="row" fxLayout.xs="column"  fxLayoutAlign="space-between center">
+        
+        <div>
+            <mat-icon>shopping_cart</mat-icon>
+            <div class="h1 mt-0"> İkinci El Alışveriş</div>
         </div>
 
         <div>
             <button mat-button [routerLink]="'/new-ikinciel'" routerLinkActive="router-link-active"  class="primary"  > Bir şey sat</button>
         </div>
-       
-
-    </div>
+</div>
     <!-- / HEADER -->
 
     <!-- CONTENT -->
@@ -21,7 +21,7 @@
         <div class="cards">
 
             <!-- CARD  -->
-              <div class="card"  *ngFor="let item of products">
+              <div class="card" [routerLink]="'/ikinciel-detay/'+item.Id"  *ngFor="let item of products">
 
                             <!-- PREVIEW -->
                             <div class="card-preview">
@@ -29,23 +29,29 @@
                                 <div class="mirapi-card">
             
                                     <div class="p-16" fxLayout="row" fxLayoutAlign="start center">
-                                        <img class="w-40 h-40 border-radius-100" src="assets/images/avatars/Boyle.jpg">
+                                        <img class="w-40 h-40 border-radius-100" src="{{item.user.photo?.path}}">
             
                                         <div class="ml-16">
                                             <div class="text-bold"> {{item.user.Name}}</div>
-                                            <div class="h5 text-bold secondary-text">20 dk. önce</div>
+                                            <div class="h5 text-bold secondary-text">
+                                                <span class="time">{{ moment(item.CreationDate).calendar()}}</span>
+                                            </div>
                                         </div>
                                     </div>
             
-                                    <img src="{{item.user.photo?.path}}">
+                                  
             
                                     <div class="p-16">
                                         <div class="h1">{{item.title}}</div>
-                                        <div class="h4 secondary-text">{{item.ucret}}</div>
+                                        <div class="h4 secondary-text">
+                                             <span *ngIf="item.ucret">{{item.ucret}} ₺ </span> 
+                                            <span *ngIf="!item.ucret">Ücretsiz</span>
+                                        </div>
                                     </div>
             
-                                    <div class="p-16 pt-0 line-height-1.75">
-                                        {{item.message}}
+                                    <div class="p-16 pt-0 line-height-1.75" >
+                                        <div  [innerHTML]="item.message"></div>
+                                     
                                     </div>
 
                                     <div class="p-8 pt-0" fxLayout="row" fxLayoutAlign="start center">
